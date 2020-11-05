@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>修改会员卡</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="">
+	<form class="layui-form" action="##" onsubmit="return false" method="post" id="form1" enctype="multipart/form-data">
+	    <!-- 编号 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">课程编号</label>
+			<div class="layui-input-inline">
+		    	<input id="courseId" name='courseId' th:value="${courses.courseId}" class="layui-input" readonly="readonly">
+			</div>
+			<div class="layui-form-mid layui-word-aux">*此项不允许更改</div>
+		</div>
+		<!-- 课程名 -->
+		<div class="layui-form-item">
+			<label class="layui-form-label">课程名</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseName" id="courseName" th:value="${courses.courseName}" class="layui-input">
+			</div>
+			<div class="layui-form-mid layui-word-aux">*请输入课程名称</div>				  
+    	</div>
+	    <!-- 课程时长 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">课程时长</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseLength" id="courseLength" th:value="${courses.courseLength}" class="layui-input">
+			</div>
+			<div class="layui-form-mid layui-word-aux">*此处单位为"分钟"</div>
+		</div>
+		<!-- 可容纳人数 -->
+		<div class="layui-form-item">
+			<label class="layui-form-label">可容纳人数</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseNumber" id="courseNumber" th:value="${courses.courseNumber}" class="layui-input">
+			</div>
+			<div class="layui-form-mid layui-word-aux">*课程能容纳的人数</div>	
+	    </div>
+	    <!-- 课程图片 -->	  
+	   	 <div class="layui-form-item">		  
+			<label class="layui-form-label">上传图片</label>
+			<div class="layui-input-inline">
+			    <input type="file" name="image" id="uploadImage" value="上传图片" class="layui-input">
+			</div>
+		</div>
+	    <!--课程简介 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">课程简介</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseContent" id="courseContent" th:value="${courses.courseContent}" class="layui-input" style="width:420px;height:120px">
+			</div>
+		</div>
+		<hr class="layui-bg-green">	  		      	   	    
+	    <!--按钮 -->
+		<div class="layui-form-item" align="center">
+		  <div class="layui-input-block" style="height:60px;width:200px;margin:auto;">
+		     <input type="button" id="addsubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" value="重置" class="layui-btn layui-btn-primary"/>
+	     </div>
+	   </div> 
+	</form>
+</div>
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var laydate=layui.laydate;  //定义时间选择器对象
+	form.render();				//渲染整个页面的form元素
+});
+
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	//点击提交事件
+	$(document).on('click','#addsubmit',function(){
+		var formData=new FormData($('#form1')[0]);
+		var courseName=$("#courseName").val();
+		var courseLength=$("#courseLength").val();
+		var courseNumber=$("#courseNumber").val();
+		
+		if(courseName===""){
+			layer.msg("课程名称不能为空");
+		}
+		else if(courseLength===""){
+			layer.msg("课程时长不能为空");
+		}
+		else if(courseNumber===""){
+			layer.msg("容纳人数不能为空");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,url:'/course/doUpdateCourse'
+				,data:formData
+				,async:false
+				,cache:false
+				,contentType:false
+				,processData:false
+				,success:function(data){				
+					if(data==="true"){
+						var index = parent.layer.getFrameIndex(window.name); 
+						parent.layer.close(index);
+						alert("成功");
+					}
+					else if(data==="false"){
+						layer.msg("课程信息信息已存在！");
+					}	
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+		}
+	});
+});
+</script>
+</body>
+</html>

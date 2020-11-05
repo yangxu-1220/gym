@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增会员</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<link th:href="@{styles/index.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="">
+	<form class="layui-form" action="##" onsubmit="return false" id="form1">
+		<!-- 第一行 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">会员卡号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="memberId" id="memberId" lay-verify="required|number"  placeholder="请输入会员编号" autocomplete="off" class="layui-input">
+			</div>			  
+		    <label class="layui-form-label">会员姓名</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="memberName" id="memberName" lay-verify="required" lay-reqtext="会员姓名不能为空？" placeholder="请输入会员姓名" autocomplete="off" class="layui-input">
+			</div>		
+    		<label class="layui-form-label">会员类型</label>
+    		<div class="layui-input-inline">
+     		<select name="memberType" id="memberType" lay-verify="required" class="select">
+        		<option value="">请选择会员卡类型</option>           
+      		</select>
+    	</div>
+  		</div>
+  		<!-- 第二行 -->
+  		<div class="layui-form-item">
+		    <label class="layui-form-label">性别</label>
+		    <div class="layui-input-inline">
+		      <input type="radio" name="memberSex" value="男" title="男">
+		      <input type="radio" name="memberSex" value="女" title="女" checked>
+		    </div>
+		 
+	    	<div class="layui-inline">
+	      		<label class="layui-form-label">加入时间</label>
+	      	<div class="layui-input-inline">
+	        	<input type="text" name="joinTime" class="layui-input" id="joinTime" placeholder="年/月/日">
+	      	</div>
+	    	</div>
+	    	<label class="layui-form-label">支付方式</label>
+    		<div class="layui-input-inline">
+     		<select name="payment" id="payment" class="select">
+        		<option value="">请选择支付方式</option> 
+        		<option value="支付宝">支付宝</option>
+        		<option value="微信">微信</option>
+        		<option value="现金">现金</option>
+        		<option value="银行卡">银行卡</option>          
+      		</select>
+      		</div>
+	    </div>
+	    <!-- 第三行 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">联系电话</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="memberPhone" id="phone" lay-verify="required|phone" placeholder="请输入电话号码" autocomplete="off" class="layui-input">
+			</div>	
+		 	<label class="layui-form-label">证件编号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="idcardNumber" id="idcardNumber"  placeholder="请输入证件编号" autocomplete="off" class="layui-input">
+			</div>
+	    	<label class="layui-form-label">证件类型</label>
+    		<div class="layui-input-inline">
+     		<select name="idcardType" id="idcardType"  class="select">
+        		<option value="">请选择证件类型</option> 
+        		<option value="中华人民共和国居民身份证">中华人民共和国居民身份证</option>
+        		<option value="港澳台通行证">港澳台通行证</option>
+        		<option value="护照">护照</option>          
+      		</select>
+	    	</div>
+	    </div>
+	    <!-- 第四行 -->
+	    <div class="layui-form-item">    	
+		 	<div class="layui-inline">
+	      		<label class="layui-form-label">出生日期</label>
+	      	<div class="layui-input-inline">
+	        	<input type="text" class="layui-input" name="memberBirthday" id="memberBirthday" placeholder="年/月/日">
+	      	</div>
+	    	</div>
+	    	<label class="layui-form-label">联系地址</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="memberAddress" id="memberAddress"   placeholder="请输联系地址" autocomplete="off" class="layui-input">
+			</div>
+			
+	    	<label class="layui-form-label">会籍ID</label>
+    		<div class="layui-input-inline">
+     		<select name="memberStuffId" id="stuffId"  class="select">
+        		<option value="">请选择会籍ID</option>        		          
+      		</select>
+	       </div>
+	    </div>
+	    <!-- 第五行 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">教练ID</label>
+    		<div class="layui-input-inline">
+	     		<select name="memberTrainerId" id="trainerId"  class="select">
+	        		<option value="">请选择教练ID</option>        		          
+	      		</select>
+      		</div>
+	    	<label class="layui-form-label">密码</label>
+			    <div class="layui-input-inline">
+     				<input type="password" name="userPassword" id="userPassword"   placeholder="请输入密码" class="layui-input">
+		    	</div>	
+		    <label class="layui-form-label">确认密码</label>
+			    <div class="layui-input-inline">
+     				<input type="password" name="enterUserPassword" id="enterUserPassword"   placeholder="再次输入密码" class="layui-input">
+		    	</div>    		
+	    </div> 
+	    <!-- 第六行 -->
+	    <div class="layui-form-item">		   
+	    	<label class="layui-form-label">健身需求</label>
+			    <div class="layui-input-inline">
+     				<select name="memberNeeds" id="needs" class="select">		        		 
+		        		<option value="减脂">减脂</option>
+		        		<option value="增肌">增肌</option>
+		        		<option value="塑形">塑形</option>          
+	      			</select>
+		    	</div>	    		
+	    </div> 
+	     <!-- 第七行照片 -->
+	    <div class="layui-form-item" style="width:450px;height:240px;margin:auto;">
+	    	<div id="image" style="width:350px;height:200px;margin:auto;">
+	    	</div>
+            <div style="width:100px;height:40px;margin:auto;">	
+	          <button type="button" class="layui-btn layui-btn-warm"style="width:100px;height:40px;" id="memberImg">
+            	<i class="layui-icon"></i>拍照
+             </button>
+	       </div>
+	    </div>
+	    <div id="memberImage"></div>
+	    <!-- 第八行备注 -->
+	    <div class="layui-form-item">		    
+	    			<label class="layui-form-label">备注</label>
+			    	<div class="layui-input-block">
+			      		<textarea name="memberNote" class="layui-textarea"></textarea>
+			    	</div>	    		    	
+	    </div> 
+	    <!-- 第九行按钮 -->	    			 		    
+	    <hr class="layui-bg-green">	 
+		<div class="layui-form-item">
+		  <div class="layui-input-block"align="center">
+		     <input type="button" id="addsubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" class="layui-btn layui-btn-primary"/>
+	     </div>
+	    </div>
+	</form>
+</div> 
+ 
+<script src="../layui/layui.js"></script>
+<script th:src="@{styles/axios.min.js}"></script>
+<script th:src="@{styles/index.js}"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var laydate=layui.laydate;  //定义时间选择器对象
+	
+	laydate.render({			//渲染时间选择器
+		elem:'#joinTime'		//elem：是时间选择器的ID
+	});
+	
+	laydate.render({			//渲染时间选择器
+		elem:'#memberBirthday'		//elem：是时间选择器的ID
+	});
+	
+	form.render();				//渲染整个页面的form元素
+});
+
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	$("#phone").blur(function(){
+		var phone=document.getElementById("phone");
+		if(!(/^1[3456789]\d{9}$/.test(phone.value))){
+			phone.focus();
+			layer.msg("请输入正确的电话号码！");
+		}
+	});
+	$("#idcardNumber").blur(function(){
+		var idcardNumber=document.getElementById("idcardNumber");
+		var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		if(reg.test(idcardNumber.value) === false){
+			idcardNumber.focus();
+			layer.msg("请输入正确的身份证号！");
+		}
+		if(15==idcardNumber.value.length||18==idcardNumber.value.length){
+			var left=idcardNumber.value.length-12;
+			var right=idcardNumber.value.length-4;
+			var b=idcardNumber.value.slice(left,right);
+			if(8==b.length){
+				//alert(b);
+				var yyyy=b.substring(0,4);
+				var mm=b.substring(4,6);
+				var dd=b.substring(6,8);
+				var birthday=yyyy+'-'+mm+'-'+dd;
+				var memberBirthday=$("#memberBirthday");
+				memberBirthday.val(birthday);
+			}
+		}
+	});
+	
+	layer.ready(function(){
+		$.ajax({
+			type:'get',
+			url:'../card/GetCardType',
+			success:function(data){
+				$.each(data,function(index,card){
+					$('#memberType').append(new Option(card.cardType));
+				});
+				form.render("select");
+			}
+		});
+		$.ajax({
+			type:'get',
+			url:'../MStuff/GetAllStuff',
+			success:function(data){
+				$.each(data,function(index,stuff){
+					$('#stuffId').append(new Option(stuff.stuffId));
+				});
+				form.render("select");
+			}
+		});
+		$.ajax({
+			type:'get',
+			url:'../MTrainer/GetAllTrainer',
+			success:function(data){
+				$.each(data,function(index,trainer){
+					$('#trainerId').append(new Option(trainer.trainerId));
+				});
+				form.render("select");
+			}
+		});
+	});
+	$("#enterUserPassword").blur(function(){
+		var userPassword=$('#userPassword').val();
+		var enterUserPassword=$('#enterUserPassword').val();
+		if(userPassword!=enterUserPassword){
+			layer.msg("两次输入密码不一致");
+		}
+	});
+	
+	$(document).on('click','#addsubmit',function(){
+		var memberId=$("#memberId").val();
+		var memberName=$("#memberName").val();
+		var memberType=$("#memberType option:selected").text();
+		var joinTime=$("#joinTime").val();
+		var payment=$("#payment option:selected").text();
+		var phone=$("#phone").val();
+		var memberBirthday=$("#memberBirthday").val();
+		var idcardType=$("#idcardType option:selected").text();
+		var idcardNumber=$("#idcardNumber").val();
+		var memberAddress=$("#memberAddress").val();
+		var stuffId=$("#stuffId option:selected").text();
+		var trainerId=$("#trainerId option:selected").text();
+		var userPassword=$("#userPassword").val();
+		var enterUserPassword=$("#enterUserPassword").val();				
+		
+		if(memberId===""){
+			layer.msg("会员编号不能为空");
+		}
+		else if(memberName===""){
+			layer.msg("会员姓名不能为空");
+		}
+		else if(memberType==="请选择会员卡类型"){
+			layer.msg("会员类型不能为空");	
+		}
+		else if(payment==="请选择支付方式"){
+			layer.msg("支付方式不能为空");
+		}
+		else if(joinTime===""){
+			layer.msg("加入时间不能为空");
+		}		
+		else if(phone===""){
+			layer.msg("联系电话不能为空");
+		}
+		else if(idcardType==="请选择证件类型"){
+			layer.msg("证件类型不能为空");
+		}
+		else if(memberBirthday===""){
+			layer.msg("会员生日不能为空");
+		}		
+		else if(idcardNumber===""){
+			layer.msg("证件编号不能为空");
+		}
+		else if(memberAddress===""){
+			layer.msg("会员住址不能为空");
+		}
+		else if(stuffId==="请选择会籍ID"){
+			layer.msg("会籍编号不能为空");
+		}
+		else if(trainerId==="请选择教练ID"){
+			layer.msg("教练编号不能为空");
+		}
+		else if(userPassword===""){
+			layer.msg("会员密码不能为空");
+		}
+		else if(enterUserPassword===""){
+			layer.msg("确认密码不能为空");
+		}
+		else if(userPassword!=enterUserPassword){
+			layer.msg("确认密码与密码不相同！");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,url:'/member/memberAdd'
+				,data:$("#form1").serialize()
+				,success:function(){
+					alert("成功");
+					var index = parent.layer.getFrameIndex(window.name); 
+					parent.layer.close(index);
+				}
+				,error:function(){
+					alert("该会员编号已存在！");
+				}
+			});	
+		}										
+	});
+	
+	$(document).on('click','#memberImg',function(){
+		var s=$("#form1").serialize();
+		var a=$("#memberId").val();
+		if(a===""){
+			layer.msg("会员编号不能为空！");
+		}
+		else{
+			//alert(a);
+			layer.open({
+				type:2
+				,title:"拍照"
+				,content:'../hh?memberId='+a
+				,area:['500px','500px']
+				,end:function(){
+					$.ajax({
+						type:'get',
+						url:'/api/profile/get_realpath',
+						success:function(data){
+						  setTimeout(show,0);		//延时显示
+							function show(){
+								var realPath=JSON.stringify(data.realPath);
+								//alert(realPath);//输出照片的地址
+								document.getElementById("image").innerHTML='<img src='+realPath+'style="width:350px;height:200px;margin:auto;">'; 
+								document.getElementById("memberImage").innerHTML='<input type="hidden" name="memberImage" value='+realPath+'>';
+						  }
+					   }
+					});
+				}
+			});
+		}	
+	});
+});
+</script>
+</body>
+</html>

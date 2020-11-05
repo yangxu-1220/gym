@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body bgcolor="#D3D3D3">
+<div class="layui-fluid">
+ <div class="layui-row layui-col-space10">
+    <div class="layui-col-lg3">
+      <div class="layui-card">
+        <div class="layui-card-header" align="center">个人主页</div>
+        <div class="layui-card-body" align="center">
+            <div><input type="hidden" id="memberId" th:value="${user.memberId}"></div>
+            <div style="width: 160px;height: 160px; border-radius:50px;overflow: hidden;border:2px solid #E6E6FA;">
+	      			<img id="user_img" src="../image/head/01f1bd5d19f28ba8012076404361ce.jpg@1280w_1l_2o_100sh.jpg" alt="" width="160px" height="160px">
+	      			<input type="hidden" id="userid" name="userid" th:value="${session.id}">
+	      		</div>     
+	          	<a href="##" id="user_name">Hi! 你好</a>
+	      	<hr> 
+	      	 <div class="layui-form-item">	  
+	         <label class="layui-form-label">会员卡号</label>
+		       <div class="layui-input-inline">
+		        <span id="memberId" th:text="${user.memberId}" style="font-size:14px;float:left;padding-top:7px;"></span>
+	          </div>
+        </div>
+	    <div class="layui-form-item">
+	        <label class="layui-form-label">会员卡类型</label>
+				<div class="layui-input-inline">
+			    	<span id="memberType" th:text="${user.memberType}" style="font-size:14px;float:left;padding-top:7px;"></span>
+				</div>
+		</div>
+		<div class="layui-form-item">
+	        <label class="layui-form-label">联系电话</label>
+			    <div class="layui-input-inline">
+			    	<span id="memberPhone" th:text="${user.memberPhone}" style="font-size:14px;float:left;padding-top:7px;"></span>
+				</div>	
+		</div>
+		<div class="layui-form-item">	
+		    <label class="layui-form-label">开卡时间</label>
+				<div class="layui-input-inline">
+			    	<span id="joinTime" th:text="${user.cardCreateTime}" style="font-size:14px;float:left;padding-top:7px;"></span>
+				</div>
+		</div>
+		 <div class="layui-form-item">
+		      <label class="layui-form-label">到期时间</label>
+				<div class="layui-input-inline">
+			    	<span id="dueTime" th:text="${user.cardDueTime}" style="font-size:14px;float:left;padding-top:7px;"></span>
+				</div>
+	     </div>
+	<hr class="layui-bg-green">
+	   <div style="width: 150px;height: 150px;align: center;" class="layui-form-item">
+	         <span style="align:center;">联系我们</span>
+	         <img src="../image/qrcode.jpg" alt="群:774028235" width="150px" height="150px">
+	   </div> 
+	    <div class="layui-form-item">
+	      <div class="layui-footer" align="center">
+	  	    <div style="padding: 28px;" align="center">
+		    <span class="layui-badge-dot"></span>
+			<span>©belongs JXN && ©belongs MyGYM  </span>
+	        <span class="layui-badge-dot"></span>
+	        </div>
+	       </div>
+	    </div>  
+     </div>
+    </div>
+  </div>
+  <div class="layui-col-lg9">
+      <div style="padding: 20px; background-color: #F2F2F2;">
+  <div class="layui-row layui-col-space30">
+    <div class="layui-col-md5">
+      <div class="layui-card">
+        <div class="layui-card-header" style="font-size:18px;">快捷菜单</div>
+        <div class="layui-card-body">
+               您可以通过以下快捷方式请求服务：
+         <hr class="layui-bg-gray">
+          <div align="center">
+          <table width="400px" height="160px" cellpadding="4" cellspacing="6" >
+		  <tr>
+		    <td><div align="center">
+		    <i class="layui-icon layui-icon-rate"></i>
+            <div class="doc-icon-name"><a href="/myOrder/index">订单查看</a></div>
+            </div>
+		    </td>
+		    <td><div align="center">
+		    <i class="layui-icon layui-icon-website"></i>
+            <div class="doc-icon-name"><a href="/shop/index">网上商城</a></div>
+            </div>
+		    </td>
+		    <td><div align="center">
+		    <i class="layui-icon layui-icon-diamond"></i>
+            <div class="doc-icon-name"><a href="/private_course_management">私教购买</a></div>
+            </div>
+		    </td>
+		  </tr>
+		  <tr>
+		   <td><div align="center">
+		    <i class="layui-icon layui-icon-release"></i>
+            <div class="doc-icon-name"><a href="/orderCourse/index">课程预约</a></div>
+            </div>
+		    </td>
+		    <td><div align="center">
+		    <i class="layui-icon layui-icon-cart-simple"></i>
+            <div class="doc-icon-name"><a href="/cart/selectDetailById">我的购物车</a></div>
+            </div>
+		    </td>
+		    <td><div align="center">
+		    <i class="layui-icon layui-icon-list"></i>
+            <div class="doc-icon-name"><a href="/orderCourse/toOrderList">约课信息</a></div>
+            </div>
+		  </tr>
+         </table>
+         <hr class="layui-bg-gray">
+          </div>
+      </div>
+    </div>
+    </div>
+    <div class="layui-col-md7">
+      <div class="layui-card">
+        <div class="layui-card-header" style="font-size:18px;">人气教练</div>
+        <div class="layui-card-body">
+	        <table width="500" border="0" cellspacing="6" cellpadding="6">
+			  <tr>
+			    <td><img src="../image/jiaolian1.jpg" width="120" height="110"></td>
+			    <td><table width="140" border="0" cellspacing="0" cellpadding="0">
+			      <tr>
+			        <td><span class="STYLE2">No1.雨霏</span></td>
+			      </tr>
+			      <tr>
+			        <td><p class="STYLE6">特长：空中瑜伽，有氧舞蹈，踏板操</p>          </td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE8">人气值：❤❤❤❤❤</span></td>
+			      </tr>
+			    </table></td>
+			    <td><img src="../image/jiaolian2.jpg" width="120" height="110"></td>
+			    <td><table width="140" border="0" cellspacing="0" cellpadding="0">
+			      <tr>
+			        <td><span class="STYLE4">No3.洛原</span></td>
+			      </tr>
+			      <tr>
+			        <td><p class="STYLE7">特长：SPINING，有氧冲击，维密训练营</p>          </td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE8">人气值：❤❤❤❤</span></td>
+			      </tr>
+			    </table></td>
+			  </tr>
+			  <tr>
+			    <td><img src="../image/jiaolian4.jpg" width="120" height="110"></td>
+			    <td><table width="140" border="0" cellspacing="0" cellpadding="0">
+			      <tr>
+			        <td><span class="STYLE3">No2.时静</span></td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE7">特长：cxworx，踏板操，搏击操</span></td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE8">人气值：❤❤❤❤</span></td>
+			      </tr>
+			    </table></td>
+			    <td><img src="../image/jiaolian3.jpg" width="120" height="110"></td>
+			    <td><table width="140" border="0" cellspacing="0" cellpadding="0">
+			      <tr>
+			        <td><span class="STYLE5">No4.石川</span></td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE7">特长：力量训练营，搏击操，杠铃操</span></td>
+			      </tr>
+			      <tr>
+			        <td><span class="STYLE8">人气值：❤❤❤❤</span></td>
+			      </tr>
+			    </table></td>
+			  </tr>
+			</table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header" style="font-size:18px;">小贴士</div>
+        <div class="layui-card-body">
+                  <ul class="layui-timeline">
+			  <li class="layui-timeline-item">
+			    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+			    <div class="layui-timeline-content layui-text">
+			      <h3 class="layui-timeline-title">商城</h3>
+			      <p>
+			                选择商城进入
+			        <br>选择商品种类和数量加入购物车
+			        <br>去购物车结算购买后点击查看订单
+			      </p>
+			    </div>
+			  </li>
+			  <li class="layui-timeline-item">
+			    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+			    <div class="layui-timeline-content layui-text">
+			      <h3 class="layui-timeline-title">私教</h3>
+			      <p>只能购买私教</p>
+			      <ul>
+			        <li>私教预约应与教练电话或者当面预约</li>
+			        <li>变数较多,仅支持购买</li>
+			      </ul>
+			    </div>
+			  </li>
+			  <li class="layui-timeline-item">
+			    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+			    <div class="layui-timeline-content layui-text">
+			      <h3 class="layui-timeline-title">课程预约</h3>
+			      <p>
+			        进入课程预约模块
+			        <br>仅支持预约已上架课程
+			        <br>每节课只能预约一次
+			        <br>如不能按时上课,请在上课前五分钟取消
+			      </p>
+			    </div>
+			  </li>
+			</ul>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+ </div>
+ </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+layui.use('jquery',function(){
+	var $=layui.jquery;
+	$.ajax({					//为头像和用户名赋值
+		url:'/user/get_user',
+		//dataType:'json',
+		type:'get',			
+		success:function(data){
+			document.getElementById("user_img").src=data.image;
+			document.getElementById("user_name").innerHTML=data.name;
+		}
+	});
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd class="layui-this"><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+<div class="layui-body">
+    <form class="layui-form" action="/orderCourse/SearchOrder">
+    <!-- 内容主体区域 -->
+		<!-- 表格渲染 -->
+		<div id="tableBox" lay-filter="tableBox"></div>
+		
+        <hr class="layui-bg-green">
+        
+		<!-- 分页 -->	
+		<div id="pageBox" align="center"></div>
+		<script type="text/html" id="toolbarBox">
+			<div class="layui-input-inline">
+    			<select name="courseName" id="courseName"  class="select">
+    				<option value="">选择课程</option>        		     
+   				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="trainerName" id="trainerName"  class="select">
+    				<option value="">选择教练</option>        		     
+    			</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="attendCourseTime" id="attendCourseTime"  class="select">
+    				<option value="">选择时间</option>        		     
+   		 		</select>
+			</div>
+			<input type="button" id="search" value="查询" class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-search" lay-event="search">
+ </script>
+</form>
+</div>
+  	<div class="layui-footer" align="center">
+  	<div style="padding: 15px;" align="center">
+	    <span class="layui-badge-dot"></span>
+		<span class="layui-badge-dot layui-bg-orange"></span>
+		<span class="layui-badge-dot layui-bg-green"></span>
+		<span class="layui-badge-dot layui-bg-cyan"></span>
+		<span class="layui-badge-dot layui-bg-blue"></span>
+		<span class="layui-badge-dot layui-bg-black"></span>
+		<span class="layui-badge-dot layui-bg-gray"></span>
+		<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+        <span class="layui-badge-dot layui-bg-gray"></span>
+        <span class="layui-badge-dot layui-bg-black"></span>
+        <span class="layui-badge-dot layui-bg-blue"></span>
+        <span class="layui-badge-dot layui-bg-cyan"></span>
+        <span class="layui-badge-dot layui-bg-green"></span>
+        <span class="layui-badge-dot layui-bg-orange"></span>
+        <span class="layui-badge-dot"></span>
+    </div>
+    	<hr class="layui-bg-cyan"> 
+  	</div>
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+	layui.use(['laydate','jquery', 'form','laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+		var laydate = layui.laydate //日期
+		var laypage = layui.laypage //分页
+		var $=layui.jquery;
+		var form=layui.form;
+		var layer = layui.layer //弹层
+		var table = layui.table //表格
+		var carousel = layui.carousel //轮播
+		var upload = layui.upload //上传
+		var element = layui.element //元素操作
+		var slider = layui.slider //滑块
+		
+		$.ajax({					//为头像和用户名赋值
+			url:'/user/get_user',
+			//dataType:'json',
+			type:'get',			
+			success:function(data){
+				document.getElementById("user_img").src=data.image;
+				document.getElementById("user_name").innerHTML=data.name;
+			}
+		});
+								
+		function renderSelect(){
+			$.ajax({
+				type:'get',
+				url:'../searchOrder/getCourseList',
+				success:function(data){
+					$.each(data,function(index,attendOrder){
+						$('#courseName').append(new Option(attendOrder.courseName));
+					});
+					form.render("select");
+				}
+			});
+			$.ajax({
+				type:'get',
+				url:'../searchOrder/getTrainerList',
+				success:function(data){
+					$.each(data,function(index,attendOrder){
+						$('#trainerName').append(new Option(attendOrder.trainerName));
+					});
+					form.render("select");
+				}
+			});
+			$.ajax({
+				type:'get',
+				url:'../searchOrder/getTimeList',
+				success:function(data){
+					$.each(data,function(index,attendOrder){
+						$('#attendCourseTime').append(new Option(attendOrder));
+					});
+					form.render("select");
+				}
+			});
+		}
+		//真分页
+		$(function(){
+			var url='/searchOrder/getSearchOrderBtween';
+			var courseName=null;
+			var trainerName=null;
+			var attendCourseTime=null;
+			//renderSelect();
+			getAttendOrder(0,url,courseName,trainerName,attendCourseTime);
+		})
+		function getAttendOrder(pageStart,url,courseName,trainerName,attendCourseTime){
+				table.render({
+					elem:'#tableBox'
+					,url:url
+					,method:"get"
+					,where:{
+						trainerName:trainerName,
+						courseName:courseName,
+						attendCourseTime:attendCourseTime,
+						pageStart:pageStart,
+						pageSize:10
+					}
+					,parseData:function(res){				
+						console.log(res)
+						return{
+							"code":0
+							,"msg":""
+							,"count":res.row
+							,"data":res.data
+							,"curr":res.pageStart
+							,"limit":res.limit
+						}
+					}
+					,toolbar:'#toolbarBox'
+					,cols:[
+				    		[
+				    	      {field:'courseId', title:'课程编号', width:100, fixed: 'left',hide:true}
+							 ,{field:'courseName', title:'课程名', width:100 }
+							 ,{field:'trainerId', title:'教练编号', width:100,hide:true}	
+							 ,{field:'trainerName', title:'上课教练', width:100}	      
+							 ,{field:'memberId', title:'会员编号', width:100,hide:true}
+							 ,{field:'memberName', title:'会员姓名' ,width:100}
+							 ,{field:'memberSex', title:'性别', width:60}
+							 ,{field:'memberPhone', title:'联系电话', width:140}
+							 ,{field:'memberAddress', title:'居住地址', width:120}
+							 ,{field:'attendCourseTime', title:'上课时间', width:200}
+							 ,{field:'orderTime',title:'预约时间', width:200}
+				   			]
+				    	]
+					,done:function(res,curr,count){
+						console.log(res);
+						laypage.render({
+							elem:'pageBox'
+							,count:res.count
+							,limit:res.limit
+							,layout: ['count','prev','page','next','skip']
+							,curr:res.curr/10+1
+							,jump:function(obj,first){//触发分页后的回调
+								if(!first){//点击跳转触发函数自身，并传递当前页：obj.curr							
+									res.pageStart=(obj.curr-1)*obj.limit;
+									console.log(res.pageStart);
+									getAttendOrder(res.pageStart,url,courseName,trainerName,attendCourseTime);														
+								}//if
+							}//jump function
+						});//laypage.render()
+						renderSelect();
+					}//done
+				});//table.render()
+		}//function getMember()			
+		//表头工具监听
+		table.on('toolbar(tableBox)',function(res){
+			 var checkStatus=table.checkStatus(res.config.id);
+			 var data=checkStatus.data;
+			 var event=res.event;
+			 var courseName=$('#courseName').val();			 
+			 var trainerName=$('#trainerName').val();
+			 var attendCourseTime=$('#attendCourseTime').val();
+			 var url='/searchOrder/getSearchOrderBtween_2'			
+			 switch(res.event){			 	
+			 	case 'search':
+			 		if(courseName===""){
+			 			layer.msg('请选择课程');
+			 		}
+			 		else if(trainerName===""){
+			 			layer.msg("请选择教练");
+			 		}
+			 		else if(attendCourseTime===""){
+			 			layer.msg("请选择时间");
+			 		}
+			 		else{
+			 			getAttendOrder(0,url,courseName,trainerName,attendCourseTime);
+			 		}
+			 		break;			 	 
+			 }
+		 });
+		
+	});//layui.use
+</script>
+</body>
+</html>

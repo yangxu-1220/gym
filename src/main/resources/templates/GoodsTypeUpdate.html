@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增商品</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="" >
+	<form class="layui-form" id="form1"  onsubmit="return false" action="##">
+		<!-- 第一行 -->
+		
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">商品名称</label>
+			<div class="layui-input-inline">
+				<input type="hidden" name="goodsTypeId" id="goodsTypeId" th:value="${goodsType_B.goodsTypeId}">
+		    	<input type="text" name="goodsTypeName" id="goodsTypeName" th:value="${goodsType_B.goodsTypeName}" placeholder="请输入商品姓名" autocomplete="off" class="layui-input">
+			</div>
+		</div>			
+		<div class="layui-form-item" style="width:160px;height:40px;margin:auto;">				  		    		   			    
+			 <input type="button" id="update" class="layui-btn" name="update" value="确定">			    			    
+			 <input type="reset" id="addreset" class="layui-btn layui-btn-primary" name="addreset" value="重置"/>			    		    
+		</div>			  		
+	</form>
+</div>  
+
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	
+	$(document).on('click','#update',function(){
+		var s=$('#goodsTypeName').val();
+		if(s==""){
+			layer.msg("类型不能为空！");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,dataType:'json'
+				,url:'../goodsType/update'
+				,data:$('#form1').serialize()
+				,success:function(result){												
+						alert("修改成功");						
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+			var index = parent.layer.getFrameIndex(window.name); 
+			parent.layer.close(index);
+		}	
+	});		
+});
+</script>
+
+</body>
+</html>

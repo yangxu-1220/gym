@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.div_1{
+		padding-top:7px;
+		font-size:14px;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<script src="../layui/layui.js"></script>
+   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+     <legend>会员升级</legend>
+   </fieldset> 
+ <form action="##" onsubmit="return false" id="form" class="layui-form">
+  <div class="layui-collapse">
+   <div class="layui-colla-item">
+     <h2 class="layui-colla-title">请核对以下会员信息</h2>
+      <div class="layui-colla-content layui-show">
+        <!-- 第一行 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">会员编号：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.memberId}"></span>
+					<input type="hidden" name="memberId" th:value="${memU.memberId}" class="layui-input">
+				</div>
+			</div>
+			<label class="layui-form-label">持卡卡号：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.cardId}"></span>
+					<input type="hidden" name="cardId" th:value="${memU.cardId}" class="layui-input">
+				</div>
+			</div>			  
+		    <label class="layui-form-label">会员姓名：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.memberName}"></span>
+					<input type="hidden" th:value="${memU.memberName}" class="layui-input">
+				</div>
+			</div>		
+  		</div>
+  		<!-- 第二行 -->
+  		<div class="layui-form-item">
+		    <label class="layui-form-label">性别：</label>
+		    <div class="layui-input-inline">
+		    	<div class="div_1">
+					<span th:text="${memU.memberSex}"></span>
+					<input type="hidden" name="memberSex" th:value="${memU.memberSex}" class="layui-input">
+				</div>
+		    </div>
+	      	<label class="layui-form-label">加入时间：</label>
+	      	<div class="layui-input-inline">
+	      		<div class="div_1">
+					<span th:text="${memU.joinTime}"></span>
+					<input type="hidden" name="joinTime" th:value="${memU.joinTime}" class="layui-input">
+				</div>
+	      	</div>
+	      	<label class="layui-form-label">会员类型：</label>
+    		<div class="layui-input-inline">
+    			<div class="div_1">
+					<span th:text="${memU.memberType}"></span>
+					<input type="hidden" th:value="${memU.memberType}" class="layui-input">
+				</div>
+    	   </div>
+	    </div>
+	    <!-- 第三行 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">联系电话：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.memberPhone}"></span>
+					<input type="hidden" th:value="${memU.memberPhone}" class="layui-input">
+				</div>
+			</div>	
+	      	<label class="layui-form-label">出生日期：</label>
+	      	 <div class="layui-input-inline">
+	      	 	<div class="div_1">
+					<span th:text="${memU.memberBirthday}"></span>
+					<input type="hidden" th:value="${memU.memberBirthday}" class="layui-input">
+				</div>
+	      	 </div>
+	    	<label class="layui-form-label">证件类型：</label>
+    		<div class="layui-input-inline">
+    			<div class="div_1">
+					<span th:text="${memU.idcardType}"></span>
+					<input type="hidden" th:value="${memU.idcardType}" class="layui-input">
+				</div>
+	    	</div>
+	    </div>
+	    
+	    <!-- 第四行 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">证件编号：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.idcardNumber}"></span>
+					<input type="hidden" th:value="${memU.idcardNumber}" class="layui-input">
+				</div>
+			</div>	
+	    	<label class="layui-form-label">联系地址：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+					<span th:text="${memU.memberAddress}"></span>
+					<input type="hidden" th:value="${memU.memberAddress}" class="layui-input">
+				</div>
+			</div>
+	    	<label class="layui-form-label">会籍ID：</label>
+    		<div class="layui-input-inline">
+    			<div class="div_1">
+					<span th:text="${memU.memberStuffId}"></span>
+					<input type="hidden" th:value="${memU.memberStuffId}" class="layui-input">
+				</div>
+	       </div>
+	    </div>
+	    <!-- 第五行 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">教练ID：</label>
+		    <div class="layui-input-inline">
+		    	<div class="div_1">
+					<span th:text="${memU.memberTrainerId}"></span>
+					<input type="hidden" th:value="${memU.memberTrainerId}" class="layui-input">
+				</div>
+      		</div>
+	    	<label class="layui-form-label">健身需求：</label>
+			    <div class="layui-input-inline">
+			    <div class="div_1">
+					<span th:text="${memU.memberNeeds}"></span>
+					<input type="hidden" th:value="${memU.memberNeeds}" class="layui-input">
+				</div>
+		        </div>
+		        <label class="layui-form-label">支付方式：</label>
+    		<div class="layui-input-inline">
+    			<div class="div_1">
+					<span th:text="${memU.payment}"></span>
+					<input type="hidden" th:value="${memU.payment}" class="layui-input">
+				</div>
+      		</div>	 			    	
+	    </div>
+    </div>
+   </div>
+ </div>    
+ <div class="layui-collapse">
+  <div class="layui-colla-item">
+  <blockquote class="layui-elem-quote layui-colla-title">请核对以上信息后升级</blockquote>
+     <div class="layui-colla-content layui-show"> 
+       <!-- 第一行 -->
+		<div class="layui-form-item">	  
+		   
+			<div class="layui-input-inline">
+			     <input type="hidden" id="memberId" name="memberId" th:value="${memU.memberId}" class="layui-input" readonly="readonly">
+			</div>
+			
+			<div class="layui-input-inline">
+		    	<input type="hidden" name="memberName" id="memberName" th:value="${memU.memberName}" class="layui-input" readonly="readonly">
+			</div>		      
+			
+    		<div class="layui-input-inline">
+				<input type="hidden" id="memberSex" name="memberSex" th:value="${memU.memberSex}" class="layui-input" readonly="readonly">
+    		</div>
+    		
+		</div>
+		<!-- 第二行 -->
+		<div class="layui-form-item">			  
+		   <label class="layui-form-label">支付方式</label>
+		   <div class="layui-input-inline">
+     		<select name="payment" id="payment" class="select">
+        		<option value="">请选择</option> 
+        		<option value="支付宝">支付宝</option>
+        		<option value="微信">微信</option>
+        		<option value="现金">现金</option>
+        		<option value="银行卡">银行卡</option>          
+      		</select>
+      		</div>
+	      	<label class="layui-form-label">升级类型</label>
+	      	<div class="layui-inline">
+		      	<select name="memberType" id="memberType" lay-verify="required" class="select">
+        			<option value="">升级类型为</option>           
+      			</select>
+	    	</div>
+  		</div>
+  		<!-- 第三行 -->
+  		<div class="layui-form-item">	
+	    <label class="layui-form-label">备注</label>
+			<div class="layui-input-inline">
+				<input id="memberNote" name="memberNote" th:value="${memU.memberNote}" class="layui-input" style="width:500px;height:100px;align:center;" >
+			</div>
+		</div>
+  		<hr class="layui-bg-gray">
+  		<!-- 第四行说明 -->
+  		 <blockquote class="layui-elem-quote layui-quote-nm layui-icon-tips">一位会员只能升级一次，只能升级为更高的卡项，活动卡类型不允许升级
+  		 </blockquote> 
+  		 
+  		<hr class="layui-bg-green">
+	    <!-- 第五行按钮 -->
+		<div class="layui-form-item">
+		  <div class="layui-input-block" style="height:60px;width:200px;margin:auto;">
+		     <input type="submit" id="addsubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" value="重置" class="layui-btn layui-btn-primary"/>
+	     </div>
+	    </div>
+	 </div>
+	</div>
+    </div>	
+ </form>					    	
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['element','form','laydate'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var laydate=layui.laydate;  //定义时间选择器对象
+	
+	laydate.render({			//渲染时间选择器
+		elem:'#memberBirthday'		//elem：是时间选择器的ID
+	});
+	
+	form.render();				//渲染整个页面的form元素
+});
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	layer.ready(function(){
+		var id=$('#memberId').val();
+		$.ajax({
+			type:'get',
+			url:'../member/getMemberTypeToUpgrade?id='+id,
+			success:function(data){
+				$.each(data,function(index,card){
+					$('#memberType').append(new Option(card));
+				});
+				form.render("select");
+			}
+		});
+	$(document).on('click','#addsubmit',function(){
+		var payment=$("#payment option:selected").text();
+		var memberType=$("#memberType option:selected").text();
+		if(payment==="请选择"){
+			layer.msg("支付方式不能为空");
+		}
+		else if(memberType==="升级类型为"){
+			layer.msg("升级类型不能为空");	
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,url:'/member/Upgrade'
+				,data:$("#form").serialize()
+				,success:function(){
+					alert("升级成功");
+					var index = parent.layer.getFrameIndex(window.name); 
+					parent.layer.close(index);
+				}
+				,error:function(){
+					alert("异常");
+				}
+			});
+		}
+	});
+});
+});
+</script>
+</body>
+</html>

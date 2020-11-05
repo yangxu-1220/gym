@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd class="layui-this"><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+ 
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+	 <!-- 表单 -->
+		<div id="dataTable"></div>
+		
+		<!-- 表格渲染 -->
+		<table class="layui-hide" id="member_tableBox" lay-filter="member_tableBox"></table>
+        <hr class="layui-bg-green">
+        
+		<!-- 分页 -->	
+		<div id="pageBox" class="a" align="center"></div>
+ 
+<script type="text/html" id="member_toolBarBox">
+    <button class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-add-1" lay-event="add" ></button>
+    <button class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-edit" lay-event="update"></button>
+    <button class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-delete" lay-event="delete" ></button> 
+ 	<input type="text" style="width:130px;height:29px;" id="memberA" name="memberA" placeholder="请输入会员信息">
+	<button class="layui-btn layui-btn-sm layui-btn-primary layui-icon layui-icon-search" lay-event="search"></button>
+	<input type="button" class="layui-btn layui-btn-sm layui-btn-danger" value="禁用会员" id="overTime" lay-event="overTime">
+	<input type="button" class="layui-btn layui-btn-sm layui-btn-normal" value="可用会员" id="inTime" lay-event="inTime">
+</script>
+ 
+<script type="text/html" id="member_toolBox">
+  <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="trans">转卡</a>
+  <a class="layui-btn layui-btn-xs" lay-event="upgrade">升级</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="issue">补卡</a>
+</script>
+    
+</div>  
+  	<div class="layui-footer" align="center">
+  	<div style="padding: 15px;" align="center">
+	    <span class="layui-badge-dot"></span>
+		<span class="layui-badge-dot layui-bg-orange"></span>
+		<span class="layui-badge-dot layui-bg-green"></span>
+		<span class="layui-badge-dot layui-bg-cyan"></span>
+		<span class="layui-badge-dot layui-bg-blue"></span>
+		<span class="layui-badge-dot layui-bg-black"></span>
+		<span class="layui-badge-dot layui-bg-gray"></span>
+		<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+        <span class="layui-badge-dot layui-bg-gray"></span>
+        <span class="layui-badge-dot layui-bg-black"></span>
+        <span class="layui-badge-dot layui-bg-blue"></span>
+        <span class="layui-badge-dot layui-bg-cyan"></span>
+        <span class="layui-badge-dot layui-bg-green"></span>
+        <span class="layui-badge-dot layui-bg-orange"></span>
+        <span class="layui-badge-dot"></span>
+    </div>
+    	<hr class="layui-bg-cyan"> 
+  	</div>
+	</div>
+
+
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+	layui.use(['laydate','jquery', 'form','laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+		var laydate = layui.laydate //日期
+		var laypage = layui.laypage //分页
+		var $=layui.jquery;
+		var form=layui.form;
+		var layer = layui.layer //弹层
+		var table = layui.table //表格
+		var carousel = layui.carousel //轮播
+		var upload = layui.upload //上传
+		var element = layui.element //元素操作
+		var slider = layui.slider //滑块
+		
+		$.ajax({					//为头像和用户名赋值
+			url:'/user/get_user',
+			//dataType:'json',
+			type:'get',			
+			success:function(data){
+				document.getElementById("user_img").src=data.image;
+				document.getElementById("user_name").innerHTML=data.name;
+			}
+		});
+		
+						
+		//真分页
+		$(function(){
+			var url='/member/getMemberBtween';
+			getMember(0,url);
+		})
+		function getMember(pageStart,url){
+				table.render({
+					elem:'#member_tableBox'
+					,url:url
+					,method:"get"
+					,where:{
+						pageStart:pageStart,
+						pageSize:10
+					}
+					,parseData:function(res){				
+						console.log(res)
+						return{
+							"code":0
+							,"msg":""
+							,"count":res.rowSize
+							,"data":res.data
+							,"curr":res.pageStart
+							,"limit":res.limit
+						}
+					}
+					,toolbar: '#member_toolBarBox' //开启头部工具栏，并为其绑定左侧模板
+					,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+						title: '提示'
+					    ,layEvent: 'LAYTABLE_TIPS'
+					    ,icon: 'layui-icon-tips'
+					 }]
+					//,cellMinWidth:100
+					,cols:[
+				    		[
+						      {type: 'checkbox', fixed: 'left'}
+						      ,{field:'memberId', title:'会员编号', width:100, fixed: 'left', unresize: true, sort: true}
+						      ,{field:'cardId', title:'会员卡编号', width:100}	
+						      ,{field:'memberName', title:'会员姓名', width:100}	      
+						      ,{field:'memberType', title:'类型', width:100 }
+						      ,{field:'memberSex', title:'性别', width:80, sort: true }
+						      ,{field:'memberBirthday', title:'生日' ,width:120,sort:true}
+						      ,{field:'memberPhone', title:'联系电话', width:120}
+						      ,{field:'memberAddress', title:'住址', width:80}
+						      ,{field:'memberStuff', title:'会籍顾问', width:100, sort: true }
+						      ,{field:'memberTrainer', title:'健身教练', width:100, sort: true }
+						      ,{field:'memberNeeds', title:'健身需求', width:100, sort: true }
+						      ,{fixed: 'right', title:'操作', width: 170, align:'center', toolbar: '#member_toolBox'}
+				   			]
+				    	]
+					,done:function(res,curr,count){
+						console.log(res);
+						laypage.render({
+							elem:'pageBox'
+							,count:res.count
+							,limit:res.limit
+							,layout: ['count','prev','page','next','skip']
+							,curr:res.curr/10+1
+							,jump:function(obj,first){//触发分页后的回调
+								if(!first){//点击跳转触发函数自身，并传递当前页：obj.curr							
+									res.pageStart=(obj.curr-1)*obj.limit;
+									console.log(res.pageStart);
+									getMember(res.pageStart,url);														
+								}//if
+							}//jump function
+						});//laypage.render()
+					}//done
+				});//table.render()
+		}//function getMember()
+		
+		//表头工具监听
+		table.on('toolbar(member_tableBox)',function(res){
+			 var checkStatus=table.checkStatus(res.config.id);
+			 var data=checkStatus.data;
+			 var event=res.event;
+			 var memberA=$('#memberA').val();
+			 switch(res.event){
+			 	case 'add':
+			 		addMember();
+			 		break;
+			 	case 'update': 
+			 		if(data.length==0){
+			 			layer.msg("请选择一行");
+			 		}
+			 		else if(data.length>1){
+			 			layer.msg('只能同时编辑一个');
+			 		}
+			 		else{
+			 			//layer.alert('编辑[id]:'+checkStatus.data[0].MemberId);
+			 			updateMember(checkStatus.data[0].memberId)
+			 		}
+			 		break;
+			 	case 'delete':
+			 		if(data.length===0){
+			 			layer.msg('请选择一行');
+			 		}
+			 		else{
+			 			layer.confirm('真的删除行么', function(index){
+			 				deleteMemberById(checkStatus.data[0].memberId);
+			 		        layer.close(index);
+			 		        //向服务端发送删除指令
+			 		      });
+			 		}
+			 		break;
+			 	case 'search':
+			 		var member_B=$("#memberA").val();			 		
+			 		if(member_B==""){
+			 			layer.msg("请输入会员姓名或会员卡ID！");
+			 		}
+			 		else{
+			 			getMemberInfo(memberA);
+			 		}
+			 		break; 
+			 	case 'overTime':
+			 		getOverTimeMember();
+			 		break;
+			 	case 'inTime':
+			 		getInTimeMember();
+			 		break;
+			 }
+		 });
+				
+		function getOverTimeMember(){
+			var url='../member/getOverTime';
+			getMember(0,url);
+		}
+		
+		function getInTimeMember(){
+			var url='../member/getInTime';
+			getMember(0,url);
+		}
+		
+		function addMember(){
+			var url='/member/getMemberBtween';
+			layer.open({
+				type:2,
+				title:"新增会员",
+				content:'../member/turnToMemberAdd',
+				area:['65%','100%'],	
+				end:function(){										
+					getMember(0,url); 					
+				}			
+			});
+			$("#memberType").empty();
+			$("#staffId").empty();
+			$("#trainerId").empty();
+		}
+		
+		function updateMember(id){
+			var url='/member/getMemberBtween';
+			layer.open({
+				type:2
+				,title:"修改会员"
+				,content:'../member/selectMemberById?id='+id
+				,area:['65%','70%']
+				,end:function(){
+					getMember(0,url);
+				}
+			});
+			
+		} 
+		
+		function deleteMemberById(id){
+			$.ajax({
+				type:'post'
+				,url:'../member/deleteMemberById?id='+id
+				,success:function(data){
+					var url='/member/getMemberBtween';
+					getMember(0,url);
+				}
+			});
+		}
+		function getMemberInfo(memberA){
+			$.ajax({
+				type:'get'
+				,url:'../member/checkMemberById?id='+memberA
+				,success:function(data){
+					if(data==="true"){
+						layer.open({
+							type:2,
+							content:'../member/getMemberInfo?memberA='+memberA,
+							area:['70%','75%'],	
+							end:function(){										
+								var url='/member/getMemberBtween';
+								getMember(0,url);				
+							}			
+						});
+					}
+					else{
+						layer.msg("会员姓名或会员卡号不存在");
+					}
+				}
+				,error:function(){
+					alert("异常");
+				}
+			})
+		}
+		//表格行工具栏渲染
+		table.on('tool(member_tableBox)',function(obj){
+			var data=obj.data;
+			var layEvent=obj.event;
+			//如果行工具栏的Event是trans
+			if(layEvent==='trans'){
+				//调用转卡的方法
+				memberTrans(data.memberId);
+			}
+			//如果行工具栏的Event是upgrade
+			else if(layEvent==='upgrade'){
+				//调用会员升级的方法
+				memberUpgrade(data.memberId);
+			}
+			else if(layEvent==='issue'){
+				//调用会员补卡的方法
+				memberIssue(data.memberId);
+			}
+		});
+		function memberTrans(id){//定义会员转卡的方法
+			layer.open({
+				type:2
+				,title:'转卡'
+				,content:'../member/selectMemberToTrans?id='+id
+				,area:['85%','85%']
+				,end:function(){	
+					var url='/member/getMemberBtween';
+					getMember(0,url);
+				}
+			});
+		}
+		
+		function memberUpgrade(id){//定义会员升级的方法
+			layer.open({
+				type:2
+				,title:'升级'
+				,content:'../member/selectMemberToUpgrade?id='+id
+				,area:['75%','75%']
+				,end:function(){	
+					var url='/member/getMemberBtween';
+					getMember(0,url);
+				}
+			});
+		}
+		function memberIssue(id){//定义会员补卡的方法
+			layer.open({
+				type:2
+				,title:'补卡'
+				,content:'../member/selectMemberToIssue?id='+id  //填入MemberIssue.html在Controller里面的路径
+				,area:['85%','87%']
+				,end:function(){	//弹出层关闭时的回调函数
+					var url='/member/getMemberBtween';
+					getMember(0,url);
+				}
+			});
+		}
+	});
+</script>
+</body>
+</html>

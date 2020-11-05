@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品出库</title>
+<style>
+	.span{
+	 	display: inline-block;
+		padding-top:8px;
+		font-size:17px;
+		align:center;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="stockOutlayer" style="" > 
+	<form class="layui-form" action="##" onsubmit="return false" id="form1">
+		<!-- 第一行 -->
+		<div class="layui-form-item">	
+			<label class="layui-form-label">商品名称：</label> 					    
+			<div class="layui-input-inline">
+		    	<span th:text="${stockOut.goodsName}" class="span"></span>
+		    	<input type="hidden" id="goodsId" name="goodsId" th:value="${stockOut.goodsId}">
+			</div>	
+		</div>
+		<div class="layui-form-item">		
+			<label class="layui-form-label">当前库存：</label>  		    
+			<div class="layui-input-inline">
+		    	<span th:text="${stockOut.goodsStockNumber}" class="span"></span>
+		    	<input type="hidden" id="goodsStockNumber" name="goodsStockNumber" th:value="${stockOut.goodsStockNumber}">
+			</div>
+		</div>		
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">出库数量</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="number" id="number" placeholder="请输入入库数量" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+    		<label class="layui-form-label">入库类型</label>
+    		<div class="layui-input-inline">
+     		<select name="operateStockState" id="operateStockState" class="select">
+        		<option value="">请选择出库类型</option>
+        		<option value="销售出库">销售出库</option> 
+        		<option value="活动出库">活动出库</option> 
+        		<option value="过期出库">过期出库</option>           
+      		</select>
+    		</div>
+    	</div> 	   			
+		<div class="layui-form-item" style="width:160px;height:40px;margin:auto;">				  		    		   			    
+			 <input type="button" id="stockOut" class="layui-btn" name="addsubmit" value="确定"/>			    			    
+			 <input type="reset" id="addreset" class="layui-btn layui-btn-primary" name="addreset" value="重置"/>			    		    
+		</div>			  		
+	</form>
+</div>  
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['element','jquery','form'],function(){
+	var element=layui.element;
+	var $=layui.jquery;
+	var form=layui.form;
+	
+	//合法输入鉴定
+	$(".layui-input").keyup(function(){
+		var s=$(this).parent().parent().prev().children().children('span.span');		
+		var t=$(this).parent().children('input.layui-input');		
+		if(t.val()==""||undefined||null||isNaN(t.val())){
+			t.val(1);
+			layer.msg("请输入数字哟(*^_^*)");
+		}
+		if(t.val()==0){
+			t.val(1);
+			layer.msg("0有啥意思");
+		}
+		if(parseInt(t.val())>parseInt(s.text())){
+			layer.msg("出库数量不能超过库存");
+			t.val(parseInt(s.text()));
+		}
+	});
+	
+	$(document).on('click','#stockOut',function(){
+		var number=$('#number').val();
+		var operateStockState=$('#operateStockState').val();
+		var goodsStockNumber=$('#goodsStockNumber').val();
+		if(number===""){
+			layer.msg("数量不能为空");
+		}
+		else if(operateStockState===""){
+			layer.msg("请选择操作类型");
+		}
+		else if(goodsStockNumber==0){
+			layer.msg("库存为0，无法出库");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,url:'../stock/stockOut'
+				,data:$('#form1').serialize()
+				,success:function(){
+					alert("成功");
+					var index = parent.layer.getFrameIndex(window.name); 
+					parent.layer.close(index);
+				}
+				,error:function(){
+					alert("异常");
+				}
+			});
+		}		
+	});	
+});//layui.use
+</script>
+</body>
+</html>

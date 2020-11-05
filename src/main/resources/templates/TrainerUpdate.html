@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加员工</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+	<div id="addlayer" style="">
+	<form method="post" class="layui-form" action="##" onsubmit="return false" id="form" enctype="multipart/form-data">
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">教练编号</label>
+			<div class="layui-input-inline">
+				<input type="text" name="trainerId" id="trainerId" th:value="${trainer.trainerId}"  lay-verify="required" placeholder="请输入教练姓名" autocomplete="off" class="layui-input">
+			</div>  
+		    	<label class="layui-form-label">教练姓名</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="trainerName" id="trainerName" th:value="${trainer.trainerName}"  lay-verify="required" placeholder="请输入教练姓名" autocomplete="off" class="layui-input">
+			</div>	
+			</div>
+			
+			<div class="layui-form-item">	
+		    	<label class="layui-form-label">教练密码</label>
+			<div class="layui-input-inline">
+		    	<input type="password" name="userPassword" id="userPassword" th:value="${trainer.userPassword}" autocomplete="off" class="layui-input">
+			</div>
+				<label class="layui-form-label">教练性别</label>
+			<div class="layui-input-inline">
+		    	<select name="trainerSex" id="trainerSex"  lay-verify="required" class="select"> 
+	        		<option selected="selected">男</option>
+	        		<option>女</option>    		          
+	      		</select>
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">教练生日</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="trainerBirthday" id="trainerBirthday" th:value="${trainer.trainerBirthday}"  lay-verify="required" class="layui-input test-item" placeholder="yyyy-MM-dd">
+			</div>
+				<label class="layui-form-label">证件类型</label>
+			<div class="layui-input-inline">
+		    	<select name="idcardType" id="idcardType" lay-verify="required" class="select"> 
+	        		<option selected="selected">中华人民共和国居民身份证</option>
+	        		<option>港澳台居民身份证</option>    
+	        		<option>机动车驾驶证</option>		          
+	      		</select>
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">证件编号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="idcardNumber" id="idcardNumber" th:value="${trainer.idcardNumber}" lay-verify="required" placeholder="请输入证件编号" autocomplete="off" class="layui-input">
+			</div>
+				<label class="layui-form-label">加入时间</label>
+		    <div class="layui-input-inline">
+		        <input type="text" name="joinTime" id="joinTime" th:value="${trainer.joinTime}" lay-verify="required" class="layui-input test-item" placeholder="yyyy-MM-dd">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">教练电话</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="trainerPhone" id="trainerPhone" th:value="${trainer.trainerPhone}" lay-verify="required" placeholder="请输入教练电话" autocomplete="off" class="layui-input">
+			</div>
+		      	<label class="layui-form-label">教练住址</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="trainerAddress" id="trainerAddress" th:value="${trainer.trainerAddress}" placeholder="请输入教练住址" autocomplete="off" class="layui-input">
+		    </div>
+		    </div>
+		    
+		    <div class="layui-form-item">
+				<label class="layui-form-label">教练照片</label>
+			<div class="layui-input-inline">
+				<input type="hidden" id="trainerImage" th:value="${trainer.trainerImage}">
+		    	<div id="img"></div>
+		    </div>
+		    	<label class="layui-form-label">修改照片</label>
+			<div class="layui-input-inline">
+		    	<input type="file" name="image" id="image" value="上传照片"  autocomplete="off" class="layui-input">
+		    </div>
+			</div>
+			
+			<div class="layui-form-item">
+		    	<label class="layui-form-label">备注</label>
+			<div class="layui-input-inline" style="width:500px;">
+		    	<input type="text" name="trainerNote" id="trainerNote" th:value="${trainer.trainerNote}" placeholder="请输入备注 " autocomplete="off" class="layui-input">
+			</div>
+		    </div>
+			
+			<div class="layui-form-item">
+		    </div>
+		    <div class="layui-form-item">
+		    </div>
+		    <div class="layui-form-item">
+		    </div>
+			
+			<div class="layui-form-item layui-layout-center" style="width:200px;height:60px;margin:auto">
+		   		<input type="button" id="button" class="layui-btn layui-btn-normal" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		   		<input type="reset" class="layui-btn layui-btn-warm" value="重置">
+			</div>
+  	</form>
+  	</div>
+	<script src="../layui/layui.js"></script>
+	<script type="text/javascript">
+	
+		var image=document.getElementById("trainerImage").value;		//获得id为content这个标签
+		document.getElementById("img").innerHTML=image;	
+	
+		layui.use(['form','jquery','layer','element','laydate'],function(){
+			var form=layui.form;
+			var layer=layui.layer;
+			var element=layui.element;
+			var $=layui.jquery;	
+			var laydate=layui.laydate;
+			var index=parent.layer.getFrameIndex(window.name);
+			layer.ready(function(){
+				lay('.test-item').each(function(){
+				    laydate.render({
+				       elem: this
+				      ,trigger: 'click'
+				    });
+				});
+			});
+			$(document).on('click','#button',function(){
+				var trainerId=document.getElementById("trainerId").value;
+				var trainerName=document.getElementById("trainerName").value;
+				var userPassword=document.getElementById("userPassword").value;
+				var trainerSex=document.getElementById("trainerSex").value;
+				var trainerBirthday=document.getElementById("trainerBirthday").value;
+				var idcardType=document.getElementById("idcardType").value;
+				var idcardNumber=document.getElementById("idcardNumber").value;
+				var joinTime=document.getElementById("joinTime").value;
+				var trainerPhone=document.getElementById("trainerPhone").value;
+				var trainerAddress=document.getElementById("trainerAddress").value;
+				
+				var formData=new FormData($('#form')[0]);
+				
+				//正则表达式
+				let phoneReg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+				var idcardReg=/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+				
+				if(trainerId==""){
+					layer.alert('教练ID不能为空！！！');
+					return false;
+				}
+				if(trainerName==""){
+					layer.alert('教练姓名不能为空！！！');
+					return false;
+				}
+				if(userPassword.length<6){
+					layer.alert('教练密码必须大于6位！！！');
+					return false;
+				}
+				if(trainerSex==""){
+					layer.alert('教练性别不能为空！！！');
+					return false;
+				}
+				if(trainerBirthday==""){
+					layer.alert('教练生日不能为空！！！');
+					return false;
+				}
+				if(idcardType==""){
+					layer.alert('证件类型不能为空！！！');
+					return false;
+				}
+				if(!idcardReg.test(idcardNumber)){
+					layer.alert('证件号码为空或格式错误！！！');
+					return false;
+				}
+				if(joinTime==""){
+					layer.alert('加入时间不能为空！！！');
+					return false;
+				}
+				if(!phoneReg.test(trainerPhone)){
+					layer.alert('电话为空或格式错误！！！');
+					return false;
+				}
+				if(trainerAddress==""){
+					layer.alert('教练地址不能为空！！！');
+					return false;
+				}
+				
+				$.ajax({
+					type:'post'
+					,url:'/trainer_management/update_trainer_do'
+					,data:formData
+					,async:false
+					,cache:false
+					,contentType:false
+					,processData:false
+					,success:function(){
+						layer.alert("修改成功！！！",function(){parent.location.reload();});
+					}
+					,error:function(){
+						layer.alert("修改失败！！！");
+					}
+				});
+			});			
+		});
+		
+	</script>
+</body>
+</html>

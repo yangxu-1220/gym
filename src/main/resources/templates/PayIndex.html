@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>付款页面</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+	<div class="layui-form-item">
+		<h1 align="center">付款页面</h1>
+	</div>
+	<div id="addlayer" style="">
+		<form action="/pay_do" class="layui-form" method="post">
+		
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">商户订单号</label>
+			<div class="layui-input-inline">
+	    		<input type="text" name="no" id="no"  readonly="readonly" class="layui-input">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">订单名称</label>
+			<div class="layui-input-inline">
+	    		<input type="text" name="name" id="name" readonly="readonly" th:value="${pay.name}"  class="layui-input">
+			</div>
+			</div>
+		
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">付款金额</label>
+			<div class="layui-input-inline">
+	    		<input type="text" name="amount" id="amount" readonly="readonly" th:value="${pay.amount}" class="layui-input">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">商品简介</label>
+			<div class="layui-input-inline">
+	    		<input type="text" name="context" id="context" readonly="readonly" th:value="${pay.context}" class="layui-input">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+	   				<input type="submit" id="button" class="layui-btn layui-btn-warm" value="付款">
+	   			</div>
+			</div>
+			
+		</form>
+	</div>
+	<script src="../layui/layui.js"></script>
+	<script type="text/javascript">
+		function GetDateNow() {			//生成商户订单号
+			var vNow = new Date();
+			var sNow = "";
+			sNow += String(vNow.getFullYear());
+			sNow += String(vNow.getMonth() + 1);
+			sNow += String(vNow.getDate());
+			sNow += String(vNow.getHours());
+			sNow += String(vNow.getMinutes());
+			sNow += String(vNow.getSeconds());
+			sNow += String(vNow.getMilliseconds());
+			document.getElementById("no").value =  sNow;
+		}
+		GetDateNow();
+	</script>
+</body>
+</html>

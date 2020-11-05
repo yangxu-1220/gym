@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>订单详情</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="detaillayer">
+	<table class="layui-table">
+		<tr th:each="detail:${myDetail}" align="center">
+			<td th:text="${detail.goodsName}"></td>
+			<td th:text="${detail.goodsNumber}"></td>
+			<td>
+				<span id="totalPrice" th:text="${detail.totalPrice}" class="total"></span>
+			</td>		
+		</tr>
+	</table>
+</div>  
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增商品</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+	<form class="layui-form" id="form1"  onsubmit="return false" action="##">
+		<!-- 第一行 -->
+		
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">类型名称</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsTypeName" id="goodsTypeName"   placeholder="请输入商品类型" autocomplete="off" class="layui-input">
+			</div>
+		</div>			
+		<div style="width:160px;height:40px;margin:auto;"   class="layui-form-item layui-layout-center">				  		    		   			    
+			 <input type="button" id="add" class="layui-btn" name="add" value="确定">			    			    
+			 <input type="reset" id="addreset" class="layui-btn layui-btn-primary" name="addreset" value="重置">			 	    		    
+		</div>			  		
+	</form>
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	$(document).on('click','#add',function(){
+		var s=$('#goodsTypeName').val();
+		if(s==""){
+			layer.msg("类型不能为空！");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,dataType:'json'
+				,url:'../goodsType/doInsert'
+				,data:$('#form1').serialize()
+				,success:function(result){												
+						alert("添加成功");						
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+			var index = parent.layer.getFrameIndex(window.name); 
+			parent.layer.close(index);
+		}	
+	});			
+});
+</script>
+
+</body>
+</html>

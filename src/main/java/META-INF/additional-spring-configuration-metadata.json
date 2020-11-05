@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "jxnimage.uploadPath",
+    "type": "java.lang.String",
+    "description": "A description for 'jxnimage.uploadPath'"
+  },
+  {
+    "name": "jxn.uploadPath",
+    "type": "java.lang.String",
+    "description": "A description for 'jxn.uploadPath'"
+  },
+  {
+    "name": "jxnimage.DeletePath",
+    "type": "java.lang.String",
+    "description": "A description for 'jxnimage.DeletePath'"
+  },
+  {
+    "name": "jxnimage.Path",
+    "type": "java.lang.String",
+    "description": "A description for 'jxnimage.Path'"
+  }
+]}

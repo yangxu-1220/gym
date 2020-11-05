@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加员工</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+	<div id="addlayer" style="">
+	<form method="post" class="layui-form" action="##" onsubmit="return false" id="form" enctype="multipart/form-data">
+			<div class="layui-form-item">	  
+		    	<label class="layui-form-label">员工编号</label>
+			<div class="layui-input-inline">
+	    		<input type="text" id="stuffId" readonly="readonly" name="stuffId" th:value="${stuff.stuffId}" autocomplete="off" class="layui-input">
+			</div>  
+		    	<label class="layui-form-label">员工姓名</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="stuffName" id="stuffName" th:value="${stuff.stuffName}" autocomplete="off" class="layui-input">
+			</div>	
+			</div>
+			
+			<div class="layui-form-item">	
+    			<label class="layui-form-label">员工职位</label>
+    		<div class="layui-input-inline">
+	     		<select name="stuffType" id="stuffType" class="select">  
+	     		<option>前台</option>   
+	     		<option>管理员</option>   		          
+	      		</select>
+    		</div>  
+		    	<label class="layui-form-label">员工密码</label>
+			<div class="layui-input-inline">
+		    	<input type="password" name="userPassword" id="userPassword" th:value="${stuff.userPassword}" autocomplete="off" class="layui-input">
+			</div>
+			</div> 
+			 
+			<div class="layui-form-item">
+				<label class="layui-form-label">员工性别</label>
+			<div class="layui-input-inline">
+		    	<select name="stuffSex" id="stuffSex" class="select"> 
+	        		<option selected="selected">男</option>
+	        		<option>女</option>    		          
+	      		</select>
+			</div>
+			<label class="layui-form-label">员工生日</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="stuffBirthday" id="stuffBirthday" th:value="${stuff.stuffBirthday}" autocomplete="off" class="layui-input test-item">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">证件类型</label>
+			<div class="layui-input-inline">
+		    	<select name="idcardType" id="idcardType" class="select"> 
+	        		<option selected="selected">中华人民共和国居民身份证</option>
+	        		<option>港澳台居民身份证</option>  
+	        		<option>机动车驾驶证</option>  		          
+	      		</select>
+			</div>
+			<label class="layui-form-label">证件编号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="idcardNumber" id="idcardNumber" th:value="${stuff.idcardNumber}" autocomplete="off" class="layui-input">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">加入时间</label>
+		    <div class="layui-input-inline">
+		        <input type="text" name="joinTime" id="joinTime" class="layui-input test-item" th:value="${stuff.joinTime}" autocomplete="off">
+			</div>
+			<label class="layui-form-label">员工电话</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="stuffPhone" id="stuffPhone" th:value="${stuff.stuffPhone}" autocomplete="off" class="layui-input">
+			</div>
+			</div>
+			
+			<div class="layui-form-item">
+		      	<label class="layui-form-label">员工地址</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="stuffAddress" id="stuffAddress" th:value="${stuff.stuffAddress}" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label">备注</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="stuffNote" id="stuffNote" th:value="${stuff.stuffNote}" autocomplete="off" class="layui-input">
+			</div>
+		    </div>
+		    
+		    <div class="layui-form-item">
+				<label class="layui-form-label">员工照片</label>
+			<div class="layui-input-inline">
+				<input type="hidden" id="stuffImage" th:value="${stuff.stuffImage}">
+				<div id="img"></div>
+			</div>
+			<label class="layui-form-label">修改照片</label>
+			<div class="layui-input-inline">
+		    	<input type="file" name="image" id="image" value="上传照片"  autocomplete="off" class="layui-input">
+		    </div>
+		    </div>
+		    
+		    <div class="layui-form-item">
+		    </div>
+		    <div class="layui-form-item">
+		    </div>
+		    <div class="layui-form-item">
+		    </div>
+
+			<div class="layui-form-item layui-layout-center" style="width:200px;height:60px;margin:auto">
+		   		<input type="button" id="button" class="layui-btn layui-btn-normal" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		   		<input type="reset" class="layui-btn layui-btn-warm" value="重置">
+			</div>
+  	</form>
+  	</div>
+	<script src="../layui/layui.js"></script>
+	<script type="text/javascript">
+		var image=document.getElementById("stuffImage").value;		//获得id为content这个标签
+		document.getElementById("img").innerHTML=image;
+		
+		layui.use(['form','jquery','layer','element','laydate'],function(){
+			var form=layui.form;
+			var layer=layui.layer;
+			var element=layui.element;
+			var $=layui.jquery;	
+			var laydate=layui.laydate;
+			var index=parent.layer.getFrameIndex(window.name);
+			lay('.test-item').each(function(){
+			    laydate.render({
+			       elem: this
+			      ,trigger: 'click'
+			    });
+			});
+			$(document).on('click','#button',function(){
+				var stuffName=document.getElementById("stuffName").value;
+				var stuffType=document.getElementById("stuffType").value;
+				var userPassword=document.getElementById("userPassword").value;
+				var stuffSex=document.getElementById("stuffSex").value;
+				var stuffBirthday=document.getElementById("stuffBirthday").value;
+				var idcardType=document.getElementById("idcardType").value;
+				var idcardNumber=document.getElementById("idcardNumber").value;
+				var joinTime=document.getElementById("joinTime").value;
+				var stuffPhone=document.getElementById("stuffPhone").value;
+				var stuffAddress=document.getElementById("stuffAddress").value;
+				
+				var formData=new FormData($('#form')[0]);
+				
+				//正则表达式
+				let phoneReg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+				var idcardReg=/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+				
+				if(stuffName==""){
+					layer.alert('员工姓名不能为空！！！');
+					return false;
+				}
+				if(stuffType==""){
+					layer.alert('员工职位不能为空！！！');
+					return false;
+				}
+				if(userPassword.length<6){
+					layer.alert('员工密码必须大于6位！！！');
+					return false;
+				}
+				if(stuffSex==""){
+					layer.alert('员工性别不能为空！！！');
+					return false;
+				}
+				if(stuffBirthday==""){
+					layer.alert('员工生日不能为空！！！');
+					return false;
+				}
+				if(idcardType==""){
+					layer.alert('证件类型不能为空！！！');
+					return false;
+				}
+				if(!idcardReg.test(idcardNumber)){
+					layer.alert('证件号码为空或格式错误！！！');
+					return false;
+				}
+				if(joinTime==""){
+					layer.alert('加入时间不能为空！！！');
+					return false;
+				}
+				if(!phoneReg.test(stuffPhone)){
+					layer.alert('电话为空或格式错误！！！');
+					return false;
+				}
+				if(stuffAddress==""){
+					layer.alert('员工地址不能为空！！！');
+					return false;
+				}
+				
+				$.ajax({
+					type:'post'
+					,url:'/setting/stuff_update_do'
+					,data:formData
+					,async:false
+					,cache:false
+					,contentType:false
+					,processData:false
+					,success:function(){
+						layer.alert("修改成功！！！",function(){parent.location.reload();});
+					}
+					,error:function(){
+						layer.alert("修改失败！！！");
+					}
+				});
+			});			
+		});
+	</script>
+</body>
+</html>

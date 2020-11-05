@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.or">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<style>
+	.span{
+		padding-top:10px;
+		font-size:20px;
+		align:center;
+	}
+	.image{
+		width:423px;
+		height:238px;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body" style="background:#F5F5F5">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd class="layui-this"><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+  
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+		<!-- 输入框 -->
+		<div class="layui-form">
+			<h1  align="center">会员来访</h1>
+			<div class="layui-form-item" style="width:50%;height:20%;margin:auto;">
+				<div class="layui-input-inline"style="display:inline-block;">
+					<input type="text" class="layui-input" id="id" name="id" maxlength="6" placeholder="请输入会员卡编号" style="width:400px;height:60px;font-size:40px;border-radius:30px;">
+				</div>
+				<div class="layui-input-inline" style="display:inline-block;padding-left:200px;">
+					<input type="button" id="visit" class="layui-btn layui-btn-primary" style="height:60px;width:180px;border-radius:30px;" value="打卡">
+				</div>
+			</div>
+		</div>
+		<!-- 会员基本信息 -->	
+		<div class="layui-container" id="obj" style="padding-top:60px;width:80%;height:60%;margin:auto;display:none;"> 
+  			<div class="layui-row">
+  				<div class="layui-col-md6">
+	  				<div class="layui-card">
+	  					<div class="layui-card-header" align="center">会员信息</div>
+		 				<div class="layui-card-body" align="center">
+		 					<div class="span">
+		 						<label>会员卡号：</label>
+		 						<span id="memberId"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>会员姓名：</label>
+		 						<span id="memberName"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>会员卡类型：</label>
+		 						<span id="memberType"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>办卡时间：</label>
+		 						<span id="joinTime"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>到期时间：</label>
+		 						<span id="dueTime"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>会员卡状态：</label>
+		 						<span id="state"></span>
+		 					</div>
+		 					<div class="span">
+		 						<label>来访次数：</label>
+		 						<span id="count"></span>
+		 					</div>
+		 				</div>
+		 				
+	  				</div>
+  				</div>
+  				<div class="layui-col-md6">
+  					<div class="layui-card">
+  						<div class="layui-card-header" align="center">会员照片</div>
+		 				<div class="layui-card-body" align="center">
+		 					<div id="userImage"></div>
+		 				</div>
+	  				</div>
+  				</div>
+  			</div>
+  		</div>
+</div>  
+  	<div class="layui-footer" align="center">
+  	<div style="padding: 15px;" align="center">
+	    <span class="layui-badge-dot"></span>
+		<span class="layui-badge-dot layui-bg-orange"></span>
+		<span class="layui-badge-dot layui-bg-green"></span>
+		<span class="layui-badge-dot layui-bg-cyan"></span>
+		<span class="layui-badge-dot layui-bg-blue"></span>
+		<span class="layui-badge-dot layui-bg-black"></span>
+		<span class="layui-badge-dot layui-bg-gray"></span>
+		<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+        <span class="layui-badge-dot layui-bg-gray"></span>
+        <span class="layui-badge-dot layui-bg-black"></span>
+        <span class="layui-badge-dot layui-bg-blue"></span>
+        <span class="layui-badge-dot layui-bg-cyan"></span>
+        <span class="layui-badge-dot layui-bg-green"></span>
+        <span class="layui-badge-dot layui-bg-orange"></span>
+        <span class="layui-badge-dot"></span>
+    </div>
+    	<hr class="layui-bg-cyan"> 
+  	</div>
+	</div>		
+	<script src="../layui/layui.js"></script>
+	<script src="../js/user.js"></script>
+	<script type="text/javascript">
+	layui.use(['layer','jquery','form','laypage','table','element'],function(){
+		var layer=layui.layer;
+		var $=layui.jquery;
+		var form=layui.form;
+		var laypage=layui.laypage;
+		var table=layui.table;						
+		var element=layui.element;
+		
+		$.ajax({					//为头像和用户名赋值
+			url:'/user/get_user',			
+			type:'get',			
+			success:function(data){
+				document.getElementById("user_img").src=data.image;
+				document.getElementById("user_name").innerHTML=data.name;
+			}
+		});
+		
+		$(document).on('click','#visit',function(){
+			var id=$("#id").val();
+			if(id==""||undefined||null||isNaN(id)||id.length!=6){
+				layer.msg("请输入正确的会员卡号");
+			}
+			else{
+				onceVisit(id);
+			}
+		})
+		
+		$("#id").keyup(function(){
+			var id=$("#id").val();
+			//var obj=document.getElementById("obj");
+			if(id.length==6){
+				//alert("j");
+				if(id==""||undefined||null||isNaN(id)){
+					layer.msg("请输入正确的会员卡号");
+				}
+				else{
+					document.getElementById("obj").style.display="";
+					visitById(id);
+				}
+			}
+			if(event.keyCode==13){
+				//alert("按下了回车");
+				if(id==""||undefined||null||isNaN(id)||id.length!=6){
+					layer.msg("请输入正确的会员卡号");
+				}
+				else{
+					onceVisit(id);
+				}
+			}
+		})
+		
+		function onceVisit(id){
+			var keyong="可用";
+			var jinyong="到期";
+			var guashi="挂失";
+			$(".span").find("span").each(function(){
+				if($(this).html()==keyong){
+					$(this).css("color","green");
+					$.ajax({
+						type:'post'
+						,url:'../visit/onceVisit?id='+id
+						,success:function(){
+							layer.msg("打卡成功！");
+						}
+						,error:function(){
+							alert("异常");
+						}
+					})
+					$.ajax({
+						type:'get'
+						,url:'../visit/countVisit?id='+id
+						,success:function(data){
+							var count=$("#count");
+							count.html(data);
+						}
+						,error:function(){
+							alert("异常");
+						}
+					})
+				}
+				if($(this).html()==jinyong){
+					$(this).css("color","red");
+					layer.msg("会员卡过期！");
+				}
+				if($(this).html()==guashi){
+					$(this).css("color","red");
+					layer.msg("该卡已挂失！");
+				}
+			})
+		}
+		
+		function visitById(id){
+			var memberId=$("#memberId");
+			var type=$("#memberType");
+			var memberName=$("#memberName");
+			var joinTime=$("#joinTime");
+			var dueTime=$("#dueTime");
+			var state=$("#state");
+			var userImage=$("#userImage");
+			var count=$("#count");
+			$.ajax({
+				type:'get'
+				,url:'../visit/visitById?id='+id
+				,success:function(data){
+					//console.log(data);
+					if(data.data!=null){
+						memberId.html(data.data.id);
+						type.html(data.data.type);
+						memberName.html(data.data.name);
+						joinTime.html(data.data.joinTime);
+						dueTime.html(data.data.dueTime);
+						state.html(data.data.state);
+						userImage.html("<img src=\""+data.data.image+"\" class=\"image\">");
+						var keyong="可用";
+						var jinyong="到期";
+						var guashi="挂失";
+						$(".span").find("span").each(function(){
+							if($(this).html()==keyong){
+								$(this).css("color","green");
+							}
+							if($(this).html()==jinyong){
+								$(this).css("color","red");
+							}
+							if($(this).html()==guashi){
+								$(this).css("color","red");
+							}
+						})
+						$.ajax({
+							type:'get'
+							,url:'../visit/countVisit?id='+id
+							,success:function(data){
+								var count=$("#count");
+								count.html(data);
+							}
+							,error:function(){
+								alert("异常");
+							}
+						})
+					}
+					else{
+						memberId.html(null);
+						type.html(null);
+						memberName.html(null);
+						joinTime.html(null);
+						dueTime.html(null);
+						state.html(null);
+						userImage.html(null);
+						count.html(null);
+						layer.msg("没有查询到对应的会员信息!");
+						document.getElementById("obj").style.display="none";
+					}
+				}
+				,error:function(){
+					alert("异常");
+				}
+			})
+		}
+		
+	});							
+	</script>
+</body>
+</html>

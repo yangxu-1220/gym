@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品详情</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="" >
+	<form id="updateForm" class="layui-form">
+		<!-- 第一行 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">商品编号:</label>
+			<div class="layui-input-inline">
+		    	<span th:text="${goods_D.goodsId}" class="layui-form-label"></span>
+			</div>	
+		</div>
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">商品名称:</label>
+			<div class="layui-input-inline">
+				<span th:text="${goods_D.goodsName}" class="layui-form-label"></span>
+			</div>
+		</div>		
+		<div class="layui-form-item">
+    		<label class="layui-form-label">类型:</label>
+    		<div class="layui-input-inline">
+     			<span th:text="${goods_D.goodsType}" class="layui-form-label"></span>
+    		</div>
+    	</div> 	
+    	<div class="layui-form-item">		  
+		    <label class="layui-form-label">单价:</label>
+			<div class="layui-input-inline">
+				<span th:text="${goods_D.goodsPrice}" class="layui-form-label"></span>			
+			</div>
+		</div>	
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">单位:</label>
+			<div class="layui-input-inline" align="center">
+		    	<span th:text="${goods_D.goodsUnit}" class="layui-form-label"></span>
+			</div>
+		</div>	
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">备注:</label>
+			<div class="layui-input-block">
+				<span th:text="${goods_D.goodsNote}" class="layui-form-label"></span>
+			</div>
+		</div>				  		
+	</form>
+</div>  
+
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+});
+</script>
+</body>
+</html>

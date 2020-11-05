@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>会员约课</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body style="background:#F5F5F5">
+<form class="layui-form">
+<div class="layui-container"> 
+  <div class="layui-row">
+    <!-- logo区域 -->
+    <div class="layui-col-md3">  
+		  	<div class="layui-card" style="height:200px;">
+		  		<img src="../image/logo/white_logo.svg" alt="图不见咯" height="190px" width="250px">
+		  	</div>	 				 		  			    							 				  			    	 			        		        	          		 
+    </div>
+    <!-- 轮播区域 -->
+    <div class="layui-col-md6">    
+	  	<div class="layui-carousel" id="orderCourse_carousel" align="center">
+		  <div carousel-item="">
+		    <div>
+				<img src="../image/carousel/1528084978838818.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+		    	<img src="../image/carousel/016772554434e80000019ae9189613.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image//carousel/6a90424e9a09b88a41165e2e7c0321d6.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image/carousel/2164229_000211669413_2.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image/carousel/v2-7955479586fc2848bf962c2ac6acf173_r.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		  </div>
+		</div>
+    </div>
+    <!-- 个人信息区域 -->
+    <div class="layui-col-md3" align="center">
+    	<div class="layui-card" style="height:200px;">
+		  <div class="layui-card-header" style="font-size:16px;">★★★★★</div>
+		  <div class="layui-card-body">
+			    <div style="width: 100px;height: 100px; border-radius:50px;overflow: hidden;border:2px solid #E6E6FA;">
+	      			<img id="user_img" src="../1.jpg" alt="图片不见了" width="100px" height="100px">
+	      			<input type="hidden" id="userid" name="userid" th:value="${session.id}">
+	      		</div>     
+	          	<a href="##" id="user_name">hi！你好</a>	          	          
+		  </div>
+		</div>                
+    </div>
+  </div>
+  	<!-- 表格区域 -->
+    <div class="layui-col-md9" style="height:520px;"> 
+    	<input type="hidden" id="userId" th:value="${session.id}">    
+	  	<table id="orderCourse_dataTable" lay-filter="orderCourse_dataTable"></table>
+	  	<script id="orderCourse_tableTool" type="text/html">						
+			<input type="button" id="yue" value="预约" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="yue">				
+	  	</script>
+	  	<div id="orderCourse_pageBox" align="center"></div>	  
+    </div>
+    <!-- 导航显示区域 -->
+    <div class="layui-col-md3" style="height:500px;">
+    	 <div class="layui-card" style="height:500px;">
+		  <div class="layui-card-header" align="center">传送门</div> 
+		  <div class="layui-card-body" align="center" >
+		  <div id="jumpDiv"></div>
+		  <script type="text/html" id="jumpScript">
+			 {{# if(d.status==1) {}}
+		      <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-warm" href="/user/index" id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-normal" href="/orderCourse/index" id="orderCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  <div class="layui-form-item">			    
+					<a id="toCart" href="/orderCourse/toOrderList" class="layui-btn" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  {{# } else if(d.status==0){}}
+			  <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-disabled" disabled id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  
+			  <div class="layui-form-item">			    
+					<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+	 	  {{#}}}
+			  <div class="layui-form-item">				  	
+			  		<a class="layui-btn layui-btn-danger" href="/shop/index" id="shop" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-cart-simple"></i>网上商城</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+					<a class="layui-btn" href="/private_course_management" id="privateCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-diamond"></i>私教服务</a>					
+		      </div>			  		
+	 		  			    				
+		      <div class="layui-form-item">			    
+					<a id="toCart" href="/cart/selectDetailById" class="layui-btn layui-btn-danger" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的购物车</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  	  <div class="layui-form-item">			    
+					<a id="toCart" href="/myOrder/index" class="layui-btn layui-btn-normal" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的订单</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  </script>
+		</div>  		
+    </div>
+  </div>
+ </div>
+ </form>
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+layui.use(['laydate','jquery','laytpl','form','laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+	var laydate = layui.laydate //日期
+	var laypage = layui.laypage //分页
+	var $=layui.jquery;
+	var form=layui.form;
+	var layer = layui.layer //弹层
+	var table = layui.table //表格
+	var carousel = layui.carousel //轮播
+	var upload = layui.upload //上传
+	var element = layui.element //元素操作
+	var slider = layui.slider //滑块
+	var laytpl=layui.laytpl;
+	var userId=$("#userId").val();
+		
+		$(function(){
+			if(parseInt(userId)>100000 && parseInt(parseInt(userId)/100000)==1){			
+				var status=1;
+				console.log(userId);
+			}
+			else{
+				var status=0;
+			}
+			var jumpScript=document.getElementById('jumpScript');
+			var jumpData={
+					"status":status
+			}
+			var jumpTpl=jumpScript.innerHTML;
+			var jumpView=document.getElementById('jumpDiv');
+			laytpl(jumpTpl).render(jumpData,function(html){
+				jumpView.innerHTML = html;
+			});
+		})
+	
+	$.ajax({					//为头像和用户名赋值
+		url:'/user/get_user',
+		//dataType:'json',
+		type:'get',			
+		success:function(data){
+			document.getElementById("user_img").src=data.image;
+			document.getElementById("user_name").innerHTML=data.name;
+		}
+	});
+	
+	//轮播
+	carousel.render({
+	    elem: '#orderCourse_carousel'
+	    ,width: '570px' //设置容器宽度
+	    ,height:'200px'
+	    ,arrow: 'none' //不显示箭头
+	    ,anim: 'fade' //切换动画方式
+	    ,interval:3000   //自动切换时间毫秒（ms）
+	    //,anim: 'updown' //切换动画方式
+	  });
+	//真分页
+	$(function(){
+		getOrderCourse(0);
+	})
+	function getOrderCourse(pageStart){
+			table.render({
+				elem:'#orderCourse_dataTable'
+				,url:'/orderCourse/getCourseByStateBtween'
+				,method:"get"
+				,where:{
+					pageStart:pageStart,
+					pageSize:10
+				}
+				,parseData:function(res){				
+					console.log(res)
+					return{
+						"code":0
+						,"msg":""
+						,"count":res.rowSize
+						,"data":res.data
+						,"curr":res.pageStart
+						,"limit":res.limit
+					}
+				}
+				//,cellMinWidth:100
+				,cols:[
+			    		[
+					      {field:'courseName', title:'课程名', width:100, fixed: 'left', unresize: true, sort: true}
+					      ,{field:'trainerName', title:'上课教练', width:100}	 
+					      ,{field:'courseId', title:'cid', width:100,hide:true}
+					      ,{field:'trainerId', title:'tid', width:100,hide:true}
+					      ,{field:'attendCourseTime', title:'上课时间', width:170,sort:true}
+					      ,{field:'courseLength', title:'课程时长', width:120, sort: true }
+					      ,{field:'attendCoursePalce', title:'上课地点' ,width:130}
+					      ,{field:'attendStock', title:'库存数', width:100,sort:true}
+					      ,{fixed: 'right', title:'', width: 100, align:'center', toolbar: '#orderCourse_tableTool'}
+			   			]
+			    	]
+				,done:function(res,curr,count){
+					console.log(res);
+					laypage.render({
+						elem:'orderCourse_pageBox'
+						,count:res.count
+						,limit:res.limit
+						,layout: ['count','prev','page','next','skip']
+						,curr:res.curr/10+1
+						,jump:function(obj,first){//触发分页后的回调
+							if(!first){//点击跳转触发函数自身，并传递当前页：obj.curr							
+								res.pageStart=(obj.curr-1)*obj.limit;
+								console.log(res.pageStart);
+								getOrderCourse(res.pageStart);														
+							}//if
+						}//jump function
+					});//laypage.render()
+				}//done
+			});//table.render()
+	}//function getMember()
+	table.on('tool(orderCourse_dataTable)', function(obj){ //注：tool 是工具条事件名，goods_toolBox 是 table 原始容器的属性 lay-filter="对应的值"
+		var data = obj.data //获得当前行数据
+	    ,layEvent = obj.event; //获得 lay-event 对应的值
+	    if(layEvent === 'yue'){
+	    	OrderOk(data.courseId,data.trainerId,data.attendCourseTime); 		
+	    } 
+	});
+	 function OrderOk(courseId,trainerId,attendCourseTime){
+			layer.open({
+				type:2,
+				title:"确定预约信息",
+				content:'../orderCourse/selectAttendByPrimary?courseId='+courseId+'&trainerId='+trainerId+'&attendCourseTime='+attendCourseTime,
+				area:['55%','65%'],	
+				end:function(){										
+					getOrderCourse(0); 					
+				}			
+			});
+		}
+});
+</script>
+</body>
+</html>

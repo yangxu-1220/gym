@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>拍照上传</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<link th:href="@{styles/index.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+	<div class="index__tips" id="index__tips"></div>
+	<div class="index__title">请点击“拍照”按钮</div>
+	<div class="index__video-panel">
+		<!-- 显示摄像头拍摄到的画面 -->
+		<video id="index__video" class="index__video"></video>
+		<!-- 视频上的提示框 -->
+		<svg width="200" height="200" class="index__video-over">
+			<!--#CD8C95 提示边框颜色,point表位置的坐标-->
+			<polyline  points="5,50 5,5 50,5" fill-opacity="0"
+				style="stroke:#CD8C95;stroke-width:10"/>
+			<polyline  points="5,150 5,195 50,195"  fill-opacity="0"
+				style="stroke:#CD8C95;stroke-width:10"/>
+			<polyline  points="155,5 195,5 195,45"  fill-opacity="0"
+				style="stroke:#CD8C95;stroke-width:10"/>
+			<polyline  points="155,195 195,195 195,155"  fill-opacity="0"
+				style="stroke:#CD8C95;stroke-width:10"/>
+		</svg>
+		<!-- 图片中的拍照按钮 -->
+		<div class="index__video-over-button" onclick="indexObj.uploadImg()">拍照并上传</div>
+	</div>
+	<!-- ID -->
+	<input type="hidden" th:value="${memberId}" id="index__member-id"/>
+	<!-- 用于给video标签截图的画布 -->
+	<canvas id="index__canvas" style="display:none;"></canvas>
+	
+	<script th:src="@{styles/axios.min.js}"></script>
+	<script th:src="@{styles/index.js}"></script>
+</body>
+</html>

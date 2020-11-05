@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>续费</title>
+<style>
+	.div_1{
+		padding-top:9px;
+		font-size:14px;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<!-- 增加课程弹出框 -->
+<div id="addlayer" style="">
+	<form class="layui-form" action="##" onsubmit="return false" method="post" id="form1" enctype="multipart/form-data">
+	<!-- 第一行 -->
+		<hr class="layui-bg-cyan">
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">会员编号：</label>
+				<div class="layui-input-inline">
+					<div class="div_1">
+						<span th:text="${memR.memberId}"></span>
+			    	</div>
+				</div>		 
+		    <label class="layui-form-label">会员卡号：</label>
+				<div class="layui-input-inline">
+					<div class="div_1">
+						<span th:text="${memR.cardId}"></span>
+						<input type="hidden" id="cardId" th:value="${memR.cardId}">
+					</div>
+				</div>		
+    	</div>
+    <!-- 第二行 -->
+    <div class="layui-form-item">	
+		<label class="layui-form-label">会员姓名：</label>
+	    	<div class="layui-input-inline">
+	    		<div class="div_1">
+					<span th:text="${memR.memberName}"></span>
+				</div>
+	      	</div>  
+		<label class="layui-form-label">类型：</label>
+    	<div class="layui-input-inline">
+    		<div class="div_1">
+				<span th:text="${memR.memberType}"></span>
+			</div>
+      	</div>	
+    </div>
+    <!-- 第三行 -->
+    <div class="layui-form-item">	
+		<label class="layui-form-label">状态：</label>
+	    	<div class="layui-input-inline">
+	    		<div class="div_1">
+					<span th:text="${memR.state}"></span>
+				</div>
+	      	</div>  
+		<label class="layui-form-label">到期时间：</label>
+    	<div class="layui-input-inline">
+    		<div class="div_1">
+					<span th:text="${memR.cardDueTime}"></span>
+				</div>
+      	</div>	
+    </div>
+    <!-- 第四行 -->
+    <div class="layui-form-item">	
+		<label class="layui-form-label">数量：</label>
+    	<div class="layui-input-inline" style="padding-top:16px;">
+    		<div id="slideTest8" class="demo-slider"></div>
+      	</div>  
+		<label class="layui-form-label">单位：</label>
+	    	<div class="layui-input-inline">
+	    		<select name="timeUnit" id="timeUnit"  class="select">
+	        		<option value="">请选时间单位</option> 
+	        		<option value="天">天</option>
+	        		<option value="月">月</option>
+	        		<option value="年">年</option>          
+	      		</select>
+	      	</div>	
+    </div>
+	<hr class="layui-bg-cyan">
+    <!-- 第五行按钮 -->
+	<div class="layui-form-item">
+	  <div class="layui-input-block" style="height:60px;width:10%;margin:auto;">
+	     <input type="button" id="addsubmit" value="提交" class="layui-btn"/>
+     </div>
+    </div>					
+	</form>
+</div>  
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate','layer','jquery','upload','slider'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var upload=layui.upload;    //定义图片上传的方法
+	var laydate=layui.laydate;  //定义时间选择器对象
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var slider=layui.slider;
+	
+	//开启输入框
+	slider.render({
+	  elem: '#slideTest8'
+	  ,max:30
+	  ,input: true //输入框
+	});
+	
+	$(document).on('click','#addsubmit',function(){
+		var number=0;
+		var timeUnit=$("#timeUnit option:selected").text();
+		$("#slideTest8").find("input").each(function(){
+			if($(this).hasClass('layui-input')){
+				//$(this).css("padding-top","14px");
+				//alert($(this).val());
+				number=$(this).val();
+			}
+		})
+		//alert(number);
+		//alert(timeUnit);
+		if(number==="0"){
+			layer.msg("续费时间不能为0");
+		}
+		else if(timeUnit==="请选时间单位"){
+			layer.msg("请选择时间单位");
+		}
+		else{//发送异步请求修改时间
+			$.ajax({
+				type:'post'
+				,url:'../member/doRenewal'
+				,data:{
+					"cardId":$("#cardId").val()
+					,"number":number
+					,"timeUnit":timeUnit
+				}
+				,success:function(){
+					alert("续费成功！");
+					var index = parent.layer.getFrameIndex(window.name); 
+					parent.layer.close(index);
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			})
+		}
+	})
+	
+	
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增商品</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="" > 
+	<form class="layui-form" action="##" onsubmit="return false" method="post" id="form1" enctype="multipart/form-data">
+		<!-- 第一行 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">商品编号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsId" id="goodsId" placeholder="请输入商品编号" autocomplete="off" class="layui-input">
+			</div>	
+		</div>
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">商品名称</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsName" id="goodsName" placeholder="请输入商品姓名" autocomplete="off" class="layui-input">
+			</div>
+		</div>		
+		<div class="layui-form-item">
+    		<label class="layui-form-label">类型</label>
+    		<div class="layui-input-inline">
+     		<select name="goodsType" id="goodsType" class="select">
+        		<option value="">请选择商品类型</option>           
+      		</select>
+    		</div>
+    	</div> 	
+    	<div class="layui-form-item">		  
+		    <label class="layui-form-label">单价</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsPrice" id="goodsPrice" placeholder="单价" autocomplete="off" class="layui-input">
+			</div>
+		</div>	
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">单位</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsUnit" id="goodsUnit" placeholder="单位" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">库存</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="goodsStockNumber" id="goodsStockNumber" placeholder="库存" autocomplete="off" class="layui-input">
+			</div>
+		</div>	
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">上传图片</label>
+			<div class="layui-input-inline">
+		    	<input type="file" name="image" id="uploadImage" value="上传图片" class="layui-input">
+			</div>
+		</div>	
+		<div class="layui-form-item">		  
+		    <label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea name="goodsNote" class="layui-textarea"></textarea>
+			</div>
+		</div>	
+		<div class="layui-form-item" style="width:160px;height:40px;margin:auto;">				  		    		   			    
+			 <input type="submit" id="addsubmit" class="layui-btn" name="addsubmit" value="确定"/>			    			    
+			 <input type="reset" id="addreset" class="layui-btn layui-btn-primary" name="addreset" value="重置"/>			    		    
+		</div>			  		
+	</form>
+</div>  
+
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	layer.ready(function(){
+		$.ajax({
+			type:'get',
+			url:'../goodsType/getTypeList',
+			success:function(data){				
+				$.each(data,function(index,goods){
+					$('#goodsType').append(new Option(goods.goodsTypeName));
+					//alert(goods.goodsTypeName);
+				});
+				form.render("select");
+			}
+		});		
+	});
+	$(document).on('click','#addsubmit',function(){
+		var formData=new FormData($('#form1')[0]);
+		var goodsId=$("#goodsId").val();
+		var goodsName=$("#goodsName").val();
+		var goodsType=$("#goodsType option:selected").text();
+		var goodsPrice=$("#goodsPrice").val();
+		var goodsUnit=$("#goodsUnit").val();
+		var goodsStockNumber=$("#goodsStockNumber").val();
+		
+		if(goodsId===""){
+			layer.msg("商品编号不能为空");
+		}
+		else if(goodsName===""){
+			layer.msg("商品名称不能为空");
+		}
+		else if(goodsType==="请选择商品类型"){
+			layer.msg("商品类型不能为空");
+		}
+		else if(goodsPrice===""){
+			layer.msg("商品单价不能为空");
+		}
+		else if(goodsUnit===""){
+			layer.msg("商品单位不能为空");
+		}
+		else if(goodsStockNumber===""){
+			layer.msg("商品库存不能为空");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				//,dataType:'json'
+				,url:'../goods/doInsert'
+				,data:formData
+				,async:false
+				,cache:false
+				,contentType:false
+				,processData:false
+				,success:function(data){				
+					if(data==="true"){
+						var index = parent.layer.getFrameIndex(window.name); 
+						parent.layer.close(index);
+					}
+					else if(data==="false"){
+						layer.msg("商品信息已存在！");
+					}	
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+		}
+	});
+});
+</script>
+
+</body>
+</html>

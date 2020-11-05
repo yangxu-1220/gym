@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>课程详细信息显示</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<script src="../layui/layui.js"></script>
+ <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+  <legend>课程信息</legend>
+ </fieldset>
+<form class="layui-form">
+<!-- 添加弹出框的div -->
+  <div id="addlayer" style="">
+   <!-- 课程图片 -->
+	    <div class="layui-form-item" align="center">
+	   	     <div style="width:200px;height:180px;display:inline;" class="layui-input-inline">
+				<input align="center" type="hidden" id="cover" th:value="${courseS.courseImage}">
+				<div id="covered"  style="width:200px;height:180px;border:2px solid #E6E6FA;">
+			    	<img src="" alt="图不见咯" width="180px" height="140px">
+			    </div>
+			</div>
+	   </div>
+     <!-- 编号 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">课程编号</label>
+			<div class="layui-input-inline">
+		    	<input id="courseId" name='courseId' th:value="${courseS.courseId}" class="layui-input" readonly="readonly">
+			</div>
+		<!-- 课程名 -->
+			<label class="layui-form-label">课程名</label>
+			<div class="layui-input-inline">
+		    	<input name="courseName" id="courseName" th:value="${courseS.courseName}" class="layui-input" readonly="readonly">
+			</div>
+    	</div>
+	    <!--课程时长 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">课程时长</label>
+			<div class="layui-input-inline">
+		    	<input name="courseLength" id="courseLength" th:value="${courseS.courseLength}" class="layui-input" readonly="readonly">
+			</div>
+		<!-- 容纳人数 -->
+			<label class="layui-form-label">容纳人数</label>
+			<div class="layui-input-inline">
+		    	<input name="courseNumber" id="courseNumber" th:value="${courseS.courseNumber}" class="layui-input" readonly="readonly">
+			</div>
+	    </div>
+	    <!--课程简介 -->
+	    <div class="layui-form-item">
+		    <label class="layui-form-label">课程简介</label>
+			<div class="layui-input-inline">
+		    	<input name="courseContent" id="courseContent" th:value="${courseS.courseContent}" class="layui-input" readonly="readonly">
+			</div>	
+       </div>
+   </div>
+</form> 
+	<script type="text/javascript">
+		var image=document.getElementById("cover").value;
+		document.getElementById("covered").innerHTML=image;
+	</script>     	    
+</body>
+</html>

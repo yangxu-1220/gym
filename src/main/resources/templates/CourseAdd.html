@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增课程</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<!-- 增加课程弹出框 -->
+<div id="addlayer" style="">
+	<form class="layui-form" action="##" onsubmit="return false" method="post" id="form1" enctype="multipart/form-data">
+	<!-- 第一行 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">课程编号</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseId" id="courseId" placeholder="请输入课程编号" autocomplete="off" class="layui-input">
+			</div>		 
+		    <label class="layui-form-label">课程名</label>
+			<div class="layui-input-inline">
+		    	<input type="text" name="courseName" id="courseName" placeholder="请输入课程名" autocomplete="off" class="layui-input">
+			</div>		
+    	</div>
+    <!-- 第二行 -->
+    <div class="layui-form-item">	
+		<label class="layui-form-label">课程时长</label>
+    	  <div class="layui-input-inline">
+     		<select name="courseLength" id="courseLength" class="select">
+        		<option value="">请选择时长(分钟)</option> 
+        		<option value="90">90</option>
+        		<option value="75">75</option>
+        		<option value="60">60</option>
+        		<option value="45">45</option> 
+        		<option value="30">30</option>            
+      		</select>
+      	   </div>  
+		<label class="layui-form-label">容纳人数</label>
+    	  <div class="layui-input-inline">
+     		<select name="courseNumber" id="courseNumber" class="select">
+        		<option value="">请选择容纳人数</option> 
+        		<option value="6">6</option>
+        		<option value="8">8</option>
+        		<option value="10">10</option>
+        		<option value="16">16</option>
+        		<option value="26">26</option>   
+      		</select>
+      	   </div>	
+    	</div>
+    <!-- 第三行图片上传-->  
+   	 <div class="layui-form-item">		  
+		<label class="layui-form-label">上传图片</label>
+		<div class="layui-input-inline">
+		    <input type="file" name="image" id="uploadImage" value="上传图片" class="layui-input">
+		</div>
+	</div>
+	<!-- 第四行 -->
+	    <div class="layui-form-item">		    
+	    	<label class="layui-form-label">课程简介</label>
+			   <div class="layui-input-block">
+			      <textarea name="courseContent" class="layui-textarea"></textarea>
+			   </div>	    		    	
+	     </div>  
+	    <hr class="layui-bg-cyan">
+	    <!-- 第五行按钮 -->
+		<div class="layui-form-item">
+		  <div class="layui-input-block" style="height:60px;width:200px;margin:auto;">
+		     <input type="button" id="addsubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" class="layui-btn layui-btn-primary"/>
+	     </div>
+	    </div>					
+	</form>
+</div>  
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate','layer','jquery','upload'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var upload=layui.upload;    //定义图片上传的方法
+	var laydate=layui.laydate;  //定义时间选择器对象
+	var layer=layui.layer;
+	var $=layui.jquery;
+	form.render();		
+	$(document).on('click','#addsubmit',function(){
+		var formData=new FormData($('#form1')[0]);
+		var courseId=$("#courseId").val();
+		var courseName=$("#courseName").val();
+		var courseLength=$("#courseLength option:selected").text();
+		var courseNumber=$("#courseNumber option:selected").text();
+		
+		if(courseId===""){
+			layer.msg("请输入课程编号");
+		}
+		else if(courseName===""){
+			layer.msg("请输入课程名称");
+		}
+		else if(courseLength==="请选择时长(分钟)"){
+			layer.msg("请选择时长");
+		}
+		else if(courseNumber==="请选择容纳人数"){
+			layer.msg("请选择容纳人数");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				,url:'/course/doInsertCourse'
+				,data:formData
+				,async:false
+				,cache:false
+				,contentType:false
+				,processData:false
+				,success:function(data){				
+					if(data==="true"){
+						var index = parent.layer.getFrameIndex(window.name); 
+						parent.layer.close(index);
+					}
+					else if(data==="false"){
+						layer.msg("课程信息信息已存在！");
+					}	
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+		}
+	});
+});
+</script>
+</body>
+</html>

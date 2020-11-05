@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>付款</title>
+</head>
+<body>
+	<input type="hidden" id="form" th:value="${form}">
+	
+	<script type="text/javascript">
+		var form=document.getElementById("form").value;	
+		//document.getElementById("all").innerHTML=form;
+		document.write(form);
+	</script>
+</body>
+</html>

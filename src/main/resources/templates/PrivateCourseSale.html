@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<!-- 绘图必要 -->
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item"><a href="">主页</a></li>
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index">会员卡管理</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index">会员卡管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd class="layui-this"><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+  
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div class="layui-form-item">
+		<h1 align="center">私教销售统计</h1>
+	</div>
+	<div class="layui-form-item" style="font-size:20px" align="center">
+		<a href="http://localhost:8080/change_3">私教销售统计</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://localhost:8080/change_4">私教上课统计</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://localhost:8080/change_5">操课上课统计</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://localhost:8080/change_6">约课统计</a>	
+	</div>
+	<form class="layui-form" action="" onsubmit="return false">
+		<div class="layui-form-item" style="font-size:16px" align="center">
+			<label class="layui-form-label" style="width:8%;">起始时间：</label>
+			<div class="layui-input-inline" style="width:8%;"><input type="text" id="startTime" class="layui-input test-item" placeholder="yyyy-MM-dd"></div>
+			<label class="layui-form-label" style="width:1%;">至</label>
+			<label class="layui-form-label" style="width:8%;">终止时间：</label>
+			<div class="layui-input-inline" style="width:8%;"><input type="text" id="endTime" class="layui-input test-item" placeholder="yyyy-MM-dd"></div>
+			<label class="layui-form-label" style="width:8%;">教练姓名：</label>
+			<div class="layui-input-inline" style="width:10%;">
+				<select id="trainerName" class="layui-input">
+					<option></option>
+				</select>	
+			</div>
+			<label class="layui-form-label" style="width:8%;">课程名称：</label>
+			<div class="layui-input-inline" style="width:10%;">
+				<select id="courseName" class="layui-input">
+					<option></option>
+				</select>	
+			</div>
+			<div class="layui-input-inline" style="width:13%;"><input type="button" id="button" value="查询" class="layui-btn layui-btn-warm"></div>
+		</div>
+	</form>
+	
+	<table class="layui-hide" id="table"></table>
+    
+    <table align="center">
+		<tr>
+			<td>
+				<div id="pie_1" style="width: 500px; height: 300px;"></div>
+			</td>
+			<td>
+				<div id="pie_2" style="width: 500px; height: 300px;"></div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<div id="linebar" style="width: 600px; height: 450px;"></div>
+			</td>
+		</tr>
+	</table>
+    
+   </div>  
+  	<div class="layui-footer" align="center">
+    	<div style="padding: 15px;" align="center">
+		    <span class="layui-badge-dot"></span>
+			<span class="layui-badge-dot layui-bg-orange"></span>
+			<span class="layui-badge-dot layui-bg-green"></span>
+			<span class="layui-badge-dot layui-bg-cyan"></span>
+			<span class="layui-badge-dot layui-bg-blue"></span>
+			<span class="layui-badge-dot layui-bg-black"></span>
+			<span class="layui-badge-dot layui-bg-gray"></span>
+			<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+	        <span class="layui-badge-dot layui-bg-gray"></span>
+	        <span class="layui-badge-dot layui-bg-black"></span>
+	        <span class="layui-badge-dot layui-bg-blue"></span>
+	        <span class="layui-badge-dot layui-bg-cyan"></span>
+	        <span class="layui-badge-dot layui-bg-green"></span>
+	        <span class="layui-badge-dot layui-bg-orange"></span>
+	        <span class="layui-badge-dot"></span>
+    	</div>
+    	<hr class="layui-bg-cyan">
+  	</div>
+	</div>		
+	<script src="../layui/layui.js"></script>
+	<script src="../js/user.js"></script>
+	<script type="text/javascript">	
+		//script方法
+		
+		layui.use('element', function(){		//点击打开二级目录等特效
+			  var element = layui.element; 		//导航的hover效果、二级菜单等功能，需要依赖element模块
+			  //监听导航点击
+			  element.on('nav(demo)', function(elem){
+			    //console.log(elem)
+			    layer.msg(elem.text());
+			  });
+		});
+		
+		//单击按钮按条件重新渲染表格
+		layui.use(['layer','jquery','form','laydate'],function(){
+			var layer=layui.layer;
+			var $=layui.jquery;
+			var form=layui.form;
+			var laydate=layui.laydate;
+		
+			$.ajax({					//为头像和用户名赋值
+				url:'/user/get_user',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					document.getElementById("user_img").src=data.image;
+					document.getElementById("user_name").innerHTML=data.name;
+				}
+			});
+			
+		    lay('.test-item').each(function(){
+			    laydate.render({
+			       elem: this
+			      ,trigger: 'click'
+			    });
+			});
+			
+		    $("#trainerName").empty();				
+			$.ajax({
+				url:'/consume/private_course_sale/get_trainerName',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					//alert(data);
+					$('#trainerName').append(new Option('所有教练'));
+					$.each(data,function(index,item){
+						$('#trainerName').append(new Option(item.trainerName));
+					});
+					form.render();
+				}
+			});
+		    
+			$("#courseName").empty();				
+			$.ajax({
+				url:'/consume/private_course_sale/get_private_course',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					//alert(data);
+					$('#courseName').append(new Option('所有课程'));
+					$.each(data,function(index,item){
+						$('#courseName').append(new Option(item.courseName));
+					});
+					form.render();
+				}
+			});
+			$(document).on('click','#button',function(){
+				
+				// 基于准备好的dom，初始化echarts实例
+			    var myChart_1 = echarts.init(document.getElementById('pie_1'),'light');
+			    var myChart_2 = echarts.init(document.getElementById('pie_2'),'light');
+			    var myChart_3 = echarts.init(document.getElementById('linebar'),'light');
+			    myChart_1.showLoading();		//加载效果
+			    myChart_2.showLoading();
+			    myChart_3.showLoading();
+				
+				var startTime=document.getElementById("startTime").value;
+				var endTime=document.getElementById("endTime").value;
+				var trainerName=document.getElementById("trainerName").value;
+				var courseName=document.getElementById("courseName").value;
+				//alert(startTime+endTime+trainerName);
+				//判断必填项是否为空
+				if(startTime==""){
+					layer.alert('起始时间为必填项！！！');
+					myChart_1.hideLoading();		//隐藏加载特效
+					myChart_2.hideLoading();
+					myChart_3.hideLoading();
+					return false;
+				}
+				if(endTime==""){
+					layer.alert('终止时间为必填项！！！');
+					myChart_1.hideLoading();		//隐藏加载特效
+					myChart_2.hideLoading();
+					myChart_3.hideLoading();
+					return false;
+				}
+				layui.use('table', function(){
+				  	var table = layui.table;
+			  		table.render({
+			    		elem: '#table'
+			    		,url: '/consume/private_course_sale?startTime='+startTime+'&endTime='+endTime+'&trainerName='+trainerName+'&courseName='+courseName
+			    		,toolbar: '#toolbar' 							//开启头部工具栏，并为其绑定左侧模板
+			    		,defaultToolbar: ['filter', 'exports', 'print'] //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+				  		,limit: 5				//要传向后台的每页显示条数
+				        ,page: { 				//支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem）
+				            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']				//自定义分页布局 
+				            ,limits:[5,10,15]
+				            ,first: false 			//不显示首页
+				            ,last: false 			//不显示尾页
+				        }
+				        ,parseData:function(data){
+			    			return{
+			    				"code":0
+			    				,"msg":""
+			    				,"count":data.count
+			    				,"data":data.data
+			    			}
+			    		}
+			    		//,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+			    		,cols: [
+			    			[
+						      		{field:'saleTime',  title: '销售日期', sort: true}
+						      		,{field:'trainerName',  title: '教练名称'}
+						      		,{field:'courseName',  title: '课程名称'}
+						      		,{field:'memberName',  title: '会员姓名'}
+						      		,{field:'coursePrice',  title: '课程价格', sort: true}
+			    				]
+			    			]
+			  		});
+			  		//绘制饼图1
+					$.ajax({
+			            type : "GET",
+			            url : "/consume/private_course_sale/get_pie_1?startTime="+startTime+'&endTime='+endTime,
+			            dataType : "json",
+			            success : function(data) {
+			            	myChart_1.hideLoading();		//隐藏加载特效
+			            	//用两个数组分别存储不同的json数据
+			                var servicedata=[];
+			                for(var i=0;i<data.length;i++){
+			                	var obj=new Object();						//pie专用
+			                    obj.name=data[i].trainerName; 
+			                    obj.value=data[i].coursePrice;
+			                    //obj.value_2=data[i].number;
+			                    servicedata[i]=obj;
+			                }
+			                myChart_1.setOption({						//饼图参数
+			                    title:{
+			                    	text: startTime+'~'+endTime+' 教练—课程收益饼图'
+			                    },  
+			                    //color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],		//全局颜色
+			                    tooltip: {
+			                    	formatter : function(params){  
+			        	              	//console.log(params);//通过对象的点语法拿到自己想要的内容,通过连接+,将想要的字符串进行自行的拼接,用<br/>来换行
+			        	              	let res = '';
+			        	              	res = '教练姓名：'+params.name + '<br/>' +'私教课程收益：'+ params.value+'元';
+			        	                return  res ;//最后返回拼接好的值
+			        	                }
+			                    },
+			                    series:[{
+			                        name:'价格',
+			                        type:'pie', 
+			                        radius:'60%', 
+			                        data:servicedata,
+			                        axisLabel: {
+			        	        		formatter: '{value}元'
+		        	        		}
+			                        //roseType: 'angle',		//南丁格尔图
+			                        /*itemStyle: {				//阴影
+			                            normal: {
+			                                color: '#c23531',
+			                                shadowBlur: 200,
+			                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                            }
+			                        }*/
+			                    }]
+			                });
+			            }
+			        });
+					//绘制饼图2
+					$.ajax({
+			            type : "GET",
+			            url : "/consume/private_course_sale/get_pie_2?startTime="+startTime+'&endTime='+endTime,
+			            dataType : "json",
+			            success : function(data) {
+			            	myChart_2.hideLoading();		//隐藏加载特效
+			            	//用两个数组分别存储不同的json数据
+			                var servicedata=[];
+			                for(var i=0;i<data.length;i++){
+			                	var obj=new Object();						//pie专用
+			                    obj.name=data[i].courseName; 
+			                    obj.value=data[i].coursePrice;
+			                    //obj.value_2=data[i].number;
+			                    servicedata[i]=obj;
+			                }
+			                myChart_2.setOption({						//饼图参数
+			                    title:{
+			                    	text: startTime+'~'+endTime+' 课程收益情况饼图'
+			                    },  
+			                    //color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],		//全局颜色
+			                    tooltip: {
+			                    	formatter : function(params){  
+			        	              	//console.log(params);//通过对象的点语法拿到自己想要的内容,通过连接+,将想要的字符串进行自行的拼接,用<br/>来换行
+			        	              	let res = '';
+			        	              	res = '课程名称：'+params.name + '<br/>' +'课程总收益：'+ params.value+'元';
+			        	                return  res ;//最后返回拼接好的值
+			        	                }
+			                    },
+			                    series:[{
+			                        name:'价格',
+			                        type:'pie', 
+			                        radius:'60%', 
+			                        data:servicedata,
+			                        axisLabel: {
+			        	        		formatter: '{value}元'
+		        	        		}
+			                        //roseType: 'angle',		//南丁格尔图
+			                        /*itemStyle: {				//阴影
+			                            normal: {
+			                                color: '#c23531',
+			                                shadowBlur: 200,
+			                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                            }
+			                        }*/
+			                    }]
+			                });
+			            }
+			        });
+					//绘制条形图和折线图
+					$.ajax({
+			            type : "GET",
+			            url : '/consume/private_course_sale/get_barline?startTime='+startTime+'&endTime='+endTime,
+			            dataType : "json",
+			            success : function(data) {
+			            	myChart_3.hideLoading();		//隐藏加载特效
+			            	//用两个数组分别存储不同的json数据
+			                var saleTime=[];
+			                var coursePrice=[];
+			                for(var i=0;i<data.length;i++){
+			                	saleTime.push(data[i].saleTime); 			//bar和line通用
+			                	coursePrice.push(data[i].coursePrice);
+			                }
+			                myChart_3.setOption({					//条形图和折线图参数
+			                	title: {
+			        	            text: startTime+'~'+endTime+' 私教销售情况条形图折线图'
+			        	        },
+			        	        tooltip: {
+			        	        	formatter : function(params){  
+			        	              	//console.log(params);//通过对象的点语法拿到自己想要的内容,通过连接+,将想要的字符串进行自行的拼接,用<br/>来换行
+			        	              	let res = '';
+		        	              		res = '日期：'+params.name + '<br/>' +'私教课程总收益：'+ params.value+'元';
+		        	                	return  res ;//最后返回拼接好的值
+		        	                }
+			        	        },
+			        	        legend: {
+			        	        	left: 'right',		//靠右显示
+			        	        	orient: 'horizontal', // 'vertical' 竖立排列
+			        	        	data:["左侧","右侧"]
+			        	        },
+			        	        xAxis: {
+			        	        	name:"日期",
+			        	            data: saleTime,
+			        	            axisLabel: {
+			        	                // 坐标轴刻度标签的相关设置
+			        	                show: true,
+			        	                interval: 0,
+			        	                formatter: function (value) {   //解决X轴字太长不能显示的问题
+			        	                  var res = value
+			        	                  if (res.length > 10) {
+			        	                    res = res.substring(0, 9) + '..'
+			        	                  }
+			        	                  return res
+			        	                },
+		        	                }
+			        	        },
+			        	        yAxis: [{
+			        	        	type: 'value',
+			        	        	name:"价格/元",
+			        	        	axisLabel: {
+			        	        		formatter: '{value}'
+		        	        		}
+			        	        },{
+			        	        	type: 'value',
+			        	        	name: '价格/元',
+			        	        	axisLabel: {
+			        	        	formatter: '{value}'
+			        	        	}
+			        	        }],
+			        	        series: [
+			        	        	{
+				        	            name: '左侧',
+				        	            type: 'line',
+				        	            //yAxisIndex: 0,		//使用y轴左侧的竖线
+				        	            data: coursePrice,
+				        	            itemStyle: {   //设置折线的样式
+					   	            	    normal: {  //设置统计表上的折线样式
+				   	            	            color: "#DC143C",
+				   	            	            lineStyle: {    //设置统计表中的折线样式
+			           	              		  	  color: "#DC143C"
+				   	            	            }
+			   	            	            }
+			        	            	}
+			        	        	},
+			        	        	{
+				        	            name: '右侧',
+				        	            type: 'bar',
+				        	            yAxisIndex: 1,		//使用y轴右侧的竖线
+				        	            data: coursePrice,
+				        	            itemStyle: {   
+					   	            	    normal: {  
+				   	            	            color: "#1E90FF",
+			   	            	            }
+				        	            }
+				        	        }
+			        	       ]
+			                });
+			            }
+			        });
+				});
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>修改上架课程信息</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="">
+	<form class="layui-form" action="##" onsubmit="return false" id="form">
+		<!-- 不可更改 -->
+		<div class="layui-form-item">	  
+		    <label class="layui-form-label">课程编号</label>
+			<div class="layui-input-inline">
+			    <input id="attendCourseId" name="attendCourseId" th:value="${attendCourse_B.attendCourseId}" class="layui-input" readonly="readonly">
+			</div>
+			<label class="layui-form-label">教练编号</label>
+    		<div class="layui-input-inline">
+				<input id="trainerId" name="trainerId" th:value="${attendCourse_B.trainerId}" class="layui-input" readonly="readonly">
+    		</div>
+		</div>
+		<!-- 第二行 -->
+		<div class="layui-form-item">			  
+    		<label class="layui-form-label">上课时间</label>
+    		<div class="layui-input-inline">
+    			<input type="hidden" id="attendCourseTime" name=attendCourseTime th:value="${attendCourse_B.attendCourseTime}">
+	     		<input type="text"  id="attendCourseTime2" name="attendCourseTime2"  class="layui-input" placeholder="年/月/日 /时/分">
+      		</div>
+    		<label class="layui-form-label">上课地点</label>
+			<div class="layui-input-inline">
+     			<select name="attendCoursePalce" id="attendCoursePalce" class="select">		        		 
+		        	 <option value="动感单车房">动感单车房</option> 
+        		     <option value="室内瑜伽馆">室内瑜伽馆</option>
+        		     <option value="室外瑜伽场">室外瑜伽场</option>
+        		     <option value="第一操课房">第一操课房</option> 
+        		     <option value="第二操课房">第二操课房</option>
+        		     <option value="第三操课房">第三操课房</option>        
+	      		</select>
+		    </div>	 
+  		</div>
+	    <div class="layui-form-item">	
+	    <label class="layui-form-label">课程状态</label>
+			<div class="layui-input-inline">
+				<select id="attendCourseState" name="attendCourseState" class="select">
+				     <option value="已上架">已上架</option>
+        		     <option value="未上架">未上架</option>
+				</select>
+			</div>
+		</div>
+		<hr class="layui-bg-green">	  		      	   	    
+	    <!-- 
+	    
+	    按钮 -->
+		<div class="layui-form-item">
+		  <div class="layui-input-block" style="height:60px;width:200px;margin:auto;">
+		     <input type="button" id="addsubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" value="重置" class="layui-btn layui-btn-primary"/>
+	     </div>
+	   </div> 
+	</form>
+</div>
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var laydate=layui.laydate;  //定义时间选择器对象
+	
+	laydate.render({			//渲染时间选择器
+		elem:'#attendCourseTime2'
+		,type:'datetime'        //elem：是时间选择器的ID
+	});
+	form.render();				//渲染整个页面的form元素
+});
+
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	layer.ready(function(){	
+		$(document).on('click','#addsubmit',function(){
+			var attendCourseTime=$("#attendCourseTime2").val();
+			if(attendCourseTime===""){
+				layer.msg("上课时间不能为空");
+			}			
+			else{
+				$.ajax({
+					type:'post'
+					,url:'/attendCourse/Update'
+					,data:$("#form").serialize()
+					,success:function(data){
+						if(data==="true"){
+							alert("修改成功");
+							var index = parent.layer.getFrameIndex(window.name); 						
+							parent.layer.close(index);	
+						}
+						if(data==="教练和时间冲突"){
+							layer.msg("该教练在该时段已有安排！");
+						}
+						if(data==="时间和地点冲突"){
+							layer.msg("此地点在该时段已被占用！");
+						}
+					}
+					,error:function(){
+						alert("异常");
+					}
+				});
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

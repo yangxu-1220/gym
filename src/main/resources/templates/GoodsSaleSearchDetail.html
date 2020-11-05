@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>订单详情</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+
+<!-- 添加弹出框的div -->
+ <div id="detaillayer">
+	<table class="layui-table">
+		<tr th:each="detail:${details}" align="center">
+			<td th:text="${detail.goodsName}"></td>
+			<td th:text="${detail.goodsNumber}"></td>
+			<td>
+				<span id="totalPrice" th:text="${detail.totalPrice}" class="total"></span>
+			</td>		
+		</tr>
+	</table>
+</div>  
+<div id="allTotal" class="allTotal" style="height:30px;width:100px;margin:auto;font-size:20px;color:red;"></div>
+
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	var allTotal=0;
+	
+	$("table tr ").find("td").each(function(){		
+		var totalPrice=$(this).children("span.total").text();		
+		if(totalPrice!=""||0){
+			allTotal+=parseInt(totalPrice);
+		}
+		$("#allTotal").html(allTotal.toFixed(2))		
+	});
+});
+</script>
+</body>
+</html>

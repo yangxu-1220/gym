@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.or">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<style>
+	.income{
+		font-size:25px;
+		color:green;
+	}
+	.outgoing{
+		font-size:25px;
+		color:red;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd class="layui-this"><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+  
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+				
+		<!-- 表格渲染 -->
+		<table class="layui-hide" id="goodsSale_dataTable" lay-filter="goodsSale_dataTable" ></table>
+
+		<!-- 分页 -->	
+		<div id="goodsSale_pageBox"></div>
+		
+		<!-- 统计区域 -->
+		<div style="width:600px;height:30px;margin:auto;">
+		<table>
+			<tr>				
+				<td>
+					<span style="font-size:25px;">统计：</span>
+				</td>
+				<td>
+					<div class="layui-input-inline" style="width:180px;">				
+						<div id="outgoing" class="outgoing" style="padding-top:4px;"></div>
+					</div>
+				</td>
+			</tr>
+		</table>			
+		</div>
+<script type="text/html" id="goodsSale_toolBar">
+	<input type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="kan" id="kan" value="查看详情">
+	<input type="button" class="layui-btn layui-btn-sm" lay-event="delete" value="删除" id="delete"> 	
+	<div class="layui-input-inline">
+    	<input type="text" class="layui-input" id="tiaoJian" placeholder="会员的ID或名称">
+    </div>
+	<div class="layui-input-inline">
+    	<input type="text" class="layui-input" id="startTime" placeholder="起始时间">
+    </div>
+	<div class="layui-input-inline">
+        <input type="text" class="layui-input" id="endTime" placeholder="截至时间">
+    </div>  	
+	<input type="button" class="layui-btn layui-btn-sm layui-btn-primary" value="查询" id="query" lay-event="query">
+</script>
+			
+		      	
+    
+   </div>  
+  	<div class="layui-footer" align="center">
+  	<div style="padding: 15px;" align="center">
+	    <span class="layui-badge-dot"></span>
+		<span class="layui-badge-dot layui-bg-orange"></span>
+		<span class="layui-badge-dot layui-bg-green"></span>
+		<span class="layui-badge-dot layui-bg-cyan"></span>
+		<span class="layui-badge-dot layui-bg-blue"></span>
+		<span class="layui-badge-dot layui-bg-black"></span>
+		<span class="layui-badge-dot layui-bg-gray"></span>
+		<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+        <span class="layui-badge-dot layui-bg-gray"></span>
+        <span class="layui-badge-dot layui-bg-black"></span>
+        <span class="layui-badge-dot layui-bg-blue"></span>
+        <span class="layui-badge-dot layui-bg-cyan"></span>
+        <span class="layui-badge-dot layui-bg-green"></span>
+        <span class="layui-badge-dot layui-bg-orange"></span>
+        <span class="layui-badge-dot"></span>
+    </div>
+    	<hr class="layui-bg-cyan"> 
+  	</div>
+	</div>		
+	
+ 
+	
+	
+	
+	<script src="../layui/layui.js"></script>
+	<script src="../js/user.js"></script>
+	<script type="text/javascript">
+	layui.use(['layer','jquery','form','laypage','table','element','laydate'],function(){
+		var layer=layui.layer;
+		var $=layui.jquery;
+		var form=layui.form;
+		var laypage=layui.laypage;
+		var table=layui.table;						
+		var element=layui.element;	
+		var laydate=layui.laydate;
+		
+		$.ajax({					//为头像和用户名赋值
+			url:'/user/get_user',
+			//dataType:'json',
+			type:'get',			
+			success:function(data){
+				document.getElementById("user_img").src=data.image;
+				document.getElementById("user_name").innerHTML=data.name;
+			}
+		});
+		
+		//日期时间选择器
+	    laydate.render({
+	      elem: '#startTime'
+	      ,type: 'datetime'
+	    });		
+		//日期时间选择器
+		  laydate.render({
+		    elem: '#endTime'
+		    ,type: 'datetime'
+		  });
+		//真分页
+		$(function(){
+			var url='/goodsSale/getGoodsSaleBtween';
+			getData(0,null,null,null,url);
+		})
+		function getData(pageStart,startTime,endTime,tiaoJian,url){			
+				table.render({
+					elem:'#goodsSale_dataTable'
+					,url:url
+					,method:"get"
+					,where:{
+						startTime:startTime
+						,endTime:endTime
+						,idOrName:tiaoJian
+						,pageStart:pageStart
+						,pageSize:10
+					}
+					,parseData:function(res){				
+						console.log(res)
+						return{
+							"code":0
+							,"msg":""
+							,"count":res.rowSize
+							,"data":res.data
+							,"curr":res.pageStart
+							,"limit":res.limit
+						}
+					}
+					,toolbar: '#goodsSale_toolBar' //开启头部工具栏，并为其绑定左侧模板
+					,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+						title: '提示'
+					    ,layEvent: 'LAYTABLE_TIPS'
+					    ,icon: 'layui-icon-tips'
+					 }]
+					//,cellMinWidth:100
+					,cols:[
+				    		[
+						      {type: 'checkbox', fixed: 'left'}
+						      ,{field:'orderId', title:'订单编号', width:240, fixed: 'left', unresize: true, sort: true}
+						      ,{field:'memberId', title:'会员编号', width:140}	      
+						      ,{field:'memberName', title:'会员姓名', width:150 }
+						      ,{field:'orderTotalPrice', title:'总价', width:120,sort:true}
+						      ,{field:'orderState', title:'状态' ,width:120}
+						      ,{field:'createTime', title:'创建时间', width:200, sort: true}						     					      
+				   			]
+				    	]
+					,done:function(res,curr,count){
+						console.log(res);
+						laypage.render({
+							elem:'goodsSale_pageBox'
+							,count:res.count
+							,limit:res.limit
+							,layout: ['count','prev','page','next','skip']
+							,curr:res.curr/10+1
+							,jump:function(obj,first){//触发分页后的回调
+								if(!first){//点击跳转触发函数自身，并传递当前页：obj.curr							
+									res.pageStart=obj.limit*(obj.curr-1);
+									console.log(res.pageStart);
+									getData(res.pageStart,null,null,null,url);														
+								}//if
+							}//jump function
+						});
+						laydate.render({
+							elem: '#startTime'
+						    ,type: 'datetime'
+						});		
+						//日期时间选择器
+						laydate.render({
+							elem: '#endTime'
+							,type: 'datetime'
+						});
+						$(document).ready(function(){							
+							var outgoing=0;
+							var state="已支付";							
+							$("table tr").find("td").each(function(){//遍历页面table中的div								
+								if($(this).hasClass('layui-table-col-special')){ 									
+									$(this).next().next().next().next().next().css("color","green");						
+									var aa=$(this).next().next().next().next().children('div.layui-table-cell').text();
+									if(aa!=""){
+										console.log(aa);
+										outgoing+=parseFloat(aa);
+									}			
+								}								
+							});							
+							console.log(outgoing);							
+							$('#outgoing').html(outgoing);
+						});
+					}
+				});
+		}//function
+		//表格顶部工具栏
+		
+		
+		
+		table.on('toolbar(goodsSale_dataTable)',function(res){
+			 var checkStatus=table.checkStatus(res.config.id);
+			 var data=checkStatus.data;
+			 var event=res.event;
+			 var i=0;
+			 var tiaoJian=$('#tiaoJian').val();
+			 var startTime=$('#startTime').val();
+			 var endTime=$('#endTime').val();
+			 switch(res.event){			 	
+			 	case 'delete':
+			 		if(data.length===0){
+			 			layer.msg('请选择一行');
+			 		}
+			 		else if(data.length>1){
+			 			for(i=0;i<data.length;i++){
+			 				deleteOrderById(checkStatus.data[i].orderId);
+			 			}			 			
+			 		}
+			 		else{
+			 			layer.confirm('真的删除行么', function(index){
+			 				deleteOrderById(checkStatus.data[0].orderId);
+			 		        layer.close(index);
+			 		        //向服务端发送删除指令
+			 		      });
+			 		}
+			 		break;
+			 	case 'kan':
+			 		if(data.length===0){
+			 			layer.msg('请选择一行');
+			 		}
+			 		else if(data.length>1){
+			 			layer.msg('只能查看一个');
+			 		}
+			 		else{			 			
+			 			getOrderDetail(checkStatus.data[0].orderId);			 		        
+			 		}
+			 		break;
+			 	case 'query':
+			 		if(tiaoJian===""&&startTime===""&&endTime===""){//三个条件为空，执行全查
+			 			var url='/goodsSale/getGoodsSaleBtween3';
+			 			getData(0,null,null,null,url);
+			 		}
+			 		else if(tiaoJian!=""&&startTime!=""&&endTime!=""){//三个条件均有
+			 			var url='/goodsSale/queryBy3';
+			 			getData(0,startTime,endTime,tiaoJian,url);
+			 		}
+			 		else if(tiaoJian!=""&&startTime===""&&endTime===""){//只有条件 没有时间
+			 			var url='/goodsSale/queryBy1';
+			 			getData(0,null,null,tiaoJian,url);
+			 		}
+			 		else if(tiaoJian===""&&startTime!=""&&endTime!=""){//只有时间 没有条件
+			 			var url='/goodsSale/queryBy2';
+			 			getData(0,startTime,endTime,null,url);
+			 		}
+			 		else if(tiaoJian!=""&&startTime===""&&endTime!=""){//有条件和结束时间
+			 			layer.msg("请输入起始时间");
+			 		}
+			 		else if(tiaoJian===""&&startTime===""&&endTime!=""){//只有结束时间
+			 			layer.msg("请输入起始时间");
+			 		}
+			 		else if(tiaoJian===""&&startTime!=""&&endTime===""){//只有起始时间
+			 			layer.msg("请输入结束时间");
+			 		}
+			 		else{
+			 			layer.msg("请输入结束时间");
+			 		}
+			 		break;
+			 }
+		 });
+		
+		function deleteOrderById(orderId){	
+			var url='/goodsSale/getGoodsSaleBtween';
+			$.ajax({
+				type:'post'
+				,url:'../goodsSale/deleteOrderById?orderId='+orderId
+				,success:function(){
+					alert("成功");
+					getData(0,null,null,null,url);
+				}
+				,error:function(){
+					alert("异常");
+				}
+			});			
+		}
+		
+		function getOrderDetail(orderId){
+			var url='/goodsSale/getGoodsSaleBtween';
+			layer.open({
+				type:2
+				,title:"订单详情"
+				,content:'../goodsSale/getDetailById?orderId='+orderId
+				,area:['300px','400px']
+				,end:function(){
+					getData(0,null,null,null,url);
+				}
+			});
+		}				
+	});							
+	</script>
+</body>
+</html>

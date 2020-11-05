@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<!-- 绘图必要 -->
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd class="layui-this"><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+  
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div class="layui-form-item">
+		<h1 align="center">员工管理</h1>
+	</div>
+	
+	<table class="layui-hide" id="table" lay-filter="test"></table> 
+	<script src="../layui/layui.js"></script>
+	<script src="../js/user.js"></script>
+    <script type="text/html" id="toolbar">
+		<button class="layui-btn layui-btn" id="button_1"><i class="layui-icon layui-icon-add-1"></i></button>
+		<button class="layui-btn layui-btn-danger" lay-event="update"><i class="layui-icon layui-icon-edit"></i></button>
+		<button class="layui-btn layui-btn-normal" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></button>
+		<input type="text" id="search" placeholder="请输入员工编号或员工姓名" style="width:250px;height:40px;">
+    	<button class="layui-btn layui-btn-warm" lay-event="search"><i class="layui-icon layui-icon-search"></i></button>
+	</script>
+    
+   	</div>  
+  	<div class="layui-footer" align="center">
+  		<div style="padding: 15px;" align="center">
+		    <span class="layui-badge-dot"></span>
+			<span class="layui-badge-dot layui-bg-orange"></span>
+			<span class="layui-badge-dot layui-bg-green"></span>
+			<span class="layui-badge-dot layui-bg-cyan"></span>
+			<span class="layui-badge-dot layui-bg-blue"></span>
+			<span class="layui-badge-dot layui-bg-black"></span>
+			<span class="layui-badge-dot layui-bg-gray"></span>
+			<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+	        <span class="layui-badge-dot layui-bg-gray"></span>
+	        <span class="layui-badge-dot layui-bg-black"></span>
+	        <span class="layui-badge-dot layui-bg-blue"></span>
+	        <span class="layui-badge-dot layui-bg-cyan"></span>
+	        <span class="layui-badge-dot layui-bg-green"></span>
+	        <span class="layui-badge-dot layui-bg-orange"></span>
+	        <span class="layui-badge-dot"></span>
+	    </div>
+    	<hr class="layui-bg-cyan"> 
+  	</div>
+  	</div>
+	<script type="text/javascript">	
+		//script方法
+		
+		layui.use('element', function(){		//点击打开二级目录等特效
+			  var element = layui.element; 		//导航的hover效果、二级菜单等功能，需要依赖element模块
+			  //监听导航点击
+			  element.on('nav(demo)', function(elem){
+			    //console.log(elem)
+			    layer.msg(elem.text());
+			  });
+		});
+		
+		//默认执行方法
+		fun('/setting/get_stuff');
+		function fun(url){
+			layui.use('table', function(){
+			  	var table = layui.table;
+		  		table.render({
+		    		elem: '#table'
+		    		,url: url
+	    			,toolbar: '#toolbar' 							//开启头部工具栏，并为其绑定左侧模板
+		    		,defaultToolbar: ['filter', 'exports', 'print'] //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+			  		,limit: 5				//要传向后台的每页显示条数
+			        ,page: { 				//支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem）
+			            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']				//自定义分页布局 
+			            ,limits:[5,10,15]
+			            ,first: false 			//不显示首页
+			            ,last: false 			//不显示尾页
+			        }
+			        ,parseData:function(data){
+		    			return{
+		    				"code":0
+		    				,"msg":""
+		    				,"count":data.count
+		    				,"data":data.data
+		    			}
+		    		}
+		    		//,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+		    		,cols: [
+		    			[
+					      		{field:'stuffId',  title: '员工编号', sort: true}
+					      		,{field:'stuffName',  title: '员工姓名'}
+					      		,{field:'stuffType',  title: '员工类型'}
+					      		,{field:'stuffSex',  title: '员工性别'}
+					      		,{field:'stuffBirthday',  title: '员工生日'}
+					      		,{field:'idcardType',  title: '证件类型'}
+					      		,{field:'idcardNumber',  title: '证件号码'}
+					      		,{field:'stuffAddress',  title: '员工地址'}
+					      		,{field:'stuffPhone',  title: '员工电话'}
+					      		,{field:'joinTime',  title: '加入时间'}
+					      		,{field:'stuffImage',  title: '员工照片'}
+					      		,{field:'stuffNote',  title: '备注'}
+					      		,{type:'radio',title:'操作'}
+		    				]
+		    			]				//<img src="http://localhost:8080/images/2019-10-09_16-22-31.png" alt="照片不见了">
+		  		});
+		  		//头工具栏事件
+				table.on('toolbar(test)', function(obj){
+				    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+				    switch(obj.event){
+				      case 'update':{
+					        var data = checkStatus.data;  		//获取选中行数据
+					        if(data.length==0){
+								layer.alert('未选中需要操作的数据');
+								break;
+							}
+					        var radioData=data[0].stuffId;			//获取被选中行的Id
+					        layer.open({				//修改被选中的数据
+								type:2,
+								title:"修改员工信息",
+								area:['700px','650px'],
+								//btn:['确定','取消'],
+								content:['/setting/stuff_update?stuffId='+radioData,'yes'],
+								yes:function(index,layero){
+									var body=layer.getChildFrame('body',index);
+									var AddIframe=window[layero.find('iframe')[0]['name']];
+									var index=parent.layer.getFrameIndex(window.name);
+								}
+							});
+					        break;
+				      }
+				      case 'delete':{
+				    	    var data = checkStatus.data;  		//获取选中行数据
+				    	    if(data.length==0){
+								layer.alert('未选中需要操作的数据');
+								break;
+							}
+				            var radioData=data[0].stuffId;			//获取被选中行的Id
+				            
+				            layui.use(['jquery'],function(){
+				            	var $=layui.jquery;
+					            $.ajax({		//删除被选中数据
+									url:'/setting/stuff_delete?stuffId='+radioData,
+									//dataType:'json',
+									type:'get',			
+									success:function(data){
+										layer.alert('您已成功删除员工信息！！！');
+										fun();
+									}
+								});
+				            });
+				      }
+				      case 'search':{
+				    	    var input=document.getElementById("search").value;		//获取输入框中的值
+				    	    if(input==""){
+				    	    	layer.alert('未输入任何数据！！！');
+				    	    	break;
+				    	    }else{
+				    	    	fun('/setting/stuff_search?search='+input);
+				    	    }
+				      }
+				    }
+				 });
+			});
+		}
+		
+		layui.use(['layer','jquery','form'],function(){
+			var layer=layui.layer;
+			var $=layui.jquery;
+			var form=layui.form;
+			
+			$.ajax({					//为头像和用户名赋值
+				url:'/user/get_user',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					document.getElementById("user_img").src=data.image;
+					document.getElementById("user_name").innerHTML=data.name;
+				}
+			});
+			
+			$(document).on('click','#button_1',function(){		//添加员工
+				layer.open({
+					type:2,
+					title:"添加员工",
+					area:['700px','650px'],
+					//btn:['确定','取消'],
+					content:['/setting/stuff_add','yes'],
+					yes:function(index,layero){
+						var body=layer.getChildFrame('body',index);
+						var AddIframe=window[layero.find('iframe')[0]['name']];
+						var index=parent.layer.getFrameIndex(window.name);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

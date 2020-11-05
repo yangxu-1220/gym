@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneShop</title>
+<style>
+	.footer{
+		height:60px;
+		width:80%;
+		background-color:#FFFFFF;
+		position:fixed;
+		bottom:0;
+	}
+	.block{
+		width:200px;
+		display:inline-block;
+		float:right;
+	}
+	.text_box{
+		width:40px;
+		height:25px;
+		font-size:20px;		
+	}
+	.plus{
+		width:30px;
+		height:30px;
+	}
+	.reduce{
+		width:30px;
+		height:30px;
+	}
+	.price{
+		color:red;
+	}
+	.stock{
+		color:#7B7B7B;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body style="background:#F5F5F5">
+<form class="layui-form" id="form1" action="/pay" method="post">
+<div class="layui-container"> 
+  <div class="layui-row">
+    <!-- logo区域 -->
+    <div class="layui-col-md3">  
+		  	<div class="layui-card" style="height:200px;">
+		  		<img src="../image/logo/white_logo.svg" alt="图不见咯" height="190px" width="250px">		  		
+		  	</div>	 				 		  			    							 				  			    	 			        		        	          		 
+    </div>
+    <!-- 购物车 -->
+    <div class="layui-col-md6">  
+		  	<div class="layui-card" style="height:200px;align:center;font-size:40px;align:center;">
+		  	<img src="../image/logo/cartLogo.jpg" alt="" width="355px" height="200px">
+		  		购物车
+		  	</div>	 				 		  			    							 				  			    	 			        		        	          		 
+    </div>
+    <!-- 个人信息区域 -->
+    <div class="layui-col-md3" align="center">
+    	<div class="layui-card" style="height:200px;">
+		  <div class="layui-card-header">个人信息</div>
+		  <div class="layui-card-body">
+			    <div style="width: 100px;height: 100px; border-radius:50px;overflow: hidden;border:2px solid #E6E6FA;">
+	      			<img id="user_img" src="../image/head/01f1bd5d19f28ba8012076404361ce.jpg@1280w_1l_2o_100sh.jpg" alt="" width="100px" height="100px">
+	      			<input type="hidden" id="userId" name="userid" th:value="${session.id}">
+	      		</div>     
+	          	<a href="##" id="user_name">Hi! 你好</a>		          	          
+		  </div>
+		</div>                
+    </div>
+  </div>
+  <div class="layui-row">  	  	
+  	<!-- 表格区域 -->
+    <div class="layui-col-md9" style="height:400px;">     
+	  	<table id="cart_dataTable" class="layui-table">
+	  		<tr bgcolor=#F5F5F5 align="center">
+	  			<td width="70px" align="center">选择</td>
+	  			<td width="140px">商品名称</td>	
+	  			<td width="50px">单价</td>  				  			
+	  			<td width="50px">库存</td>
+	  			<td width="180px">数量</td>
+	  			<td width="50px">总价</td>
+	  			<td width="60px">操作</td>
+	  		</tr>
+	  		<tr th:each="detail:${orderDetail}" align="center">
+	  			<td align="center"><input type="checkbox" class="checkitem"></td>
+	  			<td th:text="${detail.goodsName}"></td>	 
+	  			<td>
+	  				<span class="price" th:text="${detail.goodsPrice}"></span>
+	  			</td> 				  			
+	  			<td>
+	  				<span class="stock" th:text="${detail.goodsStockNumber}"></span>
+	  			</td>
+	  			<td>	  				
+	  				<input type="button" name="" id="reduce" value="-" class="reduce">
+					<input type="text" name="goodsNumber" th:value="${detail.goodsNumber}" id="num" class="text_box" value="">
+					<input type="button" name="" id="plus" value="+" class="plus">	
+	  			</td>
+	  			<td>
+	  				<span class="totalPrice" th:text="${detail.totalPrice}"></span>
+	  			</td>
+	  			<td>
+	  				<input type="hidden" name="goodsId" id="goodsId" th:value="${detail.goodsId}" class="goodsId">
+	  				<input type="hidden" name="goodsIds" id="goodsIds" class="goodsIds"><!-- 存放商品id 的数组 -->
+	  				<input type="hidden" name="numArray" id="numArray" class="numArray"><!-- 存放商品数量的数组 -->
+	  				<input type="hidden" name="orderId" id="orderId" th:value="${detail.orderId}">
+	  				<input type="hidden" name="name" id="name" th:value="${detail.goodsName}">
+	  				<input type="hidden" name="amount" id="amount">
+	  				<input type="hidden" name="context" id="context" th:value="${detail.goodsName}">
+	  				<input type="hidden" id="userId" th:value="${session.id}">
+	  				<a id="delete" class="layui-btn layui-btn-warm layui-btn-xs" th:href="@{'../cart/deleteDetailById?goodsId='+${detail.goodsId}+'&orderId='+${detail.orderId}}">删除</a>
+	  			</td>
+	  		</tr>
+	  	</table>	  	
+    </div>
+    <!-- 传送门区域 -->
+    <div class="layui-col-md3" style="height:400px;">
+    	 <div class="layui-card" style="height:400px;">
+		  <div class="layui-card-header" align="center">传送门</div> 
+		  <div class="layui-card-body" align="center" >
+		  <div id="jumpDiv"></div>
+		  <script type="text/html" id="jumpScript">
+		  {{# if(d.status==1) {}}
+		      <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-warm" href="/user/index" id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-normal" href="/orderCourse/index" id="orderCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  <div class="layui-form-item">			    
+					<a id="toCart" href="/orderCourse/toOrderList" class="layui-btn" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  {{# } else if(d.status==0){}}
+			  <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-disabled" disabled id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  
+			  <div class="layui-form-item">			    
+					<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+	 	  {{#}}}
+			  <div class="layui-form-item">				  	
+			  		<a class="layui-btn layui-btn-danger" href="/shop/index" id="shop" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-cart-simple"></i>网上商城</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+					<a class="layui-btn" href="/private_course_management" id="privateCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-diamond"></i>私教服务</a>					
+		      </div>			  		
+	 		  			    				
+		      <div class="layui-form-item">			    
+					<a id="toCart" href="/cart/selectDetailById" class="layui-btn layui-btn-danger" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的购物车</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  	  <div class="layui-form-item">			    
+					<a id="toCart" href="/myOrder/index" class="layui-btn layui-btn-normal" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的订单</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  </script>
+		</div>  		
+    </div>
+  </div>
+  	<!-- 底部结算栏 -->
+  	<div id="footer" class="footer">
+	  	<div class="layui-form-item" >
+	  		<div class="layui-input-inline" style="float:left;">	  			
+				<a id="allCheck" class="checkall"><i class="layui-icon layui-icon-ok-circle"></i>全选</a>		
+			</div>	  			
+			<script type="text/html" id="jiesuanScript">					
+				{{# if(d.count==0){}}
+				<input type="button" id="jiesuanNo" value="结算" class="layui-btn layui-btn-disabled" disabled style="height:60px;width:200px;">
+				{{# }else if(d.count!=0){}}
+				<input type="submit" id="jiesuanYes" value="结算" class="layui-btn layui-btn-danger" style="height:60px;width:200px;">
+				{{# }}} 
+			</script>
+			<div class="layui-input-inline" style="float:right;" id="jiesuanDiv"> 
+			</div>							
+			<div class="layui-input-inline" style="float:right;">
+				合计：<label id="allTotal" style="font-size:30px;color:red;"></label>
+			</div>	
+	  		<div class="layui-input-inline" style="float:right;">	  			
+				已选商品<span id="checked" style="font-size:30px;color:red;">0</span>件		
+			</div>								
+	  	</div>	
+	</div>
+ </div>
+ </div>
+ </form>
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+layui.use(['layer','jquery','form','laypage','table','element','laytpl'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var laypage=layui.laypage;
+	var table=layui.table;						
+	var element=layui.element;	
+	var laytpl=layui.laytpl;	
+	var userId=$("#userId").val();		
+	console.log(userId);
+	$.ajax({					//为头像和用户名赋值
+		url:'/user/get_user',
+		//dataType:'json',
+		type:'get',			
+		success:function(data){
+			document.getElementById("user_img").src=data.image;
+			document.getElementById("user_name").innerHTML=data.name;
+		}
+	});
+							
+	$(function(){
+		if(parseInt(userId)>100000 && parseInt(parseInt(userId)/100000)==1){			
+			var status=1;
+			console.log(userId);
+		}
+		else{
+			var status=0;
+		}
+		var jumpScript=document.getElementById('jumpScript');
+		var jumpData={
+				"status":status
+		}
+		var jumpTpl=jumpScript.innerHTML;
+		var jumpView=document.getElementById('jumpDiv');
+		laytpl(jumpTpl).render(jumpData,function(html){
+			jumpView.innerHTML = html;
+		});
+	})
+		
+		$('#allCheck').click(function(){//全选按钮点击事件
+			//alert("1");
+			$(this).toggleClass('oncheck'); //替换oncheck 
+			if($(this).hasClass('oncheck')){//如果有oncheck这个类
+				$('.layui-form-checkbox').addClass('layui-form-checked');//给所有的选择框加上一个已选择的class
+				setTotal();
+			}else{
+				$('.layui-form-checkbox').removeClass('layui-form-checked');//否则去除所有的已选择class
+				setTotal();
+			}
+		});
+		//单选
+		$('.layui-form-checkbox').click(function(){//经layui渲染的复选框所必带的一个类
+			//alert("1");
+			if($(this).hasClass('layui-form-checked')){//如果这一个复选框被选中了计算总价
+				setTotal();
+			}
+			else{
+				setTotal();//取消的时候重新计算总价
+			}
+		});
+		//加号点击事件
+		$(".plus").click(function(){
+			var t=$(this).parent().find('input[class*=text_box]');//获取输入框内容（数量）
+			var s=$(this).parent().prev().children("span.stock");//获取库存数量
+			if(t.val()==""||undefined||null){//如果t的数据非法 
+				t.val(0); //则把t置为0
+			}
+			t.val(parseInt(t.val())+1)
+			if(parseInt(t.val())>parseInt(s.text())){
+				layer.msg("购买数量不能超过库存");
+				t.val(parseInt(s.text()));
+			}
+			setTotal();
+		})
+		$(".reduce").click(function() {
+			var t = $(this).parent().find('input[class*=text_box]');
+			if(t.val()==""||undefined||null){
+				t.val(0);
+			}
+			t.val(parseInt(t.val()) - 1)
+			if(parseInt(t.val()) < 1) {
+				layer.msg("买一点吧QAQ");
+				t.val(1);
+			}
+			setTotal();
+		})
+		$(".text_box").keyup(function(){
+			var t=$(this).parent().find('input[class*=text_box]');
+			var s=$(this).parent().prev().children("span.stock");
+			if(t.val()==""||undefined||null||isNaN(t.val())){
+				t.val(1);
+				layer.msg("请输入数字哟(*^_^*)");
+			}
+			if(t.val()==0){
+				t.val(1);
+				layer.msg("买一点吧QAQ");
+			}
+			if(parseInt(t.val())>parseInt(s.text())){
+				layer.msg("购买数量不能超过库存");
+				t.val(parseInt(s.text()));
+			}
+			setTotal();
+		})
+		function setTotal() {
+			var allTotal = 0;//总价格			
+			var aTotal    //单个商品总价
+			var num = 0;//选中的商品数
+			var price = 0;//选中商品的单价	
+			var count = $(".layui-form-checked").length;//选中了几个商品
+			var goodsIds=[];
+			var numArray=[];
+			
+			$("#cart_dataTable tr td").find("div").each(function() {
+				//console.log(this);
+				num = $(this).parent().next().next().next().next().children("input.text_box").val(); //获取数量
+				price = $(this).parent().next().next().children("span.price").text(); //获取单价
+				var aTotalObject = $(this).parent().next().next().next().next().next().children("span.totalPrice");//获取总价
+				var goodsId = $(this).parent().next().next().next().next().next().next().children("input.goodsId");//获取商品ID				
+				//console.log(goodsId);
+				if($(this).hasClass('layui-form-checked')){			
+					allTotal += parseInt(num) * parseFloat(price);	//累计总价	
+					goodsIds.push(goodsId.val());					//将获取的商品ID放入数组
+					numArray.push(num);
+				}
+				//console.log(goodsIds);
+				aTotal = parseInt(num) * parseFloat(price);
+				if(parseFloat(aTotal)==""||undefined||null || isNaN(aTotal) || isNaN(parseInt(aTotal))){
+					aTotal = 0;
+				}
+				aTotalObject.html(aTotal.toFixed(2));			
+			});		
+			$("#allTotal").html(allTotal.toFixed(2));				//给所有总价赋值						
+			$("#checked").html(count);
+			$("#amount").val(allTotal.toFixed(2));
+			$("#goodsIds").val(goodsIds);							//将存放商品ID的数组赋值给input元素
+			$("#numArray").val(numArray);							//将存放数量的数组赋值给input元素
+			console.log($("#numArray").val());
+			console.log($("#goodsIds").val());
+			//alert($("#amount").val());
+			//结算按钮的变色处理
+			var jiesuanScript = document.getElementById('jiesuanScript');
+			var data={
+					"count":count   //把复选框选中的数量存进模板供前端调用					
+			};
+			var getTpl = jiesuanScript.innerHTML;
+			var view = document.getElementById('jiesuanDiv');//被渲染的对象
+			laytpl(getTpl).render(data,function(html){
+				view.innerHTML = html;
+			});
+			//console.log(count);
+		}	
+		setTotal();
+});
+</script>
+</body>
+</html>

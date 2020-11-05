@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>购买商品</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<form class="layui-form" id="form1" onsubmit="return false" action="##">
+	<!-- 外部盒子 -->
+	<div style="width:620px;height:400px;" class="layui-form-item">
+		<!-- 图片盒子 -->
+		<div style="width:400px;height:400px;display:inline;" class="layui-input-inline">
+			<input type="hidden" id="cover" th:value="${buyModel.goodsImage}">
+			<div id="covered" style="width:398px;height:398px;border:2px solid #E6E6FA;">
+		    	<img src="" alt="图不见咯" width="398px" height="398px">
+		    </div>
+		</div>
+		<!-- 标签盒子 -->
+		<div style="width:170px;height:400px;display:inline;" class="layui-input-inline" align="center">
+			<input type="hidden" id="goodsId" name="goodsId" th:value="${buyModel.goodsId}">
+			<input type="hidden" id="goodsName" name="goodsName" th:value="${buyModel.goodsName}">
+			<input type="hidden" id="goodsPrice" name="goodsPrice" th:value="${buyModel.goodsPrice}">	
+			<input type="hidden" id="goodsStockNumber" name="goodsStockNumber" th:value="${buyModel.goodsStockNumber}">	
+			<input type="hidden" id="totalPrice" name="totalPrice">
+					
+			<div class="layui-form-item">
+				<span id="goodsName" th:text="${buyModel.goodsName}" style="color:black;font-size:20px;"></span>
+			</div>
+			<div class="layui-form-item">
+				<span id="goodsType" th:text="${buyModel.goodsType}" style="color:black;font-size:20px;"></span>
+			</div>
+			<div class="layui-form-item">
+				<span class="price" id="goodsPrice" th:text="${buyModel.goodsPrice}" style="color:black;font-size:20px;"></span>元/<span id="goodsUnit" th:text="${buyModel.goodsUnit}" style="color:black;font-size:20px;"></span>
+			</div>
+			<div class="layui-form-item">
+				库存：<span class="stock" id="goodsStockNumber" th:text="${buyModel.goodsStockNumber}" style="color:#C0C0C0;font-size:15px;"></span>
+			</div>
+			<div class="layui-form-item">
+				<input type="button" name="reduce" id="reduce" value="-" class="layui-btn layui-btn-primary layui-btn-xs" style="width:30px;height:30px;">
+				<input class="text_box" type="text" name="goodsNumber" id="num" value="0" style="width:30px;height:30px;font-size:20px;">
+				<input type="button" name="plus" id="plus" value="+" class="layui-btn layui-btn-primary layui-btn-xs" style="width:30px;height:30px;">
+				￥<span id="allprice" style="color:red;font-size:40px;"></span>元
+			</div>
+			<div class="layui-form-item">
+				<input type="button" name="intoCart" id="intoCart" value="加入购物车" class="layui-btn layui-btn-danger" style="width:120px;height:50px;">
+			</div>																					
+		</div>
+	</div>
+</form>
+
+
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+	var image=document.getElementById("cover").value;
+	document.getElementById("covered").innerHTML=image;
+
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	//plus点击事件
+	$(document).on('click','#plus',function(){
+		plus($("#goodsPrice").val(),$("#goodsStockNumber").val());
+	});
+	//reduce点击事件
+	$(document).on('click','#reduce',function(){
+		reduce($("#goodsPrice").val());
+	});
+	//文本框文本改变事件
+	$(".text_box").keyup(function(){
+		var t=$(this).parent().find('input[class*=text_box]');
+		var s=$(this).parent().prev().children('span.stock');
+		if(t.val()==""||undefined||null||isNaN(t.val())){
+			t.val(1);
+			layer.msg("请输入数字哟(*^_^*)");
+		}
+		if(t.val()==0){
+			t.val(1);
+			layer.msg("买一点吧QAQ");
+		}
+		if(parseInt(t.val())>parseInt(s.text())){
+			layer.msg("购买数量不能超过库存");
+			t.val(parseInt(s.text()));
+		}
+		var p=$(this).parent().prev().prev().children('span.price');
+		setPrice(parseInt(p.text()),parseInt(t.val()));
+	});
+	//计算一个商品的总价
+	function setPrice(goodsPrice,num){
+		var allprice=0;
+		allprice=parseInt(goodsPrice)*parseInt(num);
+		$("#totalPrice").attr("value",allprice);
+		$("#allprice").html(allprice.toFixed(2));
+		$("#num").html(num);
+	}
+	//数量加函数
+	function plus(goodsPrice,stock){
+		var tag=$("#num");
+		//var input =_tag.prev('input');
+		//if(tag.prev('input[disable]').length>0){
+			//return;
+		//}	
+		var amount=parseInt(tag.val());	
+		amount++;
+		if(amount>stock){
+			return layer.msg("购买数量不能大于库存");
+		}
+		else{
+			tag.val(amount);
+			setPrice(goodsPrice,amount);
+		}
+	}
+	//数量减函数
+	function reduce(goodsPrice){
+		var tag=$("#num");
+		//var input =_tag.prev('input');
+		//if(tag.prev('input[disable]').length>0){
+			//return;
+		//}	
+		var amount=parseInt(tag.val());	
+		amount--;
+		if(amount<=0){
+			return layer.msg("购买数量不能小于1");
+		}
+		else{
+			tag.val(amount);
+			setPrice(goodsPrice,amount);
+		}
+	}
+	//输入框文本改变函数
+	function amount_input(goodsPrice,stock){
+		var amount=$("#num").val();
+		if(isNaN(amount)){
+			layer.msg("最少购买量为1");
+			$("#num").val(1);
+		}
+		else{
+			if(amount>stock){
+				layer.msg("购买数量不能大于库存");
+				$("#num").val(stock);
+				$("#num").focus();
+			}
+			else if(amount<1){
+				layer.msg("最少购买数量为1");
+				$("#num").val(1);
+			}
+		}
+		setPrice(goodsPrice,amount)
+	}
+	
+	//点击加入购物车提交表单
+	$(document).on('click','#intoCart',function(){
+		var s=$('#num').val();
+		if(parseInt(s)==0){
+			layer.msg("一件都不买可不行！");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				//,dataType:'json'
+				,url:'../orderDetail/createOrderDetail'
+				,data:$('#form1').serialize()
+				,success:function(data){												
+					if(data==="true"){
+						alert("添加成功");
+						var index = parent.layer.getFrameIndex(window.name); 
+						parent.layer.close(index);
+					}	
+					else if(data==="false"){
+						layer.msg("重复添加商品，如需修改数量请前往购物车!");
+					}
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});		
+		}
+									
+	});
+});
+</script>
+
+</body>
+</html>

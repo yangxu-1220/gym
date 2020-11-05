@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta  charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneGymsSystem</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin" >
+  <div class="layui-header">
+    <div class="layui-logo"><h1>健身房</h1></div>
+    <!-- 顶部导航 -->
+    <ul class="layui-nav layui-bg-cyan layui-layout-left">
+      <li class="layui-nav-item">
+      	<a href="">会员管理</a>
+      	<dl class="layui-nav-child">
+      		<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">商品管理</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+     	 <a href="">课程管理</a>
+     	 <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>  
+            <dd><a href="/searchOrder/index">约课管理</a></dd>          
+          </dl>
+      </li>
+      <li class="layui-nav-item">
+      	<a href="">统计报表</a>
+      	<dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>          
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img id="user_img" src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          <label id="user_name"></label>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a id="userInformation" href="#">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="http://localhost:8080/login_out">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-bg-cyan layui-nav-tree">
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">会员管理</a>
+          <dl class="layui-nav-child">
+          	<dd><a href="../visit/index">会员来访</a></dd>
+          	<dd><a href="../member/index">会员管理</a></dd>
+            <dd><a href="../card/index_entity">会员卡管理</a></dd>
+            <dd><a href="../card/index">会员卡设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="../goods/index">商品管理</a></dd>
+            <dd><a href="../goodsType/index">商品类型</a></dd>
+            <dd><a href="../goodsSale/index">消费记录</a></dd>
+            <dd><a href="../stock/index">库存管理</a></dd>
+            <dd><a href="../operate/index">库存操作记录</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/course/index">课程管理</a></dd>
+            <dd><a href="/attendCourse/index">操课管理</a></dd>
+            <dd><a href="/searchOrder/index">约课管理</a></dd>            
+          </dl>
+        </li>
+         <li class="layui-nav-item">
+          <a href="javascript:;">统计报表</a>
+          <dl class="layui-nav-child">
+            <dd><a href="http://localhost:8080/change_1">会员消费统计</a></dd>
+            <dd><a href="http://localhost:8080/change_2">营业报表统计</a></dd>
+            <dd><a href="http://localhost:8080/change_3">员工业绩管理</a></dd>
+            <dd><a href="http://localhost:8080/change_7">会员来访统计</a></dd>   
+          </dl>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">更多操作</a>
+        <dl class="layui-nav-child">
+          <dd><a href="http://localhost:8080/setting/stuff">员工管理</a></dd>
+          <dd><a href="http://localhost:8080/trainer_management">教练管理</a></dd>
+          <dd class="layui-this"><a href="http://localhost:8080/setting/database">数据库管理</a></dd>         
+        </dl>
+      </li>       
+      </ul>
+    </div>
+  </div>
+  
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+    	<div class="layui-form-item">
+    		<h1 align="center">数据库备份与恢复</h1>
+    	</div>
+    <!-- 面板一 -->
+    <form class="layui-form" action="" onsubmit="return false">
+    	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  			<legend style="font-size:30px;color:red">数据库备份</legend>
+		</fieldset>
+		<div class="layui-form-item" style="font-size:16px">
+			<label class="layui-form-label">数据库用户</label>
+			<div class="layui-input-block"><input type="text" id="user_1" lay-verify="required" lay-reqtext="数据库用户名为必填项" placeholder="请输入数据库用户名" autocomplete="off" class="layui-input"></div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">数据库密码</label>
+	    	<div class="layui-input-block"><input type="password" id="password_1" lay-verify="required" lay-reqtext="数据库密码为必填项" placeholder="请输入数据库密码" autocomplete="off" class="layui-input"></div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">数据库名</label>
+	    	<div class="layui-input-block">
+	    		<select id="database_1" class="layui-input test-select">  
+		     		<option></option>   		          
+	      		</select>
+	    	</div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">备份路径</label>
+	    	<div class="layui-input-block"><input type="text" id="backupPath" name="backupPath" readonly="readonly" class="layui-input test-item" value="‪C:\Users\24376\Desktop\DataBase\"></div>
+	    </div>
+	    
+	    <div class="layui-form-item layui-layout-center" style="margin:auto;">
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<input type="button" id="button_1" class="layui-btn layui-btn-normal" value="备份">
+	    	<input type="reset" class="layui-btn layui-btn-warm" value="重置">
+	    </div>
+	</form>
+		   
+      <!-- 面板二 -->
+      <form class="layui-form" action="" onsubmit="return false">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  			<legend align="right" style="font-size:30px;color:red">数据库还原</legend>
+		</fieldset>
+		
+		<div class="layui-form-item" style="font-size:16px">
+			<label class="layui-form-label">数据库用户</label>
+			<div class="layui-input-block"><input type="text" id="user_2" lay-verify="required" lay-reqtext="数据库用户名为必填项" placeholder="请输入数据库用户名" autocomplete="off" class="layui-input"></div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">数据库密码</label>
+	    	<div class="layui-input-block"><input type="password" id="password_2" lay-verify="required" lay-reqtext="数据库密码为必填项" placeholder="请输入数据库密码" autocomplete="off" class="layui-input"></div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">数据库名</label>
+	    	<div class="layui-input-block">
+	    		<select id="database_2" required lay-verify="required" class="layui-input test-item">  
+		     		<option></option>          
+	      		</select>
+	    	</div>
+	    </div>
+	    
+	    <div class="layui-form-item" style="font-size:16px">
+	    	<label class="layui-form-label">数据库脚本</label>
+	    	<div class="layui-input-block"><input type="file" id="restoreFile" lay-verify="required" lay-reqtext="恢复数据库脚本为必选项" autocomplete="off" class="layui-input test-item"></div>
+	    </div>
+	    
+	    <div class="layui-form-item layui-layout-center" style="margin:auto;">
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<input type="button" id="button_2" class="layui-btn layui-btn-normal" value="恢复">
+	    	<input type="reset" class="layui-btn layui-btn-warm" value="重置">
+	    </div>
+	</form>
+
+    </div>
+      
+  	<div class="layui-footer" align="center">
+    	<div style="padding: 15px;" align="center">
+		    <span class="layui-badge-dot"></span>
+			<span class="layui-badge-dot layui-bg-orange"></span>
+			<span class="layui-badge-dot layui-bg-green"></span>
+			<span class="layui-badge-dot layui-bg-cyan"></span>
+			<span class="layui-badge-dot layui-bg-blue"></span>
+			<span class="layui-badge-dot layui-bg-black"></span>
+			<span class="layui-badge-dot layui-bg-gray"></span>
+			<span>Copyright ©2019-2020 GYJ.All Rights Reserved.</span>
+	        <span class="layui-badge-dot layui-bg-gray"></span>
+	        <span class="layui-badge-dot layui-bg-black"></span>
+	        <span class="layui-badge-dot layui-bg-blue"></span>
+	        <span class="layui-badge-dot layui-bg-cyan"></span>
+	        <span class="layui-badge-dot layui-bg-green"></span>
+	        <span class="layui-badge-dot layui-bg-orange"></span>
+	        <span class="layui-badge-dot"></span>
+    	</div>
+    	<hr class="layui-bg-cyan">
+  	</div>
+	</div>
+	<script src="../layui/layui.js"></script>
+	<script src="../js/user.js"></script>
+	<script type="text/javascript">	
+		//script方法
+		
+		layui.use('element', function(){		//点击打开二级目录等特效
+			  var element = layui.element; 		//导航的hover效果、二级菜单等功能，需要依赖element模块
+			  //监听导航点击
+			  element.on('nav(demo)', function(elem){
+			    //console.log(elem)
+			    layer.msg(elem.text());
+			  });
+		});
+		
+		layui.use(['layer','jquery','form'],function(){
+			var layer=layui.layer;
+			var $=layui.jquery;
+			var form=layui.form;
+			
+			$.ajax({					//为头像和用户名赋值
+				url:'/user/get_user',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					document.getElementById("user_img").src=data.image;
+					document.getElementById("user_name").innerHTML=data.name;
+				}
+			});
+			
+			$("#database_1").empty();		//ajax异步方法			
+			$.ajax({
+				url:'/setting/database_get',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					//alert(data);
+					$.each(data,function(index,item){
+						$('#database_1').append(new Option(item.database));
+					});
+					form.render();
+				}
+			});
+			$("#database_2").empty();		//ajax异步方法			
+			$.ajax({
+				url:'/setting/database_get',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					//alert(data);
+					$.each(data,function(index,item){
+						$('#database_2').append(new Option(item.database));
+					});
+					form.render();
+				}
+			});
+			
+			$(document).on('click','#button_1',function(){		//单击按钮事件	
+				//alert('按钮响应成功');
+				var user=document.getElementById("user_1").value;
+				var password=document.getElementById("password_1").value;
+				var database=document.getElementById("database_1").value;
+				var backupPath=document.getElementById("backupPath").value;
+				//alert(user+password+database+backupPath);
+				$.ajax({
+					type:"get"
+					,url:'/setting/backup_do'
+					,data:{
+						'user':user
+						,'password':password
+						,'database':database
+						,'backupPath':backupPath
+					}				
+					//?user='+user+'&password='+password+'&database='+database+'&backupPath='+'"'+backupPath+'"
+					,dataType:'json'
+					//type:'get',			
+					,success:function(data){
+						//console.log(data);
+						//form.render();
+						//var status=document.getElementById("status").value;		//判断是否备份成功
+						var status=data;
+						if(status==1)
+							layer.alert("数据库备份失败！！！");
+						if(status==2)
+							layer.alert("数据库备份成功！！！");
+					}
+				});
+			});
+			$(document).on('click','#button_2',function(){		//单击按钮事件
+				var user=document.getElementById("user_2").value;
+				var password=document.getElementById("password_2").value;
+				var database=document.getElementById("database_2").value;
+				var restoreFile=document.getElementById("restoreFile").value;
+				//alert(user+password+database+restoreFile);
+				
+				$.ajax({
+					type:"get"
+					,url:'/setting/restore_do'
+					,data:{
+						'user':user
+						,'password':password
+						,'database':database
+						,'restoreFile':restoreFile
+					}				
+					,dataType:'json'
+					//type:'get',			
+					,success:function(data){
+						//console.log(data);
+						//form.render();
+						//var status=document.getElementById("status").value;		//判断是否备份成功
+						var status=data;
+						if(status==1)
+							layer.alert("数据库还原失败！！！");
+						if(status==2)
+							layer.alert("数据库还原成功！！！");
+					}
+				});
+			});
+		});
+		
+		
+	</script>
+</body>
+</html>

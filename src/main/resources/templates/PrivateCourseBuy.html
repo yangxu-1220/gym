@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>购买私教课程</title>
+<link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<body>
+	<div id="addlayer" style="">
+		<form method="post" class="layui-form" action="/pay_private_course">
+		<div class="layui-form-item">	  
+	    	<label class="layui-form-label">私教课程名</label>
+		<div class="layui-input-inline">
+    		<input type="text" name="name" id="privateCourseName" readonly="readonly" th:value="${buyPrivateCourse.privateCourseName}" autocomplete="off" class="layui-input">
+		</div> 
+		</div> 
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">课程描述</label>
+		<div class="layui-input-inline">
+	    	<input type="text" name="context" id="privateCourseContext" readonly="readonly" th:value="${buyPrivateCourse.privateCourseContext}" autocomplete="off" class="layui-input">
+		</div>	
+		</div>
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">课程时长</label>
+		<div class="layui-input-inline">
+	    	<input type="text" name="privateCourseLength" id="privateCourseLength" readonly="readonly" th:value="${buyPrivateCourse.privateCourseLength}" autocomplete="off" class="layui-input">
+		</div>	
+		</div>
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">课程单价</label>
+		<div class="layui-input-inline">
+	    	<input type="text" name="privateCoursePrice" id="privateCoursePrice" readonly="readonly" th:value="${buyPrivateCourse.privateCoursePrice}" autocomplete="off" class="layui-input">
+		</div>	
+		</div>
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">私教教练</label>
+		<div class="layui-input-inline">
+	    	<select name="trainer" id="trainerName" class="select">
+	    		<option></option>
+	    	</select>
+		</div>	
+		</div>
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">课程数量</label>
+		<div class="layui-input-inline">
+			<input type="button" id="sub" style="width:30px;height:30px" value="-">
+ 				<input type="text" id="buyPrivateCourseNumber" name="number" style="width:40px;height:25px;text-align:center" value="1">
+ 				<input type="button" id="add" style="width:30px;height:30px" value="+">
+		</div>	
+		</div>
+		
+		<div class="layui-form-item">
+	    	<label class="layui-form-label">课程总价</label>
+	    <div class="layui-input-inline">
+	    	<input type="text" name="amount" id="buyPrivateCoursePrice" readonly="readonly" autocomplete="off" class="layui-input">
+		</div>
+		</div>
+		
+		<div class="layui-form-item layui-layout-center" style="width:200px;height:60px;margin:auto">
+	   		<input type="submit" id="button" class="layui-btn layui-btn-normal" value="付款">
+		</div>
+			
+		</form>
+	</div>
+	
+	<script src="/layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['form','jquery','layer','element'],function(){
+			var form=layui.form;
+			var layer=layui.layer;
+			var element=layui.element;
+			var $=layui.jquery;	
+			var index1=parent.layer.getFrameIndex(window.name);
+			
+			amount();			//默认执行一次
+			function amount(){										//计算课程总价
+				var buyPrivateCourseNumber=parseInt(document.getElementById("buyPrivateCourseNumber").value);
+				var privateCoursePrice=parseFloat(document.getElementById("privateCoursePrice").value);
+				document.getElementById("buyPrivateCoursePrice").value=parseFloat(buyPrivateCourseNumber*privateCoursePrice);
+			}
+			$(document).on('click','#sub',function(){		//执行减操作
+				var buyPrivateCourseNumber=parseInt(document.getElementById("buyPrivateCourseNumber").value);
+				if(buyPrivateCourseNumber<=1){
+					layer.alert("课程数量不能低于1");
+					return false;
+				}
+				document.getElementById("buyPrivateCourseNumber").value=buyPrivateCourseNumber-1;
+				amount();
+			});	
+			$(document).on('click','#add',function(){		//执行加操作
+				var buyPrivateCourseNumber=parseInt(document.getElementById("buyPrivateCourseNumber").value);
+				document.getElementById("buyPrivateCourseNumber").value=buyPrivateCourseNumber+1;
+				amount();
+			});
+			$("#buyPrivateCourseNumber").blur(function(){			//执行离焦操作
+				var buyPrivateCourseNumber=parseInt(document.getElementById("buyPrivateCourseNumber").value);
+				var privateCoursePrice=parseFloat(document.getElementById("privateCoursePrice").value);
+				if(buyPrivateCourseNumber<1){
+					layer.alert("课程数量不能低于1");
+					document.getElementById("buyPrivateCourseNumber").value=1;
+					document.getElementById("buyPrivateCoursePrice").value=parseFloat(privateCoursePrice);
+					return false;
+				}
+				amount();
+			});
+			//下拉列表异步查询
+			$("#trainerName").empty();				
+			$.ajax({
+				url:'/consume/attend_course/get_trainer_name',
+				//dataType:'json',
+				type:'get',			
+				success:function(data){
+					$.each(data,function(index,item){
+						$('#trainerName').append(new Option(item.trainerName));
+					});
+					form.render("select");
+				}
+			});
+			//单击按钮事件
+			$(document).on('click','#button',function(){
+				//setTimeout(close,1000);		//延时关闭
+				function close(){
+					parent.layer.close(index1);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

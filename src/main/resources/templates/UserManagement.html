@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>用户管理</title>
+</head>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<body>
+	<div id="addlayer" style="">
+	<form method="post" class="layui-form" action="/user/user_update" enctype="multipart/form-data">
+		<div class="layui-form-item">	  
+	    	<label class="layui-form-label">用户登录ID</label>
+		<div class="layui-input-inline">
+			<input type="hidden" id="id" th:value="${user.id}">
+    		<input type="text" name="name" id="name" readonly="readonly" th:value="${user.name}" autocomplete="off" class="layui-input">
+		</div>
+		</div>
+		
+		<div class="layui-form-item">	  
+	    	<label class="layui-form-label" id="type"></label>
+		<div class="layui-input-inline">
+    		<input type="text" name="userName" id="userName" readonly="readonly" th:value="${user.userName}" autocomplete="off" class="layui-input">
+		</div>
+		</div>  
+		
+		<div class="layui-form-item">	  
+	    	<label class="layui-form-label">原登录密码</label>
+		<div class="layui-input-inline">
+    		<input type="password" id="pass" name="pass" placeholder="为空默认不修改" autocomplete="off" class="layui-input">
+		</div>
+		</div>
+		
+		<div class="layui-form-item">	  
+	    	<label class="layui-form-label">新登录密码</label>
+		<div class="layui-input-inline">
+    		<input type="password" id="password" name="password" placeholder="为空默认不修改" autocomplete="off" class="layui-input">
+		</div>
+		</div>
+		
+		<div id="photo_1" class="layui-form-item">	  
+	    	<label class="layui-form-label">头像</label>
+		<div class="layui-input-inline">
+			<input type="hidden" id="image" th:value="${user.image}">
+    		<div id="img"></div>
+		</div>
+		</div>
+		
+		<div id="photo_2" class="layui-form-item">	  
+	    	<label class="layui-form-label">修改头像</label>
+		<div class="layui-input-inline">
+    		<input type="file" id="userImage" name="userImage" value="修改照片"  autocomplete="off" class="layui-input">
+		</div>
+		</div>
+		
+		<div class="layui-form-item layui-layout-center" style="width:200px;height:60px;margin:auto">
+	   		<input type="submit" id="button" class="layui-btn layui-btn-normal" value="保存">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   		<input type="reset" class="layui-btn layui-btn-warm" value="重置">
+		</div>
+	</form>
+		<script src="../layui/layui.js"></script>
+			<script type="text/javascript">	
+			
+				var image=document.getElementById("image").value;		//填充用户头像
+				document.getElementById("img").innerHTML=image;
+				
+				var id_1=document.getElementById("id").value;				//填充用户类型标签
+				var id=parseInt(id_1);
+				var type;
+				if(id<100000) {		//管理员
+					type="管理员姓名";
+				}
+				else if(Math.floor(id/100000)==1) {	//会员
+					type="会员姓名";
+					document.getElementById("photo_1").innerHTML="";
+// 					document.getElementById("photo_2").innerHTML="";
+					document.getElementById("photo_2").style.display="none";
+				}
+				else if(Math.floor(id/100000)==6) {	//前台
+					type="前台姓名";
+				}
+				else if(Math.floor(id/100000)==8) {	//教练
+					type="教练姓名";
+				}
+				else
+					type="用户姓名";
+				document.getElementById("type").innerHTML=type;
+				
+				layui.use(['form','jquery','layer','element'],function(){
+					var form=layui.form;
+					var layer=layui.layer;
+					var element=layui.element;
+					var $=layui.jquery;	
+					var index=parent.layer.getFrameIndex(window.name);
+					
+					$("#pass").blur(function(){			//执行离焦操作
+						var pass=document.getElementById("pass").value;		//判断新旧密码是否一致
+						$.ajax({
+							url:'/user/get_user_password?password='+pass,
+							//dataType:'json',
+							type:'get',			
+							success:function(data){
+								if(data=="false"){
+									layer.alert('原密码输入错误');
+									return false;
+								}
+								if(pass!="" && password.length<6){
+									layer.alert('新密码长度必须大于6位');
+									return false;
+								}
+							}
+						});
+					});
+					$("#password").blur(function(){			//执行离焦操作
+						var pass=document.getElementById("pass").value;
+						var password=document.getElementById("password").value;
+						if(pass!="" && password.length<6){
+							layer.alert('新密码长度必须大于6位');
+							return false;
+						}
+					});
+					
+					//单击按钮事件
+					$(document).on('click','#button',function(){
+						var index=parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					});
+				});
+			</script>
+	</div>
+</body>
+</html>

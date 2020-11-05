@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>NeptuneGymsSystem</title>
+<link rel="stylesheet" type="text/css" href="../index/css/style.css"/>
+<script type="text/javascript" src="../index/js/modernizr.js"></script>
+<script>
+</script>
+<style type="text/css">
+<!--
+.STYLE1 {
+	font-size: 24px;
+	color: #D6CBA9;
+	font-weight: bold;
+}
+.STYLE2 {
+	color: #CC6633;
+	font-weight: bold;
+	font-size: 16px;
+}
+.STYLE3 {
+	color: #CC6633;
+	font-size: 16px;
+}
+.STYLE4 {color: #CC9999}
+.STYLE5 {color: #CC9999; font-size: 16px; }
+.STYLE6 {color: #666666}
+.STYLE7 {color: #003366}
+.STYLE8 {color: #003366; font-size: 16px; }
+.STYLE9 {
+	color: #666633;
+	font-size: 16px;
+}
+.STYLE10 {color: #666633; font-size: 16px; font-weight: bold; }
+-->
+</style>
+</head>
+<body>
+<!--头部 开始-->
+<div id="header">
+    <!--顶部bar 开始-->
+    <div id="headCont">
+        <audio id="audioPlayer"></audio>
+    	<!--二级导航-->
+        <nav class="sub_nav">
+            <div class="nav_list">
+                <ul>
+                    <li></li>
+                    <li>
+                      <div><img src="../index/images/logo.png" alt="logo" width="144" height="50"></div>
+                    </li>
+                    <div class="sub_list" id="sub_list">
+                        <p align="center" class="active STYLE4 STYLE5 STYLE1">
+                             将来的你，一定会感激现在努力的自己 </p>
+                  </div>
+                </ul>
+          </div>
+      </nav>
+    </div>
+  	<!--头部导航结束-->
+</div>
+<section class="section_cont">
+    <!--轮播图 开始 -->
+    <div class="main_banner">
+        <div class="main_banner_bg"></div>
+        <div class="main_banner_wrap">
+            <div class="main_banner_box" id="m_box">
+                <a href="javascript:void(0)" class="banner_btn js_pre">
+                    <span class="banner_btn_arrow"><i></i></span>                </a>
+                <a href="javascript:void(0)" class="banner_btn btn_next js_next">
+                    <span class="banner_btn_arrow"><i></i></span>                </a>
+                <ul>
+                    <li id="imgCard0">
+                        <span style="opacity:0;"></span>    
+                        <img src="../index/images/head1.jpg" alt="走丢了">
+                        <p style="bottom:0">只要不放弃，你永远都是强者！</p>
+                  </li> 
+                    <li id="imgCard1">
+                       <span style="opacity:0.4;"></span>     
+                        <img src="../index/images/head2.jpg" alt="走丢了">
+                        <p>他们嘲笑打击你，是因为你越来越优秀了.</p>
+                    </li> 
+                    <li id="imgCard2">
+                        <span style="opacity:0.4;" ></span>       
+                        <img src="../index/images/head3.jpg" alt="走丢了">
+                        <p>健身是世界上最公平的事，付出多少，收获多少.</p>
+                    </li> 
+                    <li id="imgCard3">
+                        <span style="opacity:0.4;"></span>     
+                        <img src="../index/images/head4.jpg" alt="走丢了">
+                        <p>倒下，也要倒在自己的地盘上.</p>
+                    </li> 
+                    <li id="imgCard4">
+                        <span style="opacity:0.4;"></span>     
+                        <img src="../index/images/head5.jpg" alt="走丢了">
+                        <p>放弃可以找到一万个理由，坚持只需一个信念面前!</p>
+                    </li> 
+                </ul>
+                <p id="rflt"></p>
+            </div>
+            <!--序列号按钮-->
+            <div class="btn_list">
+                <span class="cur"></span><span></span><span></span><span></span><span></span> </div>
+        </div>
+    </div>
+    <!--轮播图 结束 -->
+    <div class="new_mv new_common">
+      <div class="new_mv_title new_common_title index_mv_title"> <span>你最喜欢谁？</span>
+          <ul>
+            <li><a href="login">登录</a></li>
+          </ul>
+      </div>
+      <div class="new_mv_body index_mv_body">
+        <div class="mvList" id="mv_rank_list" style="display:block;">
+          <ul class="sb" id="main">
+            <li> <a href="javascript:;" class="playIcon" > <img width="220" height="125" src="../index/images/people1.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>男神？彭于晏</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/people2.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>杰森·斯坦森</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/people3.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" />
+            <span> <font>阿诺德·施瓦辛格</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/people4.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>西尔维特斯·史泰龙</font> </span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/people5.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" />
+            <span><font>52岁？？陈传多</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/person6.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>加州女神—-安娜谢里</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/person7.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>澳大利亚凯拉</font> </span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/person8.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>佩奇·海瑟薇</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/person9.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>艾莱克斯</font></span> </a> </li>
+            <li> <a href="javascript:;" class="playIcon"> <img width="220" height="125" src="../index/images/person10.jpg" class="attachment-220x125 wp-post-image" alt="图不见了" /> 
+            <span> <font>阿曼达</font> </span> </a> </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <div class="songs_rcmd_title">
+        <div class="rcmd_left_title rcmd_title">
+            <span>健身计划</span>
+        </div>
+        <div class="rcmd_center_title rcmd_title">
+            <span>补剂知识</span>
+		</div>
+        <div class="rcmd_right_title rcmd_title">
+            <span>今日食谱</span>
+        </div>
+  </div>
+    
+  <div class="songs_rcmd" id="songs_rcmd">
+  <table width="100%" border="0">
+  <tr>
+    <td width="34%" bgcolor="#CCCCCC"><div class="STYLE2">减脂计划</div>
+      <div class="STYLE3">　　不管想达到什么样的最终效果，健身计划的第一步都是要减脂。如果体脂率可以降到一定的程度，肌肉自然而然就会显露出来，所以健身先减脂是一个基本的常识。</div>
+      <div class="STYLE3"><br>
+        <strong>
+        增肌计划</strong></div>
+      <div class="STYLE3">　　当体脂率降到一定的程度，就可以开始制定增肌计划，可以做一些大剂量的无氧运动，给自己的肌肉一点压力，促使它增加围度和耐力，让自己变得强壮起来。但是要注意对关节的保护。</div>
+      <div class="STYLE3"><br>
+        <strong>形体计划</strong></div>
+      <div class="STYLE3">　　当我们把体脂率降下来之后，并且已经练成一定的肌肉，就可以开始整体塑形计划了。首先，我们可以查缺补漏，看看身上哪块肌肉薄弱，重点锻炼那些部位，然后开始增加身体的柔韧度。</div></td>
+    <td width="33%" bgcolor="#D2D5DD"><p class="STYLE5"><span class="STYLE7"><strong>初学者： </strong><br>
+      体重正常或者偏胖： 乳清蛋白粉 <br>
+      体重偏瘦： 增肌粉</span></p>
+      <p class="STYLE8"><strong>进阶者</strong>（3个月以上，且在锻炼强度上感觉有些吃力）： <br>
+        体重正常或者偏胖： 肌酸 + 乳清蛋白粉 或者 用正氮蛋白粉（用正氮价格会贵一些） <br>
+        体重偏瘦： 肌酸 + 增肌粉</p>
+      <p class="STYLE8"><strong>狂热、运动员</strong>（半年以上，且在锻炼强度是感觉很吃力）： <br>
+        体重正常或者偏胖： 肌酸 + 乳清蛋白粉 + 支链氨基酸 <br>
+        体重偏瘦： 肌酸 + 增肌粉 + 支链氨基酸 。</p>
+      <p class="STYLE8">&nbsp;</p>
+      <p class="STYLE5"><span class="STYLE6">注：不能过多依赖于补剂，补剂仅仅起到辅助作用</span></p></td>
+    <td width="33%" bgcolor="#E6E1CE"><div class="STYLE10">牛肉+全麦面包+橙汁</div>
+      <div class="STYLE9">　　在健身增肌时，我们一定要控制好高热量食物的摄入，因为我主食碳水化合物含量高，所以不适合在健身时食用。可以借助低热量的全麦面包进行代替，我们一天运动量大，所以细胞容易受损，而牛肉富含蛋白质可以修复受损细胞。而橙汁主要是为了补充维生素，平衡营养。</div>
+      <div class="STYLE9"><br>
+        <strong>
+        蔬菜沙拉+地瓜+鸡胸肉</strong></div>
+      <div class="STYLE9">　　地瓜主要是为了代替主食，起中含有丰富的粗纤维，有助于肠道蠕动。而蔬菜沙拉能够补充维生素，有助于我们肠道的保护。鸡胸肉含有的脂肪量极低，同时又属于蛋白质含量比较好的食物，既能够保证我们蛋白质含量的摄入，又能够保证不会摄入太多热量，所以很适合我们日常食用。</div>
+      <div class="STYLE9"><br>
+        <strong>玉米+豆浆+牛油果三明治</strong></div>
+      <div class="STYLE9">　　玉米是作为主食食用的，豆浆含有丰富的蛋白质，同时热量低，比牛奶更加适合我们在健身的时候食用。而牛油果是一种营养非常丰富的水果，也很美味，可以搭配全麦面包做三明治。在这一餐，就能够完全补充我们各类营养需求。</div></td>
+  </tr>
+</table>
+
+  </div>
+
+    <div class="omnibus hot_singer">
+        <div class="omnibus_cont new_common">
+            <div class="omnibus_title new_common_title">
+                <span>课程专区</span>
+                <a href="" class="more"></a>            </div>
+            <ul id="omnibus_list">
+                <li class="post_big">
+                    <a href="javascript:;">
+                        <img src="../index/images/gl.jpg" alt="" width="305" height="290">
+                        <i></i>                    </a>
+                    <a href="javascript:;">减脂塑形——杠铃操</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src="../index/images/ky.jpg" alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="javascript:;">空中瑜伽</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src='../index/images/jue.jpg' alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="">爵士</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src="../index/images/pu.jpg" alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="">普拉提</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src='../index/images/yy.jpg' alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="">有氧舞蹈</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src='../index/images/boji.jpg' alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="">搏击操</a>                </li>
+                <li class="post_small">
+                    <a href="">
+                        <img src="../index/images/cx.jpg" alt="" width="130" height="130">
+                        <span></span>                    </a>
+                    <a href="">CXWORX</a>                </li>
+            </ul>
+        </div>
+        <div class="hot_singer_cont new_common">
+            <div class="hot_singer_title new_common_title">
+                <span>关于我们</span>
+                <a href="" class="more"></a>            </div>
+            <ul class="singer_list">
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src="../index/images/huju.jpg" alt="" width="70" height="70"></a>
+                    <a href="" class="singer">护具</a>                </li>
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src="../index/images/buji.jpg" alt="" width="70" height="70"></a>
+                    <a href="" class="singer">补剂</a>                </li>
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src="../index/images/course.jpg" alt="" width="70" height="70"></a>
+                    <a href="" class="singer">约课</a>                </li>
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src="../index/images/sijiao.jpg" alt="" width="70" height="70"></a>
+                    <a href="" class="singer">私教</a>                </li>
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src='../index/images/member.jpg' alt="" width="70" height="70"></a>
+                    <a href="" class="singer">会员</a>                </li>
+                <li>
+                    <a href="" class="singerPhoto">
+                        <img src="../index/images/trainer.jpg" alt="" width="70" height="70"></a>
+                    <a href="" class="singer">教练</a>                </li>
+                <div style="clear:both;"></div>
+            </ul>
+        </div>
+    <div style="clear:both"></div></div>
+</section>
+<!--底部 开始 -->
+<div class="footer" id="footer">
+	<div class="footer_cont">
+    	<div class="footer_cont_left">
+        	<p>
+            	||<a href="">员工专区</a>||<a href="login">会员专区</a>||<a href="">教练专区</a>||
+
+            </p>
+            <p>
+            	JXN © GZQ and YX
+            </p>
+        </div>
+        <div class="footer_cont_right">
+        	<span>加入我们</span>
+        	<ul>
+                <li>
+					<a href="" class="twoCode">
+						<span></span>
+						<img class="tCode" src="../image/qrcode.jpg" width="100" height="100" alt="二维码" />
+					</a>
+				</li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div id="toTop"></div>
+    </div>
+
+</div>
+<!--底部结束 -->
+<script type="text/javascript" src="../index/js/jquery.js"></script>
+<script type="text/javascript" src="../index/js/index.js"></script>
+</body>
+</html>
+
+

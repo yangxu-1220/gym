@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NeptuneShop</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body style="background:#F5F5F5">
+<form class="layui-form">
+<div class="layui-container"> 
+  <div class="layui-row">
+    <!-- logo区域 -->
+    <div class="layui-col-md3">  
+		  	<div class="layui-card" style="height:200px;">
+		  		<img src="../image/logo/white_logo.svg" alt="图不见咯" height="190px" width="250px">
+		  	</div>	 				 		  			    							 				  			    	 			        		        	          		 
+    </div>
+    <!-- 轮播区域 -->
+    <div class="layui-col-md6">    
+	  	<div class="layui-carousel" id="shop_carousel">
+		  <div carousel-item align="center">
+		    <div>
+				<img src="../image/carousel/1528084978838818.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+		    	<img src="../image/carousel/016772554434e80000019ae9189613.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image//carousel/6a90424e9a09b88a41165e2e7c0321d6.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image/carousel/2164229_000211669413_2.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		    <div>
+				<img src="../image/carousel/v2-7955479586fc2848bf962c2ac6acf173_r.jpg" alt="图不见咯" height="200px" width="450px"/>
+			</div>
+		  </div>
+		</div>
+    </div>
+    <!-- 个人信息区域 -->
+    <div class="layui-col-md3" align="center">
+    	<div class="layui-card" style="height:200px;">
+		  <div class="layui-card-header">个人信息</div>
+		  <div class="layui-card-body">
+			    <div style="width: 100px;height: 100px; border-radius:50px;overflow: hidden;border:2px solid #E6E6FA;">
+	      			<img id="user_img" src="../image/head/01f1bd5d19f28ba8012076404361ce.jpg@1280w_1l_2o_100sh.jpg" alt="" width="100px" height="100px">
+	      			<input type="hidden" id="userid" name="userid" th:value="${session.id}">
+	      		</div>     
+	          	<a href="##" id="user_name">Hi! 你好</a>	          	          
+		  </div>
+		</div>                
+    </div>
+  </div>
+  <div class="layui-row">
+  	<!-- 导航区域 -->
+  	<!-- 表格区域 -->
+    <div class="layui-col-md9" style="height:400px;">  
+    	<input type="hidden" id="userId" th:value="${session.id}">
+    	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+  			<legend align="center" style="font-size:25px">私教服务</legend>
+		</fieldset>
+
+		<div class="layui-collapse" lay-accordion="">
+  			<div class="layui-colla-item">
+  				<div id="myCourse">
+	    			<h2 class="layui-colla-title">我的课程</h2>
+	   				<div class="layui-colla-content">
+	   					<table id="privateCourse" lay-filter="privateCourse"></table>
+	   				</div>
+	   			</div>
+  			</div>
+  			
+			<!--会员独有方法 -->
+  			<div id="buyPrivateCourse">
+			    <div class="layui-colla-item">
+			    	<h2 class="layui-colla-title">购买私教课程</h2>
+			    	<div class="layui-colla-content layui-show">
+			      		<table class="layui-table" 
+			      			lay-data="{
+				      			url:'/private_course_management/member/buy_private'
+				      			,limit: 5
+				      			,page:{ 	
+				      				layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					      			,limits:[5,10,15]
+					      			,first: false
+					      			,last: false
+					      		}
+				      			,parseData:function(data){
+				      				return{ 
+					      				'code':0
+					      				,'msg':''
+					      				,'count':data.count
+					      				,'data':data.data 
+				      				} 
+				      			} 
+			      			}" lay-filter="buyPrivateCourse">
+						  <thead>
+						    <tr>
+						      <th lay-data="{field:'privateCourseName',width:'25%',sort: true,fixed:'left'}">私教课程名</th>
+						      <th lay-data="{field:'privateCourseContext',width:'35%'}">课程描述</th>
+						      <th lay-data="{field:'privateCourseLength',width:'15%',sort: true}">课程时长</th>
+						      <th lay-data="{field:'privateCoursePrice',width:'15%',sort: true}">课程单价</th>
+						      <th lay-data="{fixed:'right',width:'10%',align:'center', toolbar: '#bar'}">购买</th>
+						    </tr>
+						  </thead>
+						</table>
+						<script type="text/html" id="bar">
+       						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="buy">购买</a>
+	 					</script>
+			    	</div>
+		    	</div>
+		    </div>
+	    	
+	    	<div id="BoughtPrivateCourse">
+		    	<div class="layui-colla-item">
+			    	<h2 class="layui-colla-title">已购买私教课程</h2>
+			    	<div class="layui-colla-content layui-show">
+			    		<table class="layui-table" 
+			    			lay-data="{
+				    			url:'/private_course_management/member/select_bought_private'
+				    			,limit: 5
+				      			,page:{ 	
+				      				layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					      			,limits:[5,10,15]
+					      			,first: false
+					      			,last: false
+					      		}
+				      			,parseData:function(data){
+				      				return{ 
+					      				'code':0
+					      				,'msg':''
+					      				,'count':data.count
+					      				,'data':data.data 
+				      				} 
+				      			} 
+			      			}" lay-filter="BoughtPrivateCourse">
+							<thead>
+							    <tr>
+							      <th lay-data="{field:'privateCourseName',width:'20%',sort: true,fixed:'left'}">购买私教课程</th>
+							      <th lay-data="{field:'memberName',width:'15%'}">购买会员</th>
+							      <th lay-data="{field:'trainerName',width:'15%'}">上课教练</th>
+							      <th lay-data="{field:'buyPrivateCourseTime',width:'15%',sort: true}">购买时间</th>
+							      <th lay-data="{field:'buyPrivateCourseNumber',width:'15%',sort: true}">购买数量</th>
+							      <th lay-data="{field:'buyPrivateCoursePrice',width:'20%',sort: true}">总价</th>
+							    </tr>
+						  </thead>
+						</table>
+			    	</div>
+		    	</div>
+		    </div>
+		    
+            <!--教练独有方法 ，预留方法-->
+		    <div id="managementPrivateCourse">
+			    <div class="layui-colla-item">
+	    			<h2 class="layui-colla-title">安排会员上课</h2>
+	   				<div class="layui-colla-content layui-show">
+	   					<table class="layui-table" 
+	   						lay-data="{
+	   							url:'/private_course_management/member/buy_private'
+		   						,limit: 5
+				      			,page:{ 	
+				      				layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					      			,limits:[5,10,15]
+					      			,first: false
+					      			,last: false
+					      		}
+				      			,parseData:function(data){
+				      				return{ 
+					      				'code':0
+					      				,'msg':''
+					      				,'count':data.count
+					      				,'data':data.data 
+				      				} 
+				      			} 
+			      			}" lay-filter="managementPrivateCourse">
+						  <thead>
+						    <tr>
+						      <th lay-data="{field:'privateCourseName',width:'20%',sort: true,fixed:'left'}">私教课程</th>
+							      <th lay-data="{field:'trainerName',width:'15%'}">上课会员</th>
+							      <th lay-data="{field:'trainerName',width:'15%'}">教练</th>
+							      <th lay-data="{field:'buyPrivateCourseNumber',width:'15%',sort: true}">课程数量</th>
+						      <th lay-data="{fixed:'right',width:'35%',align:'center', toolbar: '#bar'}">操作</th>
+						    </tr>
+						  </thead>
+						</table>
+						<script type="text/html" id="bar">
+       						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="attend">上课</a>
+	 					</script>
+	   				</div>
+	  			</div>
+  			</div>
+		    
+	    </div>
+    	   
+    </div>
+    <!-- 购物车显示区域 -->
+    <div class="layui-col-md3" style="height:400px;">
+    	 <div class="layui-card" style="height:400px;">
+		  <div class="layui-card-header" align="center">传送门</div> 
+		  <div class="layui-card-body" align="center" >
+			  <div id="jumpDiv"></div>
+		  <script type="text/html" id="jumpScript">
+			  {{# if(d.status==1) {}}
+		      <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-warm" href="/user/index" id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-normal" href="/orderCourse/index" id="orderCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  <div class="layui-form-item">			    
+					<a id="toCart" href="/orderCourse/toOrderList" class="layui-btn" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  {{# } else if(d.status==0){}}
+			  <div class="layui-form-item">			  	
+			  		<a class="layui-btn layui-btn-disabled" disabled id="index" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-home"></i>首页</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+			    	<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-dialogue"></i>会员约课</a>			    
+			  </div>
+			  
+			  <div class="layui-form-item">			    
+					<a class="layui-btn layui-btn-disabled" disabled style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的预约</a>						 				  			    	 			        		        	          
+		  	  </div>
+	 	  {{#}}}
+			  <div class="layui-form-item">				  	
+			  		<a class="layui-btn layui-btn-danger" href="/shop/index" id="shop" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon layui-icon-cart-simple"></i>网上商城</a>			  	
+			  </div>
+			  <div class="layui-form-item">			    
+					<a class="layui-btn" href="/private_course_management" id="privateCourse" style="font-size:20px;width:100%;height:18%;"><i class="layui-icon layui-icon-diamond"></i>私教服务</a>					
+		      </div>			  		
+	 		  			    				
+		      <div class="layui-form-item">			    
+					<a id="toCart" href="/cart/selectDetailById" class="layui-btn layui-btn-danger" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的购物车</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  	  <div class="layui-form-item">			    
+					<a id="toCart" href="/myOrder/index" class="layui-btn layui-btn-normal" style="font-size:20px;height:18%;width:100%;"><i class="layui-icon layui-icon layui-icon-cart"></i>我的订单</a>						 				  			    	 			        		        	          
+		  	  </div>
+		  </script>
+		</div>  		
+    </div>
+  </div>
+ </div>
+ </div>
+ </form>
+<script src="../layui/layui.js"></script>
+<script src="../js/user.js"></script>
+<script type="text/javascript">
+	layui.use(['layer','jquery','laytpl','form','laypage','table','element','carousel'],function(){
+		var layer=layui.layer;
+		var $=layui.jquery;
+		var form=layui.form;
+		var laypage=layui.laypage;
+		var table=layui.table;						
+		var element=layui.element;	
+		var carousel=layui.carousel;
+		var laytpl=layui.laytpl;
+		var userId=$("#userId").val();
+			
+			$(function(){
+				if(parseInt(userId)>100000 && parseInt(parseInt(userId)/100000)==1){			
+					var status=1;
+					console.log(userId);
+				}
+				else{
+					var status=0;
+				}
+				var jumpScript=document.getElementById('jumpScript');
+				var jumpData={
+						"status":status
+				}
+				var jumpTpl=jumpScript.innerHTML;
+				var jumpView=document.getElementById('jumpDiv');
+				laytpl(jumpTpl).render(jumpData,function(html){
+					jumpView.innerHTML = html;
+				});
+			})
+		
+		$.ajax({					//为头像和用户名赋值
+			url:'/user/get_user',
+			//dataType:'json',
+			type:'get',			
+			success:function(data){
+				document.getElementById("user_img").src=data.image;
+				document.getElementById("user_name").innerHTML=data.name;
+			}
+		});
+		
+	    //监听手风琴折叠
+	    element.on('collapse(test)', function(data){
+	    	layer.msg('展开状态：'+ data.show);
+	    });
+		
+		$.ajax({
+			type:'get'
+			,url:'/private_course_management/user_type'
+			,success:function(data){
+				if(data==="会员"){
+					document.getElementById('managementPrivateCourse').innerHTML="";		//将教练部分清空
+					table.render({		//渲染“我的课程”
+						elem:'#privateCourse'
+						,url:'/private_course_management/member/select_member_private'
+						,method:"get"
+						,limit: 5				//要传向后台的每页显示条数
+				        ,page: { 				//支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem）
+				            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']				//自定义分页布局 
+				            ,limits:[5,10,15]
+				            ,first: false 			//不显示首页
+				            ,last: false 			//不显示尾页
+				        }
+				        ,parseData:function(data){
+			    			return{
+			    				"code":0
+			    				,"msg":""
+			    				,"count":data.count
+			    				,"data":data.data
+			    			}
+			    		}
+						,cols:[
+					    		[	
+					    	      {field:'attendPrivateTime', title:'上课时间', sort: true}	
+					    		  ,{field:'memberName', title:'上课会员'}
+							      ,{field:'privateCourseName', title:'私教课程'}
+							      ,{field:'attendPrivateLenght', title:'上课时长'}
+							      ,{field:'attendPrivatePlace', title:'上课地点'}			      
+							      ,{field:'trainerName', title:'私课教练'}					     
+					   			]
+					    	]
+					});
+					
+					//监听工具条
+					table.on('tool(buyPrivateCourse)', function(obj){
+					    var data = obj.data;
+					    if(obj.event === 'buy'){
+					    	var privateCourseName=data.privateCourseName;
+					      
+						    layer.open({				//购买私教课
+								type:2,
+								title:"购买私教课程",
+								area:['450px','650px'],
+								//btn:['确定','取消'],
+								content:['/private_course_management/member/buy_private_do?privateCourseName='+privateCourseName,'yes'],
+								yes:function(index,layero){
+									var body=layer.getChildFrame('body',index);
+									var AddIframe=window[layero.find('iframe')[0]['name']];
+									var index=parent.layer.getFrameIndex(window.name);
+									//$("#userType").empty();
+									parent.layer.close(index);
+									parent.location.reload();									
+								}
+							});
+					      
+					    }
+					});
+					
+				}else if(data==="教练"){
+					document.getElementById('buyPrivateCourse').innerHTML="";		//将会员部分清空
+					//document.getElementById('BoughtPrivateCourse').innerHTML="";
+					document.getElementById('managementPrivateCourse').innerHTML="";
+					table.render({
+						elem:'#privateCourse'
+						,url:'/private_course_management/trainer/select_trainer_private'
+						,method:"get"
+							,limit: 5				//要传向后台的每页显示条数
+					        ,page: { 				//支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem）
+					            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']				//自定义分页布局 
+					            ,limits:[5,10,15]
+					            ,first: false 			//不显示首页
+					            ,last: false 			//不显示尾页
+					        }
+					        ,parseData:function(data){
+				    			return{
+				    				"code":0
+				    				,"msg":""
+				    				,"count":data.count
+				    				,"data":data.data
+				    			}
+				    		}
+						,cols:[
+					    		[	
+					    		  {field:'attendPrivateTime', title:'上课时间', sort: true}
+					    		  ,{field:'trainerName', title:'私课教练'}
+					    		  ,{field:'memberName', title:'上课会员'}
+							      ,{field:'privateCourseName', title:'私教课程'}
+							      ,{field:'attendPrivateLenght', title:'上课时长'}
+							      ,{field:'attendPrivatePlace', title:'上课地点'}			      
+					   			]
+					    	]
+					});
+				}else{
+					document.getElementById('buyPrivateCourse').innerHTML="";		//将会员，教练部分清空
+					document.getElementById('BoughtPrivateCourse').innerHTML="";
+					document.getElementById('managementPrivateCourse').innerHTML="";
+					document.getElementById('myCourse').innerHTML="";
+// 					table.render({			//默认不加载数据
+// 						elem:'#privateCourse'
+// 						,url:''
+// 						,method:"get"
+// 						,parseData:function(res){				
+// 							console.log(res)
+// 							return{
+// 								"code":0
+// 								,"msg":""
+// 								//,"count":1000
+// 								,"data":res
+// 							}
+// 						}
+// 						,cols:[
+// 					    		[	
+// 					    		  {field:'', title:'上课时间', sort: true}
+// 					    		  ,{field:'', title:'上课时长'}	
+// 					    		  ,{field:'', title:'上课会员'}
+// 							      ,{field:'', title:'私教课程'}
+// 							      ,{field:'', title:'上课地点'}			      
+// 							      ,{field:'', title:'私课教练'}					     
+// 					   			]
+// 					    	]
+// 					});
+				}
+			}
+		});
+		
+		table.on('tool(shop_dataTable)', function(obj){ //注：tool 是工具条事件名，goods_toolBox 是 table 原始容器的属性 lay-filter="对应的值"
+			var data = obj.data //获得当前行数据
+		    ,layEvent = obj.event; //获得 lay-event 对应的值
+		    if(layEvent === 'buy'){
+		    	buy(data.goodsId);
+		    } 	    
+		});
+		
+		//轮播
+		carousel.render({
+		    elem: '#shop_carousel'
+		    ,width: '570px' //设置容器宽度
+		    ,height:'200px'
+		    ,arrow: 'always' //始终显示箭头
+		    ,interval:5000   //自动切换时间毫秒（ms）
+		    //,anim: 'updown' //切换动画方式
+		  });
+		
+		function buy(goodsId){
+			layer.open({
+				type:2
+				,title:"商品购买"
+				,content:'../shop/selectGoodsInfoById?id='+goodsId
+				,area:['650px','460px']
+				,end:function(){
+					var url='/shop/selectShopBtween'
+					var goodsType=null;
+					getData(0,goodsType,url);
+				}
+			});
+		}		
+		//下拉框监听
+		form.on('select(goodsTypeSelect)',function(data){
+			var url='../shop/getGoodsByType';
+			var goodsType=data.value;
+			getData(0,goodsType,url);
+			if(data.value==="所有"){
+				var url='/shop/selectShopBtween'
+				var goodsType=null;
+				getData(0,goodsType,url);
+			}
+		});
+		
+		//进入购物车
+		$(document).on('click','toCart',function(){
+			
+		});
+	});
+</script>
+</body>
+</html>

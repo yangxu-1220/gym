@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+	.div_1{
+		padding-top:7px;
+		font-size:14px;
+	}
+</style>
+<link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<script src="../layui/layui.js"></script>
+<div id="addlayer" style="">
+<form class="layui-form"> 
+ <hr class="layui-bg-green">	
+   <div class="layui-form-item">
+		 <div align="center"><a id="transfer" class="layui-btn layui-btn-sm layui-btn-primary">转卡</a>
+		   <a id="upgrade" class="layui-btn layui-btn-sm">升级</a>
+		   <a id="issue" class="layui-btn layui-btn-danger layui-btn-sm">补卡</a>	
+		   <a id="renewal" class="layui-btn layui-btn-warm layui-btn-sm">续费</a>
+         </div>
+   </div>  
+   <!-- 照片显示 -->
+   <div class="layui-form-item" style="width:350px;height:200px;margin:auto;">
+	    	<div id="image" style="width:300px;height:350px;margin:auto;">
+	    	<img style="width:350px; height:200px;" th:src="${memberS.memberImage}">
+	    	</div> 
+  </div>
+  <hr class="layui-bg-gray">
+    <!-- 会员编号 -->	
+    <div><input type="hidden" id="memberId" th:value="${memberS.memberId}"></div>	
+    <div class="layui-form-item">	  
+	     <label class="layui-form-label">会员编号：</label>
+		 <div class="layui-input-inline">
+		 	<div class="div_1">
+		 		<span th:text="${memberS.memberId}"></span>
+		 		<input type="hidden" th:value="${memberS.memberId}" id="memberId" name="memberId">
+		 	</div>
+	     </div>
+       <!-- 会员姓名 -->	
+			<label class="layui-form-label">会员姓名：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.memberName}"></span>
+		 		</div>
+			</div>
+	    <!-- 会员类型 -->
+		    <label class="layui-form-label">会员类型：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.memberType}"></span>
+		 		</div>
+			</div>
+    </div>
+		<!-- 会员性别 -->
+	  <div class="layui-form-item">
+			<label class="layui-form-label">会员性别：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.memberSex}"></span>
+		 		</div>
+			</div>
+	    <!--加入时间 -->
+		    <label class="layui-form-label">加入时间：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.cardCreateTime}"></span>
+		 		</div>
+			</div>
+		<!--到期时间-->
+			<label class="layui-form-label">到期时间：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.cardDueTime}"></span>
+		 		</div>
+			</div>
+	  </div>
+	  <!--出生日期-->
+	  <div class="layui-form-item">	  
+	     <label class="layui-form-label">出生日期：</label>
+		 <div class="layui-input-inline">
+		 	<div class="div_1">
+			 	<span th:text="${memberS.memberBirthday}"></span>
+		 	</div>
+	     </div>
+       <!-- 联系电话 -->	
+			<label class="layui-form-label">联系电话：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.memberPhone}"></span>
+		 		</div>
+			</div>
+	    <!-- 联系地址 -->
+		    <label class="layui-form-label">联系地址：</label>
+			<div class="layui-input-inline">
+				<div class="div_1">
+			 		<span th:text="${memberS.memberAddress}"></span>
+		 		</div>
+			</div>
+	  </div>
+	  <!--会籍ID-->
+	  <div class="layui-form-item">	  
+	     <label class="layui-form-label">会籍编号：</label>
+		 <div class="layui-input-inline">
+		 	<div class="div_1">
+			 	<span th:text="${memberS.memberStuffId}"></span>
+		 	</div>
+	     </div>
+	  <!-- 教练ID -->	
+		<label class="layui-form-label">教练编号：</label>
+		<div class="layui-input-inline">
+			<div class="div_1">
+			 	<span th:text="${memberS.memberTrainerId}"></span>
+		 	</div>
+		</div>
+	  <!-- 备注 -->
+		<label class="layui-form-label">备注：</label>
+		<div class="layui-input-inline">
+			<div class="div_1">
+			 	<span th:text="${memberS.memberNote}"></span>
+		 	</div>
+		</div>
+	</div>
+</form>
+</div>	
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+		layui.use(['jquery','layer'],function(){
+			var $=layui.jquery;
+			var layer=layui.layer;
+			$(document).on('click','#transfer',function(){
+				var id=$('#memberId').val();
+				memberTrans(id);
+			});
+			$(document).on('click','#upgrade',function(){
+				var id=$('#memberId').val();
+				memberUpgrade(id);
+			});
+			$(document).on('click','#issue',function(){
+				var id=$('#memberId').val();
+				memberIssue(id);
+			});
+			$(document).on('click','#renewal',function(){
+				var id=$("#memberId").val();
+				memberRenewal(id);
+			});
+			function memberTrans(id){//定义会员转卡的方法
+				layer.open({
+					type:2
+					,title:"转卡"
+					,content:'../member/selectMemberToTrans?id='+id
+					,area:['93%','93%']
+				});
+			}
+			function memberUpgrade(id){//定义会员升级的方法
+				layer.open({
+					type:2
+					,title:"升级"
+					,content:'../member/selectMemberToUpgrade?id='+id
+					,area:['93%','93%']
+				});
+			}
+			function memberIssue(id){//定义会员补卡的方法
+				layer.open({
+					type:2
+					,title:"补卡"
+					,content:'../member/selectMemberToIssue?id='+id  //填入MemberIssue.html在Controller里面的路径
+					,area:['93%','93%']
+				});
+			}	
+			function memberRenewal(id){
+				layer.open({
+					type:2
+					,title:"续费"
+					,content:'../member/selectMemberToRenewal?id='+id  //填入MemberIssue.html在Controller里面的路径
+					,area:['60%','75%']
+				});
+			}
+		});
+	</script>
+</body>
+</html>

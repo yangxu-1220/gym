@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<style type="text/css">
+</style>
+</head>
+<body>
+<div id="addlayer">
+ <form class="layui-form" id="form1" action="##" onSubmit="return false">
+    <div align="center" style="width:200px;height:180px;display:inline;" class="layui-input-inline">
+		<input type="hidden" id="cover" th:value="${result.courseImage}">
+		 <div id="covered" style="width:200px;height:180px;border:2px solid #E6E6FA;">
+			 <img src="" alt="图不见咯" width="180px" height="140px">
+		</div>
+	</div>
+	 <div class="layui-card">
+      <div class="layui-card-header" align="center" style="font-size:20px;">尊敬的<span style="font-size:20px;font-color:navy blue;" th:text="${member.memberName}"></span>，您好！您的约课信息如下:</div>
+      <div class="layui-card-body" align="center"  style="font-size:18px;">
+               课程名称：<span th:text="${result.courseName}"></span><br>
+              上课教练 ：<span th:text="${result.trainerName}"></span><br>
+              上课地点：<span th:text="${result.attendCoursePalce}"></span><br>
+              上课时间：<span th:text="${result.attendCourseTime}"></span><br>
+              	<input type="hidden" name="courseName" th:value="${result.courseName}">
+              	<input type="hidden" name="memberId" th:value="${member.memberId}">
+              	<input type="hidden" name="trainerName" th:value="${result.trainerName}">
+              	<input type="hidden" name="memberName" th:value="${member.memberName}">
+              	<input type="hidden" name="attendCourseTime" th:value="${result.attendCourseTime}">             	
+       </div>
+       <hr class="layui-bg-orange">
+        <div align="center">
+		     <input type="button" id="submit" value="确认" class="layui-btn layui-btn-warm"/>
+	 </div>
+   </div>
+</form>
+</div> 
+<script src="../layui/layui.js"></script>
+<script type="text/javascript">
+layui.use(['jquery','layer'],function(){
+	var layer=layui.layer;
+	var image=document.getElementById("cover").value;
+	document.getElementById("covered").innerHTML=image;
+	var $=layui.jquery;
+	$(document).on('click','#submit',function(){
+		$.ajax({
+			type:'post'
+			,url:'/orderCourse/insertOrderCourse'
+			,data:$("#form1").serialize()
+			,success:function(data){
+				if(data==="预约成功"){
+					alert("预约成功");
+					var index=parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+				}
+				if(data==="会员已经预约过该课程"){
+					layer.msg("您已预约过该课程！");
+				}
+				if(data==="会员在该时段有课"){
+					layer.msg("您在该时段已经有课，请按时上课！");
+				}
+				if(data==="课程已经开始"){
+					layer.msg("课程已经开始");
+				}
+				if(data==="预约已满"){
+					layer.msg("课程预约人数已达上限！");
+				}
+			}
+			,error:function(){
+				alert("预约失败！");
+			}
+		});		
+	});	
+});
+</script>
+</body>
+</html>

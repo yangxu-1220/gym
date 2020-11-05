@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>新增会员</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<link th:href="@{styles/index.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- 添加弹出框的div -->
+ <div id="addlayer" style="">
+	<form class="layui-form" id="form1" action="##" onsubmit="return false">
+		<!-- 第一行 -->
+		<div class="layui-form-item">  
+		   <label class="layui-form-label">课程名</label>
+    		<div class="layui-input-inline">
+     		 <select name="courseName" id="courseName" lay-verify="required" class="select">
+        		<option value="">请选择课程</option>           
+      		 </select>
+      	   </div>	  
+		    <label class="layui-form-label">教练</label>
+			<div class="layui-input-inline">
+		    <select name="trainerName" id="trainerName" lay-verify="required" class="select">
+        		<option value="">请选择教练</option>           
+      		 </select>
+  		   </div>
+  		</div>
+  		<!-- 第二行 -->
+  		<div class="layui-form-item">
+		     <label class="layui-form-label">上课时间</label>
+		       <div class="layui-input-inline">
+		         <input type="text" name="attendCourseTime" class="layui-input" id="attendCourseTime" placeholder="请选择时间">
+		       </div>
+	    <div class="layui-inline">
+	      	 <label class="layui-form-label">上课地点</label>
+	      	    <div class="layui-input-inline">
+	        	 	<select name="attendCoursePalce" id="attendCoursePalce"  class="select">
+        		     <option value="动感单车房">动感单车房</option> 
+        		     <option value="室内瑜伽馆">室内瑜伽馆</option>
+        		     <option value="室外瑜伽场">室外瑜伽场</option>
+        		     <option value="第一操课房">第一操课房</option> 
+        		     <option value="第二操课房">第二操课房</option>
+        		     <option value="第三操课房">第三操课房</option>
+      		       </select>
+	      	    </div>
+	    </div>
+	    </div>	    
+	    <!-- 按钮 -->	    			 		    
+	    <hr class="layui-bg-green">	 
+		<div class="layui-form-item">
+		  <div class="layui-input-block" style="height:60px;width:200px;margin:auto;">
+		     <input type="button" id="AttendCourseSubmit" value="提交" class="layui-btn"/>
+		     <input type="reset" id="addreset" class="layui-btn layui-btn-primary"/>
+	     </div>
+	    </div>
+	</form>
+</div> 
+ 
+<script src="../layui/layui.js"></script>
+
+<script type="text/javascript">
+layui.use(['element','form','laydate'],function(){
+	var element=layui.element;	//定义element对象
+	var form=layui.form;		//定义form对象
+	var laydate=layui.laydate;  //定义时间选择器对象
+	
+	laydate.render({			//渲染时间选择器
+		elem:'#attendCourseTime' //elem：是时间选择器的ID
+		,type:'datetime'
+	});	
+	form.render();				//渲染整个页面的form元素
+});
+
+layui.use(['layer','jquery','form','element'],function(){
+	var layer=layui.layer;
+	var $=layui.jquery;
+	var form=layui.form;
+	var element=layui.element;
+	
+	layer.ready(function(){
+		$.ajax({
+			type:'get',
+			url:'../course/GetCourse',
+			success:function(data){
+				$.each(data,function(index,course1){
+					$('#courseName').append(new Option(course1.courseName));
+				});
+				form.render("select");
+			}
+		});
+		$.ajax({
+			type:'get',
+			url:'../MTrainer/GetAllTrainer',
+			success:function(data){
+				$.each(data,function(index,trainer){
+					$('#trainerName').append(new Option(trainer.trainerName));
+				});
+				form.render("select");
+			}
+		});
+	});
+	$(document).on('click','#AttendCourseSubmit',function(){
+		var courseName=$("#courseName option:selected").text();
+		var trainerName=$("#trainerName option:selected").text();
+		var attendCourseTime=$("#attendCourseTime").val();
+		
+		if(courseName==="请选择课程"){
+			layer.msg("请选择课程");
+		}
+		else if(trainerName==="请选择教练"){
+			layer.msg("请选择教练");
+		}
+		else if(attendCourseTime===""){
+			layer.msg("请选择上课时间");
+		}
+		else{
+			$.ajax({
+				type:'post'
+				//,dataType:'json'
+				,url:'../attendCourse/doInsert'
+				,data:$('#form1').serialize()
+				,success:function(data){
+					if(data==="true"){
+						alert("添加成功");
+						var index = parent.layer.getFrameIndex(window.name); 						
+						parent.layer.close(index);	
+					}
+					if(data==="教练和时间冲突"){
+						layer.msg("该教练在该时段已有安排！");
+					}
+					if(data==="时间和地点冲突"){
+						layer.msg("此地点在该时段已被占用！");
+					}
+					
+				}
+				,error:function(){
+					alert("异常！");
+				}
+			});
+		}
+	});
+});
+</script>
+</body>
+</html>
